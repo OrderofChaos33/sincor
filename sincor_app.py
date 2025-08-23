@@ -26,6 +26,16 @@ NOTIFY_PHONE=os.getenv("NOTIFY_PHONE","")
 
 app=Flask(__name__, static_folder=str(ROOT), static_url_path="")
 
+# Import checkout routes
+try:
+    from checkout import add_checkout_routes
+    add_checkout_routes(app)
+    log("Checkout routes added successfully")
+except ImportError as e:
+    log(f"Warning: Could not import checkout module: {e}")
+except Exception as e:
+    log(f"Error adding checkout routes: {e}")
+
 def log(msg):
     ts=datetime.datetime.now().isoformat(timespec="seconds")
     with open(LOGFILE,"a",encoding="utf-8") as f: f.write(f"[{ts}] {msg}\n")
@@ -69,12 +79,22 @@ def clean_phone(p):
 
 @app.get("/")
 def home():
-    return ("""
+    try:
+        # Serve the professional marketing website
+        template_path = ROOT / "templates" / "index.html"
+        if template_path.exists():
+            return template_path.read_text(encoding="utf-8"), 200, {"Content-Type": "text/html"}
+        else:
+            # Fallback to simple version
+            return ("""
 <!doctype html><meta charset="utf-8"><title>SINCOR</title>
 <body style="font-family:system-ui;margin:2rem">
 <h2>SINCOR Lead Engine</h2>
 <p><a href="/lead">Lead form</a> · <a href="/logs">Logs</a> · <a href="/outputs">Outputs</a> · <a href="/health">Health</a></p>
-</body>""",200,{"Content-Type":"text/html"})
+</body>""", 200, {"Content-Type": "text/html"})
+    except Exception as e:
+        log(f"Error serving home page: {e}")
+        return ("Error loading page", 500)
 
 @app.get("/lead")
 def lead_form():

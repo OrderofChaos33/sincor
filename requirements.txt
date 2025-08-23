@@ -8,6 +8,9 @@ Jinja2>=3.1.0                # Template engine for content generation
 PyYAML>=6.0                  # YAML configuration files
 schedule>=1.2.0              # Task scheduling for automation
 
+# Payment Processing
+stripe>=7.0.0                 # Stripe payment integration
+
 # Email handling (built into Python)
 # smtplib - built-in
 # email - built-in
