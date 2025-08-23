@@ -2,9 +2,18 @@
 # Flask web framework for lead capture
 Flask>=2.3.0,<3.0.0
 
+# Business Intelligence and Automation
+requests>=2.31.0              # HTTP requests for API calls
+Jinja2>=3.1.0                # Template engine for content generation
+PyYAML>=6.0                  # YAML configuration files
+schedule>=1.2.0              # Task scheduling for automation
+
 # Email handling (built into Python)
 # smtplib - built-in
 # email - built-in
+
+# Database (built into Python)
+# sqlite3 - built-in
 
 # File handling and paths
 # pathlib - built-in (Python 3.4+)
@@ -24,9 +33,19 @@ Flask>=2.3.0,<3.0.0
 # JSON handling
 # json - built-in
 
+# Threading and multiprocessing
+# threading - built-in
+# time - built-in
+
 # Development/Testing dependencies
 pytest>=7.0.0
 pytest-flask>=1.2.0
 
 # Optional: For better development experience
 python-dotenv>=1.0.0
+
+# Optional: Enhanced functionality
+beautifulsoup4>=4.12.0       # Web scraping for email extraction
+lxml>=4.9.0                  # XML/HTML parsing
+selenium>=4.15.0             # Browser automation (if needed)
+pandas>=2.0.0                # Data analysis and manipulation
