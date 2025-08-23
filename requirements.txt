@@ -1,0 +1,32 @@
+# SINCOR Requirements
+# Flask web framework for lead capture
+Flask>=2.3.0,<3.0.0
+
+# Email handling (built into Python)
+# smtplib - built-in
+# email - built-in
+
+# File handling and paths
+# pathlib - built-in (Python 3.4+)
+
+# CSV handling
+# csv - built-in
+
+# Regular expressions
+# re - built-in
+
+# Operating system interface
+# os - built-in
+
+# Date and time
+# datetime - built-in
+
+# JSON handling
+# json - built-in
+
+# Development/Testing dependencies
+pytest>=7.0.0
+pytest-flask>=1.2.0
+
+# Optional: For better development experience
+python-dotenv>=1.0.0
