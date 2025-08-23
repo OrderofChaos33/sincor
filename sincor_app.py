@@ -168,5 +168,6 @@ def health(): return jsonify({"ok":True})
 
 if __name__=="__main__":
     port=int(os.environ.get("PORT","5000"))
-    log(f"Starting on :{port}")
-    app.run(host="127.0.0.1",port=port)
+    host=os.environ.get("HOST","0.0.0.0")
+    log(f"Starting on {host}:{port}")
+    app.run(host=host,port=port)
