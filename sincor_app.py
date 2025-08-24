@@ -40,6 +40,16 @@ except ImportError as e:
 except Exception as e:
     log(f"Error adding checkout routes: {e}")
 
+# Import dashboard routes
+try:
+    from dashboard_routes import add_dashboard_routes
+    add_dashboard_routes(app)
+    log("Dashboard routes added successfully")
+except ImportError as e:
+    log(f"Warning: Could not import dashboard module: {e}")
+except Exception as e:
+    log(f"Error adding dashboard routes: {e}")
+
 def ensure_leads_csv():
     if not LEADSCSV.exists():
         with open(LEADSCSV,"w",newline="",encoding="utf-8") as f:
