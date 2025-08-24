@@ -111,11 +111,11 @@ def add_checkout_routes(app):
                 </div>
                 
                 <button type="submit" id="submit-button" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50">
-                    Start 14-Day Free Trial
+                    Start $1 Trial - First Month
                 </button>
                 
                 <p class="text-sm text-gray-500 mt-4 text-center">
-                    14-day free trial, then ${plan['price']/100:.0f}/month. Cancel anytime.
+                    $1 first month, then ${plan['price']/100:.0f}/month. Cancel anytime.
                 </p>
             </form>
         </div>

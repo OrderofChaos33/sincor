@@ -278,59 +278,64 @@ class SINCOREngine:
         
         templates = {
             "default": {
-                "subject": "Transform {business_name}'s Customer Experience - Free Consultation",
+                "subject": "How {business_name} Can Get 50+ New Customers Every Month on Autopilot",
                 "content": """Hi {business_name} team,
 
-I noticed {business_name} has built an impressive reputation with {rating}⭐ ({review_count} reviews) in {city}. 
+I noticed {business_name} has built an impressive {rating}⭐ reputation with {review_count} reviews in {city}. That tells me you deliver quality work.
 
-Your customers clearly value quality - which is exactly why I wanted to reach out.
+But here's what I'm curious about: How many new customers are you turning away each month because you're already at capacity?
 
-I help successful {business_type} businesses like yours:
-• Discover 300-500 new potential customers every month
-• Send personalized outreach that converts at 4-8% 
-• Automate follow-up sequences that never miss a lead
-• Scale marketing without the headache
+I ask because I help successful {business_type} businesses like yours systematically discover and connect with customers who are actively looking for their services.
 
-This is how Mike's Auto Detailing in Houston went from 12 customers/month to 47 customers/month in just 90 days.
+Here's what this looks like:
+• Automatically find 300-500 potential customers in your area every month
+• Send personalized outreach that mentions their specific needs 
+• Follow-up sequences that convert 4-8% into paying customers
+• Complete automation - no cold calling or manual work
 
-Would you be interested in a quick 15-minute call to see how this could work for {business_name}?
+One client (Elite Mobile Detail in Austin) went from 12 customers/month to 47 customers/month in 90 days using this system.
 
-I have a few spots open this week. Just reply with "INTERESTED" and I'll send over some times.
+Would you be interested in seeing how this could work for {business_name}?
 
-Best regards,
-The SINCOR Team
+I have a few demo spots open this week. Just reply "SHOW ME" and I'll send you a quick case study + schedule a 15-minute demo.
 
-P.S. - This isn't about ads or cold calling. It's about intelligent business discovery and relationship building that actually works.
+Best,
+SINCOR Team
+Lead Generation on Autopilot
+
+P.S. - We also have ready-to-use marketing packs for {business_type} businesses starting at $197. Perfect if you prefer to handle marketing yourself but need professional templates.
 """
             },
             
             "high_value": {
-                "subject": "Exclusive Invitation for {business_name} - Elite Business Growth Program", 
+                "subject": "EXCLUSIVE: {business_name} Selected for Elite Growth Program", 
                 "content": """Hello {business_name},
 
-Your {rating}-star reputation and {review_count} customer reviews caught our attention.
+Your outstanding {rating}⭐ reputation and {review_count} reviews put you in the top 5% of {business_type} businesses in {city}.
 
-We're inviting just 10 top-performing {business_type} businesses in {city} to join our Elite Growth Program this quarter.
+That's why you're receiving this exclusive invitation.
 
-What makes this exclusive:
-• Direct access to 1,500+ qualified prospects monthly
-• AI-powered customer acquisition that works 24/7  
-• Dedicated growth specialist (no more DIY marketing)
-• Guaranteed 300% increase in qualified leads within 90 days
+SINCOR's Elite Growth Program is typically reserved for businesses already doing $500K+ annually. We only accept 10 companies per city, per quarter.
 
-Current elite members include:
-- Superior HVAC (Phoenix): +$48K monthly revenue
-- Garcia Landscaping (Miami): 15 hours/week saved
-- Elite Mobile Detail (Austin): 300% lead increase
+What Elite members get:
+• Automated discovery of 1,500+ qualified prospects monthly
+• AI-powered personalized outreach campaigns
+• Dedicated growth specialist (white-glove service)
+• GUARANTEED 300% increase in qualified leads within 90 days
 
-This program typically has a 6-month waiting list, but we have 3 spots available in {city} this month.
+Current Elite members:
+→ Superior HVAC (Phoenix): +$48K monthly revenue  
+→ Garcia Landscaping (Miami): 15 hours/week freed up
+→ Elite Mobile Detail (Austin): 300% lead increase in 60 days
 
-Interested in learning more? Reply with "ELITE" and I'll send you the program details.
+We have 2 spots remaining in {city} for Q1 2025.
+
+Interested? Reply "ELITE ACCESS" and I'll send the private program details.
 
 Best,
-SINCOR Elite Team
+SINCOR Elite Growth Team
 
-This invitation expires in 48 hours.
+*This invitation expires in 48 hours and cannot be extended.*
 """
             }
         }

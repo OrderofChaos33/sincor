@@ -50,6 +50,16 @@ except ImportError as e:
 except Exception as e:
     log(f"Error adding dashboard routes: {e}")
 
+# Import media pack routes
+try:
+    from media_pack_routes import add_media_pack_routes
+    add_media_pack_routes(app)
+    log("Media pack routes added successfully")
+except ImportError as e:
+    log(f"Warning: Could not import media pack module: {e}")
+except Exception as e:
+    log(f"Error adding media pack routes: {e}")
+
 def ensure_leads_csv():
     if not LEADSCSV.exists():
         with open(LEADSCSV,"w",newline="",encoding="utf-8") as f:
