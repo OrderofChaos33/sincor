@@ -60,6 +60,16 @@ except ImportError as e:
 except Exception as e:
     log(f"Error adding media pack routes: {e}")
 
+# Import auto detailing authority routes
+try:
+    from auto_detailing_routes import add_auto_detailing_routes
+    add_auto_detailing_routes(app)
+    log("Auto detailing authority routes added successfully")
+except ImportError as e:
+    log(f"Warning: Could not import auto detailing module: {e}")
+except Exception as e:
+    log(f"Error adding auto detailing routes: {e}")
+
 def ensure_leads_csv():
     if not LEADSCSV.exists():
         with open(LEADSCSV,"w",newline="",encoding="utf-8") as f:

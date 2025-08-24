@@ -277,6 +277,45 @@ class SINCOREngine:
         """Create personalized email for a business."""
         
         templates = {
+            "auto_detailing": {
+                "subject": "The Guy Who Wrote THE Book on Auto Detailing Success Wants to Help {business_name}",
+                "content": """Hi {business_name} team,
+
+I'm the author of "From $0 to Six Figures in Auto Detailing" - you may have seen it around the industry.
+
+I noticed {business_name} has built an impressive {rating}⭐ reputation with {review_count} reviews in {city}. That tells me you deliver quality work, just like the successful detailers I wrote about in my book.
+
+Here's why I'm reaching out: I've now AUTOMATED the customer acquisition strategies from my book.
+
+Instead of manually doing what the book teaches, my SINCOR system does it all automatically:
+• Finds car owners in {city} who need detailing services
+• Sends personalized emails mentioning their car type and location  
+• Follows up with proven sequences from my book
+• Books appointments directly to your calendar
+
+Real results: Elite Mobile Detail in Austin went from 12 customers/month to 47 customers/month in 90 days using this system.
+
+Since you're in the auto detailing industry, I'd like to offer you:
+✓ The complete SINCOR automated system ($297/month)
+✓ FREE BONUS: My book "From $0 to Six Figures in Auto Detailing" ($29.97 value)
+✓ Auto detailing-specific email templates
+✓ Direct access to me (the author) for questions
+
+First month is just $1 to try it out.
+
+Interested in seeing how this works for {business_name}? 
+
+Just reply "SHOW ME" and I'll send you a quick demo plus your free book.
+
+Best,
+[Your Name]
+Author of "From $0 to Six Figures in Auto Detailing"
+Creator of the SINCOR System
+
+P.S. - This offer (free book + $1 trial) is only for auto detailing businesses like yours. I know the industry inside and out.
+"""
+            },
+            
             "default": {
                 "subject": "How {business_name} Can Get 50+ New Customers Every Month on Autopilot",
                 "content": """Hi {business_name} team,
@@ -340,9 +379,13 @@ SINCOR Elite Growth Team
             }
         }
         
-        # Select template based on lead score
+        # Select template based on business type and lead score
+        business_type = business.get("business_type", "")
         lead_score = business.get("lead_score", 50)
-        if lead_score >= 85:
+        
+        if "auto" in business_type.lower() or "detail" in business_type.lower():
+            template = "auto_detailing"
+        elif lead_score >= 85:
             template = "high_value"
         
         email_template = templates.get(template, templates["default"])
