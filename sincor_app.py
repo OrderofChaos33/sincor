@@ -24,6 +24,10 @@ EMAIL_FROM=os.getenv("EMAIL_FROM","")
 EMAIL_TO=[e.strip() for e in os.getenv("EMAIL_TO","").split(",") if e.strip()]
 NOTIFY_PHONE=os.getenv("NOTIFY_PHONE","")
 
+def log(msg):
+    ts=datetime.datetime.now().isoformat(timespec="seconds")
+    with open(LOGFILE,"a",encoding="utf-8") as f: f.write(f"[{ts}] {msg}\n")
+
 app=Flask(__name__, static_folder=str(ROOT), static_url_path="")
 
 # Import checkout routes
@@ -35,10 +39,6 @@ except ImportError as e:
     log(f"Warning: Could not import checkout module: {e}")
 except Exception as e:
     log(f"Error adding checkout routes: {e}")
-
-def log(msg):
-    ts=datetime.datetime.now().isoformat(timespec="seconds")
-    with open(LOGFILE,"a",encoding="utf-8") as f: f.write(f"[{ts}] {msg}\n")
 
 def ensure_leads_csv():
     if not LEADSCSV.exists():
@@ -188,6 +188,6 @@ def health(): return jsonify({"ok":True})
 
 if __name__=="__main__":
     port=int(os.environ.get("PORT","5000"))
-    host=os.environ.get("HOST","0.0.0.0")
-    log(f"Starting on {host}:{port}")
-    app.run(host=host,port=port)
+    host="0.0.0.0"  # Railway requires binding to 0.0.0.0
+    log(f"Starting SINCOR on {host}:{port}")
+    app.run(host=host, port=port, debug=False)

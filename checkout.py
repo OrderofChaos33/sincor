@@ -14,8 +14,8 @@ from datetime import datetime
 import json
 
 # Stripe configuration
-stripe.api_key = os.environ.get("STRIPE_SECRET_KEY", "")
-STRIPE_PUBLISHABLE_KEY = os.environ.get("STRIPE_PUBLISHABLE_KEY", "")
+stripe.api_key = os.environ.get("stripe", "")
+STRIPE_PUBLISHABLE_KEY = os.environ.get("stripe", "")
 
 # Service plans
 PLANS = {
