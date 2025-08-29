@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-SINCOR Startup - Simple monetization app
+SINCOR EMERGENCY PAYPAL TEST - Bypass Railway Cache
 """
 from flask import Flask, jsonify, render_template_string
 import os
