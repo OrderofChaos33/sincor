@@ -231,4 +231,5 @@ if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
     print(f"🚀 Starting SINCOR Monetization Platform on port {port}")
     print(f"💰 PayPal Integration: {'✅ Configured' if os.getenv('PAYPAL_REST_API_ID') else '❌ Missing credentials'}")
-    app.run(host='0.0.0.0', port=port)
+    print("🔒 Production WSGI Server Ready for PayPal API")
+    app.run(host='0.0.0.0', port=port, debug=False)
