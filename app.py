@@ -224,7 +224,7 @@ def health():
         'status': 'healthy',
         'service': 'SINCOR Monetization Platform',
         'paypal_configured': bool(os.getenv('PAYPAL_REST_API_ID')),
-        'timestamp': '2025-08-29T17:30:00Z'
+        'timestamp': '2025-08-29T17:35:00Z'
     })
 
 if __name__ == '__main__':
