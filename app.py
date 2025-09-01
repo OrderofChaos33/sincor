@@ -701,4 +701,13 @@ if __name__ == '__main__':
     print(f">> Base URL: {APP_BASE_URL}")
     print(f">> PayPal: {'CONFIGURED' if os.getenv('PAYPAL_REST_API_ID') else 'MISSING CREDENTIALS'}")
     print(f">> Engines: {'AVAILABLE' if ENGINES_AVAILABLE else 'IMPORT FAILED'}")
+    
+    # DEBUG: Print all environment variables for Railway debugging
+    print(">> DEBUG: All environment variables:")
+    for key, value in sorted(os.environ.items()):
+        if 'SECRET' in key or 'PASS' in key or 'KEY' in key:
+            print(f"   {key}=***HIDDEN***")
+        else:
+            print(f"   {key}={value}")
+    
     app.run(host='0.0.0.0', port=port, debug=False)
