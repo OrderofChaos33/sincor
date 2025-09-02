@@ -78,10 +78,21 @@ def initialize_engines():
 @app.route('/')
 def home():
     """SINCOR homepage"""
-    return f'<h1>SINCOR PRODUCTION SYSTEM LIVE</h1><p>Version: 2.0.1-FIXED</p><p>Time: {datetime.now()}</p><p>PayPal: {bool(os.getenv("PAYPAL_REST_API_ID"))}</p><a href="/health">Health Check</a> | <a href="/services">Services</a> | <a href="/dashboard">Dashboard</a>'
-    
-    # Full homepage template below (commented out for deployment test)
-    return render_template_string('''<!DOCTYPE html>
+    return f'''
+    <h1>SINCOR AI Business Automation Platform</h1>
+    <h2>Production System - {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</h2>
+    <div style="margin: 20px 0;">
+        <p><strong>PayPal Configured:</strong> {bool(os.getenv("PAYPAL_REST_API_ID"))}</p>
+        <p><strong>Environment:</strong> {os.getenv("PAYPAL_ENV", "not-set")}</p>
+        <p><strong>Engines Available:</strong> {ENGINES_AVAILABLE}</p>
+    </div>
+    <div style="margin: 20px 0;">
+        <a href="/health" style="margin-right: 20px;">Health Check</a>
+        <a href="/services" style="margin-right: 20px;">Services</a>
+        <a href="/dashboard" style="margin-right: 20px;">Dashboard</a>
+    </div>
+    <p><em>SINCOR LLC - Autonomous Business Intelligence</em></p>
+    '''
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -730,10 +741,18 @@ if __name__ == '__main__':
     print(f">> PayPal: {'CONFIGURED' if os.getenv('PAYPAL_REST_API_ID') else 'MISSING CREDENTIALS'}")
     print(f">> Engines: {'AVAILABLE' if ENGINES_AVAILABLE else 'IMPORT FAILED'}")
     
-    # Initialize engines after Flask app is ready
-    print(">> Initializing SINCOR engines...")
-    engines_initialized = initialize_engines()
-    print(f">> Engine initialization: {'SUCCESS' if engines_initialized else 'FAILED (routes still work)'}")
+    # List registered routes for debugging
+    print(">> Registered Flask routes:")
+    for rule in app.url_map.iter_rules():
+        print(f"   {rule.rule} -> {rule.endpoint}")
     
-    print(">> Flask routes registered, starting server...")
+    # Initialize engines after Flask app is ready
+    try:
+        print(">> Initializing SINCOR engines...")
+        engines_initialized = initialize_engines()
+        print(f">> Engine initialization: {'SUCCESS' if engines_initialized else 'FAILED (routes still work)'}")
+    except Exception as e:
+        print(f">> Engine initialization error: {e}")
+    
+    print(">> Starting Flask server...")
     app.run(host='0.0.0.0', port=port, debug=False)
