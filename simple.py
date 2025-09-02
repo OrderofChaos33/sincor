@@ -38,8 +38,21 @@ except ImportError as e:
     logger.warning(f"⚠️ Engine import failed: {e}")
     ENGINES_AVAILABLE = False
 
-# Initialize engines
-if ENGINES_AVAILABLE:
+# Initialize engines after routes are defined
+monetization_engine = None
+payment_processor = None
+bi_engine = None
+pricing_engine = None
+scaling_engine = None
+
+def initialize_engines():
+    """Initialize SINCOR engines safely"""
+    global monetization_engine, payment_processor, bi_engine, pricing_engine, scaling_engine
+    
+    if not ENGINES_AVAILABLE:
+        logger.warning("Engines not available due to import failures")
+        return False
+    
     try:
         # Import additional dependencies for BI engine
         from swarm_coordination import TaskMarket
@@ -57,19 +70,10 @@ if ENGINES_AVAILABLE:
         pricing_engine = DynamicPricingEngine()
         scaling_engine = InfiniteScalingEngine()
         logger.info("✅ SINCOR engines initialized")
+        return True
     except Exception as e:
         logger.error(f"❌ Engine initialization failed: {e}")
-        monetization_engine = None
-        payment_processor = None
-        bi_engine = None
-        pricing_engine = None
-        scaling_engine = None
-else:
-    monetization_engine = None
-    payment_processor = None
-    bi_engine = None
-    pricing_engine = None
-    scaling_engine = None
+        return False
 
 @app.route('/')
 def home():
@@ -712,12 +716,10 @@ if __name__ == '__main__':
     print(f">> PayPal: {'CONFIGURED' if os.getenv('PAYPAL_REST_API_ID') else 'MISSING CREDENTIALS'}")
     print(f">> Engines: {'AVAILABLE' if ENGINES_AVAILABLE else 'IMPORT FAILED'}")
     
-    # DEBUG: Print all environment variables for Railway debugging
-    print(">> DEBUG: All environment variables:")
-    for key, value in sorted(os.environ.items()):
-        if 'SECRET' in key or 'PASS' in key or 'KEY' in key:
-            print(f"   {key}=***HIDDEN***")
-        else:
-            print(f"   {key}={value}")
+    # Initialize engines after Flask app is ready
+    print(">> Initializing SINCOR engines...")
+    engines_initialized = initialize_engines()
+    print(f">> Engine initialization: {'SUCCESS' if engines_initialized else 'FAILED (routes still work)'}")
     
+    print(">> Flask routes registered, starting server...")
     app.run(host='0.0.0.0', port=port, debug=False)
