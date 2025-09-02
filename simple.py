@@ -25,18 +25,9 @@ IS_PRODUCTION = PAYPAL_ENV == 'live'
 PAYPAL_API_BASE = 'https://api-m.paypal.com' if IS_PRODUCTION else 'https://api-m.sandbox.paypal.com'
 APP_BASE_URL = os.getenv('APP_BASE_URL', 'https://getsincor.com')
 
-# Initialize SINCOR engines
-try:
-    from monetization_engine import MonetizationEngine
-    from paypal_integration import SINCORPaymentProcessor, PaymentRequest
-    from instant_business_intelligence import InstantBusinessIntelligence
-    from dynamic_pricing_engine import DynamicPricingEngine
-    from infinite_scaling_engine import InfiniteScalingEngine
-    ENGINES_AVAILABLE = True
-    logger.info("✅ SINCOR engines imported successfully")
-except ImportError as e:
-    logger.warning(f"⚠️ Engine import failed: {e}")
-    ENGINES_AVAILABLE = False
+# Initialize SINCOR engines (disabled for Railway debugging)
+ENGINES_AVAILABLE = False
+logger.info("Engines disabled for Railway deployment test")
 
 # Initialize engines after routes are defined
 monetization_engine = None
