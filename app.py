@@ -41,9 +41,19 @@ except ImportError as e:
 # Initialize engines
 if ENGINES_AVAILABLE:
     try:
+        # Import additional dependencies for BI engine
+        from swarm_coordination import TaskMarket
+        from cortecs_core import CortecsBrain
+        
+        # Initialize core engines
         monetization_engine = MonetizationEngine()
         payment_processor = SINCORPaymentProcessor()
-        bi_engine = InstantBusinessIntelligence()
+        
+        # Initialize BI engine with proper dependencies
+        task_market = TaskMarket()
+        cortecs_brain = CortecsBrain()
+        bi_engine = InstantBusinessIntelligence(task_market, cortecs_brain)
+        
         pricing_engine = DynamicPricingEngine()
         scaling_engine = InfiniteScalingEngine()
         logger.info("✅ SINCOR engines initialized")
