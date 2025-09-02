@@ -48,7 +48,7 @@ class PayPalIntegration:
         self.client_secret = os.getenv('PAYPAL_REST_API_SECRET')
         
         # PayPal API configuration
-        paypal_env = os.getenv('PAYPAL_ENV', 'sandbox')
+        paypal_env = os.getenv('PAYPAL_ENV', 'live')
         self.sandbox_mode = paypal_env.lower() == 'sandbox'
         
         if self.sandbox_mode:
