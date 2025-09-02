@@ -78,6 +78,9 @@ def initialize_engines():
 @app.route('/')
 def home():
     """SINCOR homepage"""
+    return f'<h1>SINCOR PRODUCTION SYSTEM LIVE</h1><p>Version: 2.0.1-FIXED</p><p>Time: {datetime.now()}</p><p>PayPal: {bool(os.getenv("PAYPAL_REST_API_ID"))}</p><a href="/health">Health Check</a> | <a href="/services">Services</a> | <a href="/dashboard">Dashboard</a>'
+    
+    # Full homepage template below (commented out for deployment test)
     return render_template_string('''<!DOCTYPE html>
 <html lang="en">
 <head>
