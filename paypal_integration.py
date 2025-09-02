@@ -48,7 +48,8 @@ class PayPalIntegration:
         self.client_secret = os.getenv('PAYPAL_REST_API_SECRET')
         
         # PayPal API configuration
-        self.sandbox_mode = os.getenv('PAYPAL_SANDBOX', 'true').lower() == 'true'
+        paypal_env = os.getenv('PAYPAL_ENV', 'sandbox')
+        self.sandbox_mode = paypal_env.lower() == 'sandbox'
         
         if self.sandbox_mode:
             self.base_url = "https://api.sandbox.paypal.com"
