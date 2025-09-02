@@ -85,13 +85,16 @@ def home():
         <p><strong>PayPal Configured:</strong> {bool(os.getenv("PAYPAL_REST_API_ID"))}</p>
         <p><strong>Environment:</strong> {os.getenv("PAYPAL_ENV", "not-set")}</p>
         <p><strong>Engines Available:</strong> {ENGINES_AVAILABLE}</p>
+        <p><strong>AI Engine:</strong> {"CONFIGURED" if os.getenv("ANTHROPIC_API_KEY") else "MISSING API KEY"}</p>
+        <p><strong>Domain:</strong> getsincor.com ✓</p>
     </div>
     <div style="margin: 20px 0;">
         <a href="/health" style="margin-right: 20px;">Health Check</a>
         <a href="/services" style="margin-right: 20px;">Services</a>
         <a href="/dashboard" style="margin-right: 20px;">Dashboard</a>
     </div>
-    <p><em>SINCOR LLC - Autonomous Business Intelligence</em></p>
+    <p><em>SINCOR LLC - Autonomous Business Intelligence & Lead Generation</em></p>
+    <p style="color: #00ff00;">🚀 LIVE ON GETSINCOR.COM</p>
     '''
 <html lang="en">
 <head>
