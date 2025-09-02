@@ -708,6 +708,17 @@ def readiness_check():
         'version': '2.0.0'
     }), 200 if all_ready else 503
 
+@app.route('/deployment-test')
+def deployment_test():
+    """Test endpoint to verify latest deployment"""
+    return jsonify({
+        'message': 'SINCOR LATEST DEPLOYMENT ACTIVE',
+        'timestamp': datetime.now().isoformat(),
+        'version': '2.0.1-route-fix',
+        'routes_registered': True,
+        'file': 'simple.py'
+    })
+
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))
     print(f">> Starting SINCOR Production Platform on port {port}")
