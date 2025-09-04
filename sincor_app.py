@@ -34,27 +34,27 @@ def home():
             <h1 class="text-6xl font-bold mb-4 text-blue-400">SINCOR</h1>
             <p class="text-2xl mb-8 text-gray-300">AI Business Automation Platform</p>
             <div class="text-lg text-gray-400 mb-8">
-                🚀 Instant Business Intelligence • 🤖 Agent Scaling • 💰 Revenue Generation
+                [ROCKET] Instant Business Intelligence • [ROBOT] Agent Scaling • [MONEY] Revenue Generation
             </div>
         </div>
         
         <div class="grid md:grid-cols-3 gap-8 mb-12">
             <div class="bg-gray-800 p-6 rounded-lg text-center">
-                <h2 class="text-xl font-bold mb-4 text-green-400">💡 Instant BI</h2>
+                <h2 class="text-xl font-bold mb-4 text-green-400">[LIGHT] Instant BI</h2>
                 <p class="text-gray-300 mb-4">Get business intelligence in seconds, not weeks</p>
                 <div class="text-2xl font-bold text-green-400">$2,500 - $15,000</div>
                 <p class="text-sm text-gray-400">Per analysis</p>
             </div>
             
             <div class="bg-gray-800 p-6 rounded-lg text-center">
-                <h2 class="text-xl font-bold mb-4 text-purple-400">🤖 Agent Services</h2>
+                <h2 class="text-xl font-bold mb-4 text-purple-400">[ROBOT] Agent Services</h2>
                 <p class="text-gray-300 mb-4">AI agents that scale your business operations</p>
                 <div class="text-2xl font-bold text-purple-400">$500 - $5,000/mo</div>
                 <p class="text-sm text-gray-400">Subscription</p>
             </div>
             
             <div class="bg-gray-800 p-6 rounded-lg text-center">
-                <h2 class="text-xl font-bold mb-4 text-yellow-400">📊 Predictive Analytics</h2>
+                <h2 class="text-xl font-bold mb-4 text-yellow-400">[CHART] Predictive Analytics</h2>
                 <p class="text-gray-300 mb-4">Forecast market trends and opportunities</p>
                 <div class="text-2xl font-bold text-yellow-400">$6,000 - $25,000</div>
                 <p class="text-sm text-gray-400">Per project</p>
@@ -63,20 +63,20 @@ def home():
         
         <div class="text-center">
             <a href="/dashboard" class="bg-green-600 hover:bg-green-700 px-8 py-4 rounded-lg font-semibold text-xl mr-4">
-                🚀 Launch Dashboard
+                [ROCKET] Launch Dashboard
             </a>
             <a href="/services" class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg font-semibold text-xl">
-                💰 View Services
+                [MONEY] View Services
             </a>
         </div>
         
         <div class="mt-12 bg-gray-800 p-6 rounded-lg">
-            <h2 class="text-2xl font-bold mb-4 text-cyan-400">🎯 Enterprise Solutions</h2>
+            <h2 class="text-2xl font-bold mb-4 text-cyan-400">[TARGET] Enterprise Solutions</h2>
             <div class="grid md:grid-cols-2 gap-4 text-gray-300">
-                <div>🤝 Partnership Framework: $50,000 - $200,000 revenue streams</div>
-                <div>🔄 Recursive Value Products: Exponential growth models</div>
-                <div>⚡ Real-time Intelligence: Live market monitoring</div>
-                <div>🎯 Quality Scoring: Performance optimization</div>
+                <div>[HANDSHAKE] Partnership Framework: $50,000 - $200,000 revenue streams</div>
+                <div>[REFRESH] Recursive Value Products: Exponential growth models</div>
+                <div>[BOLT] Real-time Intelligence: Live market monitoring</div>
+                <div>[TARGET] Quality Scoring: Performance optimization</div>
             </div>
         </div>
     </div>
@@ -96,7 +96,7 @@ def dashboard():
 </head>
 <body class="bg-gray-900 text-white min-h-screen">
     <div class="container mx-auto px-4 py-8">
-        <h1 class="text-4xl font-bold mb-8 text-green-400 text-center">🚀 SINCOR Command Center</h1>
+        <h1 class="text-4xl font-bold mb-8 text-green-400 text-center">[ROCKET] SINCOR Command Center</h1>
         
         <div class="grid md:grid-cols-4 gap-6 mb-8">
             <div class="bg-gray-800 p-4 rounded-lg text-center">
@@ -128,22 +128,22 @@ def dashboard():
             <h2 class="text-2xl font-bold mb-4 text-red-400">Available Services</h2>
             <div class="grid md:grid-cols-4 gap-4">
                 <div class="text-center p-4 bg-gray-700 rounded">
-                    <div class="text-2xl mb-2">💡</div>
+                    <div class="text-2xl mb-2">[LIGHT]</div>
                     <h3 class="font-bold">Instant BI</h3>
                     <p class="text-sm text-gray-400">$2,500 - $15,000</p>
                 </div>
                 <div class="text-center p-4 bg-gray-700 rounded">
-                    <div class="text-2xl mb-2">🤖</div>
+                    <div class="text-2xl mb-2">[ROBOT]</div>
                     <h3 class="font-bold">Agent Services</h3>
                     <p class="text-sm text-gray-400">$500 - $5,000/mo</p>
                 </div>
                 <div class="text-center p-4 bg-gray-700 rounded">
-                    <div class="text-2xl mb-2">📊</div>
+                    <div class="text-2xl mb-2">[CHART]</div>
                     <h3 class="font-bold">Predictive Analytics</h3>
                     <p class="text-sm text-gray-400">$6,000 - $25,000</p>
                 </div>
                 <div class="text-center p-4 bg-gray-700 rounded">
-                    <div class="text-2xl mb-2">🤝</div>
+                    <div class="text-2xl mb-2">[HANDSHAKE]</div>
                     <h3 class="font-bold">Enterprise Partnerships</h3>
                     <p class="text-sm text-gray-400">$50,000 - $200,000</p>
                 </div>
@@ -173,7 +173,7 @@ def services():
         
         <div class="grid md:grid-cols-2 gap-8 mb-12">
             <div class="bg-gray-800 p-8 rounded-lg">
-                <h2 class="text-2xl font-bold mb-4 text-green-400">💡 Instant Business Intelligence</h2>
+                <h2 class="text-2xl font-bold mb-4 text-green-400">[LIGHT] Instant Business Intelligence</h2>
                 <p class="text-gray-300 mb-4">Get comprehensive business analysis in minutes, not months.</p>
                 <ul class="text-gray-300 space-y-2 mb-6">
                     <li>• Market opportunity analysis</li>
@@ -185,7 +185,7 @@ def services():
             </div>
             
             <div class="bg-gray-800 p-8 rounded-lg">
-                <h2 class="text-2xl font-bold mb-4 text-purple-400">🤖 Agent Services</h2>
+                <h2 class="text-2xl font-bold mb-4 text-purple-400">[ROBOT] Agent Services</h2>
                 <p class="text-gray-300 mb-4">AI agents that handle your business operations 24/7.</p>
                 <ul class="text-gray-300 space-y-2 mb-6">
                     <li>• Customer service automation</li>
@@ -197,7 +197,7 @@ def services():
             </div>
             
             <div class="bg-gray-800 p-8 rounded-lg">
-                <h2 class="text-2xl font-bold mb-4 text-yellow-400">📊 Predictive Analytics</h2>
+                <h2 class="text-2xl font-bold mb-4 text-yellow-400">[CHART] Predictive Analytics</h2>
                 <p class="text-gray-300 mb-4">Forecast market trends and identify future opportunities.</p>
                 <ul class="text-gray-300 space-y-2 mb-6">
                     <li>• Market trend forecasting</li>
@@ -209,7 +209,7 @@ def services():
             </div>
             
             <div class="bg-gray-800 p-8 rounded-lg">
-                <h2 class="text-2xl font-bold mb-4 text-red-400">🤝 Enterprise Partnerships</h2>
+                <h2 class="text-2xl font-bold mb-4 text-red-400">[HANDSHAKE] Enterprise Partnerships</h2>
                 <p class="text-gray-300 mb-4">Strategic partnerships that unlock massive revenue streams.</p>
                 <ul class="text-gray-300 space-y-2 mb-6">
                     <li>• Partnership framework development</li>
