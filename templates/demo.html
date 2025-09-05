@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block title %}Live Demo - See SINCOR in Action{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-blue-600 to-purple-700 text-white py-16">
+    <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">See SINCOR in Action</h1>
+            <p class="text-xl md:text-2xl mb-8 text-blue-100">Watch how SINCOR transforms raw data into actionable business insights in minutes, not hours.</p>
+            <div class="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
+                <button class="demo-button bg-yellow-500 text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-yellow-400 transition duration-200 transform hover:scale-105">
+                    <svg class="w-6 h-6 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
+                    </svg>
+                    Watch Live Demo
+                </button>
+                <a href="/demo/access" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-200">
+                    Try Member Dashboard
+                </a>
+                <a href="/admin/access" class="inline-block bg-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-purple-700 transition duration-200">
+                    Try Admin Dashboard
+                </a>
+            </div>
+            <p class="text-blue-200 mt-6 text-sm">Demo access - no signup required</p>
+        </div>
+    </div>
+</section>
+
+<!-- Video Modal -->
+<div id="video-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+    <div class="bg-white p-8 rounded-lg max-w-4xl w-full mx-4">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-2xl font-bold">SINCOR Live Demo</h3>
+            <button onclick="document.getElementById('video-modal').classList.add('hidden')" class="text-gray-500 hover:text-gray-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="aspect-video bg-gray-200 rounded-lg flex items-center justify-center">
+            <div class="text-center">
+                <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg>
+                <p class="text-gray-600">Demo video would be embedded here</p>
+                <p class="text-sm text-gray-500 mt-2">Contact us to schedule a personalized demo</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Demo Features -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">What You'll See in the Demo</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">Live Data Transformation</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-white text-sm font-bold">1</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Raw Data Import</h4>
+                                <p class="text-gray-600">Watch us connect to multiple data sources and import real business data in seconds.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-white text-sm font-bold">2</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">AI-Powered Analysis</h4>
+                                <p class="text-gray-600">See our AI automatically identify patterns, trends, and anomalies in your data.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-white text-sm font-bold">3</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Instant Visualizations</h4>
+                                <p class="text-gray-600">Watch beautiful dashboards and reports generate automatically from your data.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">Predictive Analytics in Action</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-white text-sm font-bold">1</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Revenue Forecasting</h4>
+                                <p class="text-gray-600">See 6-month revenue predictions with 95% accuracy based on your historical data.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-white text-sm font-bold">2</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Customer Insights</h4>
+                                <p class="text-gray-600">Discover which customers are likely to churn and what actions can retain them.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center mr-3 mt-1">
+                                <span class="text-white text-sm font-bold">3</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Market Opportunities</h4>
+                                <p class="text-gray-600">Identify emerging market trends and opportunities before your competition.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Interactive Demo Screenshots -->
+<section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Interactive Dashboard Preview</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4">Revenue Analytics Dashboard</h3>
+                        <div class="aspect-video bg-gradient-to-br from-blue-100 to-blue-50 rounded-lg flex items-center justify-center">
+                            <div class="text-center">
+                                <svg class="w-16 h-16 text-blue-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                                <p class="text-blue-600 font-semibold">Real-time revenue tracking</p>
+                                <p class="text-blue-500 text-sm">See in live demo</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mt-4">Track revenue performance, identify trends, and get AI-powered forecasts.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-4">Customer Insights Panel</h3>
+                        <div class="aspect-video bg-gradient-to-br from-purple-100 to-purple-50 rounded-lg flex items-center justify-center">
+                            <div class="text-center">
+                                <svg class="w-16 h-16 text-purple-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                                </svg>
+                                <p class="text-purple-600 font-semibold">Customer behavior analysis</p>
+                                <p class="text-purple-500 text-sm">See in live demo</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mt-4">Understand customer segments, predict churn, and optimize retention strategies.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Schedule Personal Demo -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-6">Want a Personalized Demo?</h2>
+            <p class="text-xl text-gray-600 mb-8">Schedule a one-on-one demo tailored to your specific business needs and data sources.</p>
+            
+            <div class="bg-gray-50 p-8 rounded-lg">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">30-Minute Session</h3>
+                        <p class="text-gray-600">Comprehensive walkthrough of all features</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Your Data</h3>
+                        <p class="text-gray-600">See SINCOR analyze your actual business data</p>
+                    </div>
+                    
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-2-2v-1M7 7V3a2 2 0 012-2h6a2 2 0 012 2v4H7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">Q&A Session</h3>
+                        <p class="text-gray-600">Get all your questions answered by experts</p>
+                    </div>
+                </div>
+                
+                <a href="mailto:demo@sincor.com?subject=Personal Demo Request" class="inline-block bg-yellow-500 text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-yellow-400 transition duration-200 transform hover:scale-105">Schedule Personal Demo</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-r from-blue-600 to-purple-700 text-white">
+    <div class="container mx-auto px-6 text-center">
+        <h2 class="text-4xl font-bold mb-6">Ready to See Real Results?</h2>
+        <p class="text-xl mb-8 text-blue-100">Experience the power of intelligent business analytics</p>
+        <div class="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
+            <a href="{{ url_for('signup') }}" class="inline-block bg-yellow-500 text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-yellow-400 transition duration-200 transform hover:scale-105">Get Started Today</a>
+            <a href="mailto:demo@sincor.com" class="inline-block border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-600 transition duration-200">Schedule Personal Demo</a>
+        </div>
+        <p class="text-blue-200 mt-6">See how SINCOR can transform your business today</p>
+    </div>
+</section>
+{% endblock %}

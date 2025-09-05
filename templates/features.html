@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block title %}Features - SINCOR Intelligent Business Solutions{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-blue-600 to-purple-700 text-white py-16">
+    <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">Powerful Features for Modern Business</h1>
+            <p class="text-xl md:text-2xl mb-8 text-blue-100">Everything you need to transform data into actionable insights and drive growth.</p>
+            <a href="{{ url_for('contact') }}" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-200 transform hover:scale-105">Get Started</a>
+        </div>
+    </div>
+</section>
+
+<!-- Feature Grid -->
+<section class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
+            
+            <!-- Predictive Analytics -->
+            <div class="feature-card">
+                <div class="flex items-start space-x-6">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Predictive Analytics</h3>
+                        <p class="text-gray-600 mb-4">Harness the power of AI to forecast trends, identify opportunities, and make data-driven decisions with confidence.</p>
+                        <ul class="space-y-2 text-gray-700">
+                            <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>Revenue forecasting with 95% accuracy</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>Customer behavior prediction</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>Market trend analysis</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>Risk assessment and mitigation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instant BI -->
+            <div class="feature-card">
+                <div class="flex items-start space-x-6">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Instant Business Intelligence</h3>
+                        <p class="text-gray-600 mb-4">Generate beautiful reports and dashboards in seconds. Transform complex data into clear, actionable insights.</p>
+                        <ul class="space-y-2 text-gray-700">
+                            <li class="flex items-center"><span class="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>Real-time dashboard creation</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>Automated report generation</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>Interactive data visualization</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>Custom KPI tracking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent Services -->
+            <div class="feature-card">
+                <div class="flex items-start space-x-6">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-8 h-8 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Intelligent Agent Services</h3>
+                        <p class="text-gray-600 mb-4">24/7 AI agents that monitor, analyze, and optimize your business processes automatically.</p>
+                        <ul class="space-y-2 text-gray-700">
+                            <li class="flex items-center"><span class="w-2 h-2 bg-yellow-500 rounded-full mr-3"></span>System health monitoring</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-yellow-500 rounded-full mr-3"></span>Automated alert management</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-yellow-500 rounded-full mr-3"></span>Performance optimization</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-yellow-500 rounded-full mr-3"></span>Proactive issue resolution</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Enterprise Ready -->
+            <div class="feature-card">
+                <div class="flex items-start space-x-6">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Enterprise Security & Scale</h3>
+                        <p class="text-gray-600 mb-4">Built for enterprise with bank-grade security, unlimited scalability, and comprehensive compliance.</p>
+                        <ul class="space-y-2 text-gray-700">
+                            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>SOC 2 Type II certified</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>99.9% uptime guarantee</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>Advanced role-based access</li>
+                            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>Unlimited data processing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Integration Section -->
+<section class="py-16 bg-gray-50">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold mb-4">Seamless Integrations</h2>
+            <p class="text-xl text-gray-600">Connect with your existing tools and data sources</p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center">
+            <div class="text-center">
+                <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition duration-200">
+                    <div class="text-lg font-semibold text-gray-400">Salesforce</div>
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition duration-200">
+                    <div class="text-lg font-semibold text-gray-400">HubSpot</div>
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition duration-200">
+                    <div class="text-lg font-semibold text-gray-400">Slack</div>
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition duration-200">
+                    <div class="text-lg font-semibold text-gray-400">Microsoft</div>
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition duration-200">
+                    <div class="text-lg font-semibold text-gray-400">Google</div>
+                </div>
+            </div>
+            <div class="text-center">
+                <div class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition duration-200">
+                    <div class="text-lg font-semibold text-gray-400">Zapier</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-r from-blue-600 to-purple-700 text-white">
+    <div class="container mx-auto px-6 text-center">
+        <h2 class="text-4xl font-bold mb-6">Ready to Transform Your Business?</h2>
+        <p class="text-xl mb-8 text-blue-100">Contact us today and see the difference SINCOR can make for your organization</p>
+        <div class="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
+            <a href="{{ url_for('contact') }}" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-200 transform hover:scale-105">Contact Sales</a>
+            <a href="{{ url_for('demo') }}" class="inline-block border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-600 transition duration-200">Schedule Demo</a>
+        </div>
+        <p class="text-blue-200 mt-6">Professional enterprise solutions • Dedicated support included</p>
+    </div>
+</section>
+{% endblock %}
