@@ -109,3 +109,93 @@ CREATE TABLE IF NOT EXISTS subscriptions(
 CREATE INDEX idx_subscriptions_customer ON subscriptions(customer_ref);
 CREATE INDEX idx_subscriptions_tenant ON subscriptions(tenant_id);
 CREATE INDEX idx_plans_tenant ON plans(tenant_id);
+
+-- Marketplace Tables
+CREATE TABLE IF NOT EXISTS catalog(
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  description TEXT,
+  price_cents INTEGER NOT NULL,
+  type TEXT NOT NULL, -- template, mediapax_pack, script_bundle
+  category TEXT, -- automotive, saas, local_services, etc
+  payload_ref TEXT, -- S3 key or file reference
+  preview_url TEXT,
+  tags TEXT[], -- searchable tags
+  active BOOLEAN DEFAULT true,
+  featured BOOLEAN DEFAULT false,
+  download_count INTEGER DEFAULT 0,
+  rating DECIMAL(2,1) DEFAULT 0.0,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  updated_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS purchases(
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id TEXT,
+  customer_email TEXT,
+  item_id UUID REFERENCES catalog(id),
+  amount_cents INTEGER NOT NULL,
+  payment_provider TEXT DEFAULT 'stripe',
+  payment_ref TEXT, -- stripe payment intent ID
+  status TEXT DEFAULT 'pending', -- pending, completed, refunded
+  download_url TEXT,
+  download_expires_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS reviews(
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  item_id UUID REFERENCES catalog(id),
+  tenant_id TEXT,
+  rating INTEGER CHECK (rating >= 1 AND rating <= 5),
+  review_text TEXT,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE INDEX idx_catalog_category ON catalog(category);
+CREATE INDEX idx_catalog_type ON catalog(type);
+CREATE INDEX idx_catalog_featured ON catalog(featured, active);
+CREATE INDEX idx_purchases_tenant ON purchases(tenant_id);
+CREATE INDEX idx_purchases_item ON purchases(item_id);
+
+-- Referral System Tables
+CREATE TABLE IF NOT EXISTS ref_codes(
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  tenant_id TEXT,
+  code TEXT UNIQUE NOT NULL,
+  campaign_name TEXT,
+  payout_cents INTEGER NOT NULL,
+  payout_type TEXT DEFAULT 'fixed', -- fixed, percentage
+  active BOOLEAN DEFAULT true,
+  expires_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE TABLE IF NOT EXISTS ref_attributions(
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  code TEXT REFERENCES ref_codes(code),
+  fingerprint TEXT NOT NULL, -- browser fingerprint
+  ip_address INET,
+  user_agent TEXT,
+  referrer TEXT,
+  first_seen TIMESTAMPTZ DEFAULT now(),
+  last_seen TIMESTAMPTZ DEFAULT now(),
+  conversion_value_cents INTEGER DEFAULT 0,
+  converted BOOLEAN DEFAULT false
+);
+
+CREATE TABLE IF NOT EXISTS ref_conversions(
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  code TEXT REFERENCES ref_codes(code),
+  attribution_id UUID REFERENCES ref_attributions(id),
+  amount_cents INTEGER NOT NULL,
+  conversion_type TEXT, -- purchase, booking, subscription
+  conversion_ref TEXT, -- external reference (purchase_id, booking_id, etc)
+  payout_amount_cents INTEGER,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+CREATE INDEX idx_ref_codes_tenant ON ref_codes(tenant_id);
+CREATE INDEX idx_ref_attributions_code ON ref_attributions(code);
+CREATE INDEX idx_ref_attributions_fingerprint ON ref_attributions(fingerprint);
+CREATE INDEX idx_ref_conversions_code ON ref_conversions(code);
