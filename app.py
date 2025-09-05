@@ -90,6 +90,18 @@ def signup():
 def faq():
     return render_template('faq.html')
 
+@app.route('/hunter')
+def hunter():
+    return render_template('hunter.html')
+
+@app.route('/mediapax')
+def mediapax():
+    return render_template('mediapax.html')
+
+@app.route('/cortec-ai')
+def cortec_ai():
+    return render_template('cortec_ai.html')
+
 @app.route('/admin/agent-constellation')
 def agent_constellation():
     if 'user_authenticated' not in session or session.get('user_level') != 'admin':
