@@ -1,0 +1,4 @@
+destinations:
+  LOCAL_DETAILING_ELIGIBLE: { hourly: 40, daily: 250, concurrency: 8 }
+  SAAS_ELIGIBLE:            { hourly: 1000, daily: 5000, concurrency: 50 }
+  OUTREACH:                 { hourly: 500, daily: 5000, concurrency: 25 }

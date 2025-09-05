@@ -6,6 +6,7 @@ STREAM_CLEANED = "stream.leads.cleaned"
 STREAM_SCORED = "stream.leads.scored"
 STREAM_ROUTE = "stream.leads.route"
 STREAM_DELIVERED = "stream.leads.delivered"
+STREAM_DLQ = "stream.leads.dlq"
 
 async def redis():
     return await aioredis.from_url(os.getenv("REDIS_URL","redis://localhost:6379/0"))
