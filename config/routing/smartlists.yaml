@@ -1,0 +1,21 @@
+lists:
+  - name: LOCAL_DETAILING_ELIGIBLE
+    rules:
+      - left: lead.vertical
+        op: "=="
+        right: "auto_detailing"
+      - left: lead.consent.tcpa
+        op: "=="
+        right: true
+      - left: lead.score
+        op: ">="
+        right: 60
+
+  - name: SAAS_ELIGIBLE
+    rules:
+      - left: lead.vertical
+        op: "=="
+        right: "sincor_saas"
+      - left: lead.score
+        op: ">="
+        right: 70

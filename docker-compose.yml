@@ -1,0 +1,71 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: sincor
+      POSTGRES_PASSWORD: sincor
+      POSTGRES_DB: sincor
+    ports: ["5432:5432"]
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      - ./infra/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+  redis:
+    image: redis:7
+    ports: ["6379:6379"]
+
+  lead_ingest:
+    build: ./services/lead_ingest
+    environment:
+      DB_DSN: postgresql://sincor:sincor@db:5432/sincor
+      REDIS_URL: redis://redis:6379/0
+    depends_on: [db, redis]
+    ports: ["8001:8000"]
+
+  lead_cleaner:
+    build: ./services/lead_cleaner
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    depends_on: [redis]
+
+  lead_scoring:
+    build: ./services/lead_scoring
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      DB_DSN: postgresql://sincor:sincor@db:5432/sincor
+    depends_on: [redis, db]
+
+  consent_vault:
+    build: ./services/consent_vault
+    environment:
+      DB_DSN: postgresql://sincor:sincor@db:5432/sincor
+      REDIS_URL: redis://redis:6379/0
+    depends_on: [db, redis]
+    ports: ["8004:8000"]
+
+  lead_router:
+    build: ./services/lead_router
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      CONFIG_DIR: /app/config
+    volumes:
+      - ./config:/app/config:ro
+    depends_on: [redis]
+    ports: ["8005:8000"]
+
+  outreach_mediapax:
+    build: ./services/outreach_mediapax
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    depends_on: [redis]
+
+  dashboard:
+    build: ./dashboard
+    environment:
+      DB_DSN: postgresql://sincor:sincor@db:5432/sincor
+    depends_on: [db]
+    ports: ["8010:8000"]
+
+volumes:
+  dbdata:
