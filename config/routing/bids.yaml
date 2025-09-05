@@ -1,0 +1,40 @@
+destinations:
+  LOCAL_DETAILING_ELIGIBLE:
+    mode: "auction"
+    min_price: 25.00
+    reputation_weight: 0.3
+    price_weight: 0.4 
+    quality_weight: 0.3
+    
+  SAAS_ELIGIBLE:
+    mode: "auction"
+    min_price: 50.00
+    reputation_weight: 0.2
+    price_weight: 0.5
+    quality_weight: 0.3
+    
+  OUTREACH:
+    mode: "fixed"
+    min_price: 10.00
+
+buyers:
+  - id: "buyer_clinton_detailing"
+    name: "Clinton Auto Detailing"
+    min_price: 30.00
+    categories: ["LOCAL_DETAILING_ELIGIBLE"]
+    reputation: 85
+    webhook: "https://clinton-detailing.com/webhook/leads"
+    
+  - id: "buyer_premium_detailing" 
+    name: "Premium Detail Co"
+    min_price: 35.00
+    categories: ["LOCAL_DETAILING_ELIGIBLE"]
+    reputation: 92
+    webhook: "https://premium-detail.com/api/leads"
+    
+  - id: "buyer_saas_standard"
+    name: "SaaS Standard Tier"
+    min_price: 45.00
+    categories: ["SAAS_ELIGIBLE"]
+    reputation: 78
+    webhook: "https://yourapp.com/api/checkout"
