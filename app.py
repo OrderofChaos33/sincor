@@ -86,6 +86,10 @@ def enterprise_solutions():
 def signup():
     return render_template('signup.html')
 
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
 @app.route('/admin/agent-constellation')
 def agent_constellation():
     if 'user_authenticated' not in session or session.get('user_level') != 'admin':
