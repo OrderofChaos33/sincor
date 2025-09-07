@@ -19,11 +19,11 @@ destinations:
 
 buyers:
   - id: "buyer_clinton_detailing"
-    name: "Clinton Auto Detailing"
+    name: "Clinton Auto Detailing" 
     min_price: 30.00
     categories: ["LOCAL_DETAILING_ELIGIBLE"]
     reputation: 85
-    webhook: "https://clinton-detailing.com/webhook/leads"
+    webhook: "https://clintondetailing.com/booking"  # User's actual booking site
     
   - id: "buyer_premium_detailing" 
     name: "Premium Detail Co"

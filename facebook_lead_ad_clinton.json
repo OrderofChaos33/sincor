@@ -1,0 +1,169 @@
+{
+  "campaign_name": "Clinton Auto Detailing - Weekend Special - Sept 2025",
+  "objective": "LEAD_GENERATION",
+  "campaign_settings": {
+    "daily_budget": 2000,
+    "schedule": "immediate",
+    "campaign_status": "ACTIVE"
+  },
+  "targeting": {
+    "geo_locations": {
+      "custom_locations": [
+        {
+          "latitude": 41.8444,
+          "longitude": -90.1887,
+          "radius": 15,
+          "distance_unit": "mile",
+          "name": "Clinton, IA"
+        }
+      ]
+    },
+    "age_min": 25,
+    "age_max": 65,
+    "interests": [
+      "Car wash",
+      "Auto detailing", 
+      "Car care",
+      "Luxury cars",
+      "BMW",
+      "Mercedes-Benz",
+      "Audi",
+      "Tesla",
+      "Car enthusiast"
+    ],
+    "behaviors": [
+      "Car owners",
+      "Premium car owners", 
+      "Recently moved",
+      "High income",
+      "Home owners"
+    ]
+  },
+  "ad_creative": {
+    "headline": "Weekend Detail: $25 Off — Limited to 6 Slots",
+    "primary_text": "🏆 Licensed & Insured - Clinton's Most Experienced Detail Professional\\n\\nFull interior + exterior detailing. We come to you in Clinton/Quad Cities. 90–120 minutes.\\n\\n✅ Licensed & Insured (only option in Clinton)\\n✅ Highest rated detailing service\\n✅ Most experienced professional\\n✅ Mobile service - we come to you\\n\\nOffer ends Sunday 11:59 pm.",
+    "call_to_action_type": "LEARN_MORE",
+    "website_url": "https://clintondetailing.com/booking"
+  },
+  "instant_form": {
+    "name": "Clinton Auto Detailing - Weekend Special",
+    "intro_message": "Get your $25 OFF quote for professional auto detailing! Licensed & Insured.",
+    "thank_you_message": "Thanks! We'll call you within 15 minutes. Check your phone for our call from Court's Auto Detailing.",
+    "privacy_policy_url": "https://clintondetailing.com/privacy",
+    "questions": [
+      {
+        "type": "FULL_NAME", 
+        "key": "full_name",
+        "label": "Full Name",
+        "required": true
+      },
+      {
+        "type": "PHONE",
+        "key": "phone_number", 
+        "label": "Phone Number",
+        "required": true
+      },
+      {
+        "type": "ZIP",
+        "key": "zip_code",
+        "label": "ZIP Code", 
+        "required": true
+      },
+      {
+        "type": "MULTIPLE_CHOICE",
+        "key": "service_interest",
+        "label": "What service interests you?",
+        "required": true,
+        "options": [
+          "Basic Wash ($40)",
+          "Full Detail ($150 - $25 OFF = $125)",
+          "Premium Detail ($250 - $25 OFF = $225)", 
+          "Ceramic Coating ($800)",
+          "Just want information"
+        ]
+      },
+      {
+        "type": "MULTIPLE_CHOICE",
+        "key": "timing",
+        "label": "When would you like service?",
+        "required": false,
+        "options": [
+          "This weekend (priority)",
+          "Next week",
+          "Within 2 weeks",
+          "Just exploring options"
+        ]
+      }
+    ]
+  },
+  "webhook_configuration": {
+    "webhook_url": "http://localhost:8000/leads",
+    "test_webhook_url": "http://localhost:8000/leads",
+    "webhook_mapping": {
+      "lead_id": "{{leadgen.lead_id}}",
+      "vertical": "auto_detailing",
+      "contact": {
+        "email": "{{leadgen.email}}",
+        "phone": "{{leadgen.phone_number}}",
+        "zip": "{{leadgen.zip_code}}",
+        "state": "IA"
+      },
+      "attributes": {
+        "name": "{{leadgen.full_name}}",
+        "service_interest": "{{leadgen.service_interest}}",
+        "timing": "{{leadgen.timing}}",
+        "urgency": "high"
+      },
+      "meta": {
+        "utm": {
+          "source": "facebook",
+          "medium": "lead_ad",
+          "campaign": "clinton_weekend_special"
+        }
+      },
+      "consent": {
+        "tcpa": true,
+        "timestamp": "{{leadgen.created_time}}"
+      }
+    }
+  },
+  "budget_and_bidding": {
+    "optimization_goal": "LEAD_GENERATION",
+    "bid_strategy": "LOWEST_COST_WITHOUT_CAP",
+    "daily_budget": 2000,
+    "lifetime_budget": null
+  },
+  "placement": {
+    "placement_types": [
+      "feed",
+      "right_hand_column", 
+      "marketplace",
+      "video_feeds",
+      "mobile_feed",
+      "mobile_fullwidth",
+      "instagram_feed",
+      "instagram_story"
+    ],
+    "publisher_platforms": [
+      "facebook",
+      "instagram"
+    ],
+    "device_platforms": [
+      "mobile",
+      "desktop"
+    ]
+  },
+  "tracking": {
+    "utm_parameters": {
+      "utm_source": "facebook",
+      "utm_medium": "lead_ad", 
+      "utm_campaign": "clinton_weekend_special",
+      "utm_content": "{{ad.id}}",
+      "utm_term": "auto_detailing_clinton"
+    },
+    "facebook_pixel_events": [
+      "Lead",
+      "InitiateCheckout"
+    ]
+  }
+}

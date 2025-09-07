@@ -1,0 +1,73 @@
+# Main routing configuration - ChatGPT "flip switches" setup
+# Route order for auto_detailing: LOCAL_DETAILING_ELIGIBLE → OUTREACH (fallback)
+
+verticals:
+  auto_detailing:
+    route_order:
+      - LOCAL_DETAILING_ELIGIBLE
+      - OUTREACH  # fallback for unmatched leads
+    
+    # High caps for urgent Clinton campaign
+    caps:
+      hourly: 20    # ChatGPT recommendation
+      daily: 120    # ChatGPT recommendation
+      
+    # Lead scoring weights for proximity and urgency
+    scoring:
+      proximity_weight: 0.4  # ZIP within 15mi gets priority
+      urgency_weight: 0.3    # "needs by" within 7 days
+      contact_quality_weight: 0.3  # phone present
+      
+  sincor_saas:
+    route_order:
+      - SAAS_ELIGIBLE
+      - OUTREACH
+    caps:
+      hourly: 1000
+      daily: 5000
+
+# Adapter configurations
+adapters:
+  booking_webhook:
+    url: "https://clintondetailing.com/booking"  # User's site
+    timeout: 30
+    retry_count: 3
+    
+  square_giftcard:
+    url: "https://squareup.com/gift/clinton-auto-detailing/order"  # Update with real URL
+    enabled: true
+    
+  saas_checkout:
+    mode: "NOOP"  # ChatGPT: don't split focus
+
+# Ingest protection (ChatGPT recommendation)
+ingest:
+  api_key_required: true
+  rate_limit_rps: 5
+  idempotency_key_required: true
+  
+# Outreach settings for immediate follow-up
+outreach:
+  auto_detailing:
+    frequency_cap:
+      sms: 1      # max 1 SMS per 48h
+      email: 1    # max 1 email per 48h
+      window_hours: 48
+      
+    templates:
+      sms_first_touch: "Hey {name} — it's Court's Auto Detailing. We've got $25 off this weekend, only 6 slots. Book here: {booking_link}. Prefer a gift card? {giftcard_link} — reply STOP to opt out."
+      
+      email_fallback: |
+        Weekend Detail: $25 Off — Limited to 6 Slots
+        
+        Hi {name},
+        
+        Full interior + exterior detailing. We come to you in Bettendorf/Quad Cities. 90–120 minutes.
+        
+        Book your slot: {booking_link}
+        Or grab a gift card: {giftcard_link}
+        
+        Offer ends Sunday 11:59 pm.
+        Insured • 5-star local • Text support
+        
+        Court's Auto Detailing
