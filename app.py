@@ -81,6 +81,11 @@ def business_intelligence():
 def agent_services():
     return render_template('agent_services.html')
 
+@app.route('/clinton-weekend-special')
+def clinton_weekend_special():
+    """Clinton Auto Detailing Weekend Special Landing Page"""
+    return render_template('clinton_weekend_special.html')
+
 @app.route('/enterprise-solutions')
 def enterprise_solutions():
     return render_template('enterprise_solutions.html')

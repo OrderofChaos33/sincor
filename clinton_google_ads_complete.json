@@ -1,0 +1,234 @@
+{
+  "business_info": {
+    "name": "Clinton Auto Detailing",
+    "phone": "(815) 718-8936",
+    "booking_url": "https://clintondetailing.com/booking",
+    "service_area": "Clinton, IA",
+    "competitive_advantage": "Licensed & Insured - Clinton's Most Experienced Detail Pro"
+  },
+  "campaign_budget": {
+    "daily_budget": 20.00,
+    "weekly_goal": 1200,
+    "target_bookings": 8,
+    "avg_booking_value": 150
+  },
+  "search_campaign": {
+    "campaign_name": "Clinton Auto Detailing Search - Urgent",
+    "campaign_type": "SEARCH",
+    "daily_budget": 12.00,
+    "keywords": [
+      {
+        "keyword": "[auto detailing clinton iowa]",
+        "match_type": "EXACT",
+        "bid": 4.00
+      },
+      {
+        "keyword": "[car detailing clinton ia]", 
+        "match_type": "EXACT",
+        "bid": 3.50
+      },
+      {
+        "keyword": "[mobile car detailing clinton]",
+        "match_type": "EXACT", 
+        "bid": 4.50
+      },
+      {
+        "keyword": "\"car detailing near me\"",
+        "match_type": "PHRASE",
+        "bid": 5.00
+      },
+      {
+        "keyword": "\"mobile detailing\"",
+        "match_type": "PHRASE",
+        "bid": 4.25
+      },
+      {
+        "keyword": "[ceramic coating clinton iowa]",
+        "match_type": "EXACT",
+        "bid": 6.00
+      }
+    ],
+    "ad_groups": {
+      "Clinton Local": {
+        "headlines": [
+          "Clinton Auto Detailing Pro",
+          "$25 OFF This Weekend Only",
+          "Licensed & Insured Service"
+        ],
+        "descriptions": [
+          "Professional auto detailing in Clinton, IA. Interior & exterior. We come to you! Licensed & insured.",
+          "Clinton's only licensed & insured detail pro. Mobile service. Book online today!"
+        ],
+        "final_url": "https://clintondetailing.com/booking?utm_source=google&utm_campaign=search"
+      },
+      "Mobile Service": {
+        "headlines": [
+          "Mobile Car Detailing",
+          "We Come To You - Clinton IA", 
+          "Professional Results"
+        ],
+        "descriptions": [
+          "Mobile auto detailing service. Licensed & insured. Serving Clinton & Quad Cities area.",
+          "$25 OFF weekend special. Professional equipment. Satisfaction guaranteed."
+        ],
+        "final_url": "https://clintondetailing.com/booking?utm_source=google&utm_campaign=mobile"
+      }
+    },
+    "extensions": {
+      "sitelinks": [
+        {
+          "text": "Book Online",
+          "url": "https://clintondetailing.com/booking"
+        },
+        {
+          "text": "Weekend Special", 
+          "url": "https://clintondetailing.com/booking?promo=weekend25"
+        },
+        {
+          "text": "Call Now",
+          "url": "tel:(563) XXX-XXXX"
+        },
+        {
+          "text": "Service Areas",
+          "url": "https://clintondetailing.com/areas"
+        }
+      ],
+      "callouts": [
+        "Licensed & Insured",
+        "Mobile Service",
+        "Same Day Service", 
+        "$25 OFF Weekend",
+        "Highest Rated",
+        "Professional Equipment"
+      ]
+    },
+    "targeting": {
+      "locations": [
+        "Clinton, IA",
+        "Bettendorf, IA",
+        "Davenport, IA", 
+        "Quad Cities, IA"
+      ],
+      "radius_miles": 15,
+      "devices": ["mobile", "desktop"],
+      "schedule": "All days, 8 AM - 8 PM"
+    }
+  },
+  "performance_max_campaign": {
+    "campaign_name": "Clinton Auto Detailing - Performance Max",
+    "daily_budget": 8.00,
+    "goal": "MAXIMIZE_CONVERSION_VALUE",
+    "target_roas": 400,
+    "headlines": [
+      "Professional Auto Detailing",
+      "$25 OFF This Weekend Only",
+      "Clinton's Licensed Detail Pro",
+      "Mobile Service Available", 
+      "Highest Rated in Clinton",
+      "We Come To You",
+      "Licensed & Insured Service"
+    ],
+    "descriptions": [
+      "Professional auto detailing in Clinton, IA. Licensed & insured. Interior & exterior cleaning, waxing, protection. Book today!",
+      "Clinton's only licensed & insured auto detail professional. We come to you! Premium results guaranteed.",
+      "Weekend special: $25 OFF full detail service. Professional equipment. Serving Clinton & Quad Cities area."
+    ],
+    "audience_signals": [
+      "Car owners in Clinton, IA",
+      "Recently moved", 
+      "High income households",
+      "People interested in car care",
+      "Luxury car owners"
+    ]
+  },
+  "local_services_setup": {
+    "service_type": "Auto Detailing",
+    "license_required": true,
+    "insurance_required": true,
+    "service_areas": [
+      {
+        "city": "Clinton",
+        "state": "IA", 
+        "zip_codes": ["52732", "52733"]
+      },
+      {
+        "city": "Bettendorf",
+        "state": "IA",
+        "zip_codes": ["52722"]
+      },
+      {
+        "city": "Davenport", 
+        "state": "IA",
+        "zip_codes": ["52801", "52802", "52803", "52804", "52806", "52807", "52808"]
+      }
+    ],
+    "services_offered": [
+      "Interior Car Detailing",
+      "Exterior Car Detailing",
+      "Full Service Car Detailing", 
+      "Mobile Car Detailing",
+      "Ceramic Coating",
+      "Paint Correction"
+    ],
+    "business_hours": {
+      "monday": "8:00 AM - 6:00 PM",
+      "tuesday": "8:00 AM - 6:00 PM",
+      "wednesday": "8:00 AM - 6:00 PM", 
+      "thursday": "8:00 AM - 6:00 PM",
+      "friday": "8:00 AM - 6:00 PM",
+      "saturday": "8:00 AM - 4:00 PM",
+      "sunday": "Closed"
+    }
+  },
+  "conversion_tracking": {
+    "lead_form": {
+      "name": "Clinton Detailing - Lead Form",
+      "value": 150,
+      "category": "LEAD"
+    },
+    "phone_call": {
+      "name": "Clinton Detailing - Phone Call", 
+      "value": 100,
+      "minimum_duration": 30
+    },
+    "booking_complete": {
+      "name": "Clinton Detailing - Booking",
+      "value": 150, 
+      "category": "PURCHASE"
+    }
+  },
+  "setup_instructions": {
+    "step_1": "Go to https://ads.google.com and create new campaigns",
+    "step_2": "Use the keyword lists and ad copy above",
+    "step_3": "Set up conversion tracking for leads and phone calls", 
+    "step_4": "Enable Local Services Ads at https://ads.google.com/local/",
+    "step_5": "Upload license and insurance documents",
+    "step_6": "Launch with $20/day total budget split across campaigns",
+    "competitive_advantages": [
+      "Licensed & Insured (only option in Clinton)",
+      "Mobile service - we come to you",
+      "Professional grade equipment", 
+      "Satisfaction guaranteed",
+      "Same day service available",
+      "Highest rated in Clinton area",
+      "$25 OFF weekend special"
+    ]
+  },
+  "expected_results": {
+    "daily_leads": "2-3 leads per day",
+    "cost_per_lead": "$15-25",
+    "conversion_rate": "25-35%", 
+    "weekly_bookings": "8-10 bookings",
+    "weekly_revenue": "$1200-1500"
+  },
+  "quick_launch_checklist": [
+    "Update phone number: (563) XXX-XXXX",
+    "Set up Google Ads account", 
+    "Create Search campaign with keywords above",
+    "Set up Performance Max campaign",
+    "Apply for Local Services Ads",
+    "Add conversion tracking to booking page",
+    "Launch with $20/day budget",
+    "Monitor and answer leads within 15 minutes"
+  ]
+}
