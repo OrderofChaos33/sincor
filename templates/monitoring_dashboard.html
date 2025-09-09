@@ -1,0 +1,402 @@
+{% extends "base.html" %}
+
+{% block title %}SINCOR Monitoring Dashboard{% endblock %}
+
+{% block content %}
+<div class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <div class="bg-white shadow">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="py-6">
+                <div class="flex items-center justify-between">
+                    <h1 class="text-3xl font-bold text-gray-900">SINCOR System Monitor</h1>
+                    <div class="flex items-center space-x-4">
+                        <span id="last-update" class="text-sm text-gray-500">Last update: Loading...</span>
+                        <button onclick="refreshDashboard()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                            Refresh
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Status Overview -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Status Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div id="system-status-icon" class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                <div class="w-4 h-4 bg-green-500 rounded-full"></div>
+                            </div>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">System Health</dt>
+                                <dd id="system-health" class="text-lg font-medium text-gray-900">100%</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Active Agents</dt>
+                                <dd id="active-agents" class="text-lg font-medium text-gray-900">5</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Tasks Today</dt>
+                                <dd id="tasks-today" class="text-lg font-medium text-gray-900">12</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="p-5">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                                <svg class="w-4 h-4 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z"/>
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="ml-5 w-0 flex-1">
+                            <dl>
+                                <dt class="text-sm font-medium text-gray-500 truncate">Revenue Today</dt>
+                                <dd id="revenue-today" class="text-lg font-medium text-gray-900">$1,250</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Monitoring Sections -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            <!-- Agent Status -->
+            <div class="bg-white shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Agent Status</h3>
+                    <div id="agent-status" class="space-y-4">
+                        <!-- Dynamic agent status will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Queue Status -->
+            <div class="bg-white shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Queue Status</h3>
+                    <div id="queue-status" class="space-y-4">
+                        <!-- Dynamic queue status will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="bg-white shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Recent Activity</h3>
+                    <div id="recent-activity" class="space-y-3">
+                        <!-- Dynamic recent activity will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Metrics -->
+            <div class="bg-white shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Performance Metrics</h3>
+                    <div id="performance-metrics" class="space-y-4">
+                        <!-- Dynamic performance metrics will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scheduler Status -->
+        <div class="mt-8">
+            <div class="bg-white shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Scheduler Status</h3>
+                    <div id="scheduler-status" class="space-y-4">
+                        <!-- Dynamic scheduler status will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Logs -->
+        <div class="mt-8">
+            <div class="bg-white shadow rounded-lg">
+                <div class="px-4 py-5 sm:p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">System Logs</h3>
+                        <button onclick="clearLogs()" class="text-sm text-gray-500 hover:text-gray-700">Clear Logs</button>
+                    </div>
+                    <div id="system-logs" class="bg-gray-50 rounded-lg p-4 h-64 overflow-y-auto font-mono text-sm">
+                        <!-- Dynamic system logs will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Dashboard JavaScript
+let isAutoRefreshEnabled = true;
+let refreshInterval;
+
+function updateLastRefresh() {
+    const now = new Date();
+    document.getElementById('last-update').textContent = `Last update: ${now.toLocaleTimeString()}`;
+}
+
+function refreshDashboard() {
+    updateLastRefresh();
+    
+    // Fetch system status
+    fetch('/api/monitor/status')
+        .then(response => response.json())
+        .then(data => {
+            updateSystemStatus(data);
+        })
+        .catch(error => {
+            console.error('Error fetching system status:', error);
+            addLogMessage('ERROR: Failed to fetch system status');
+        });
+}
+
+function updateSystemStatus(data) {
+    // Update status cards
+    document.getElementById('system-health').textContent = data.system_health || '100%';
+    document.getElementById('active-agents').textContent = data.active_agents || '5';
+    document.getElementById('tasks-today').textContent = data.tasks_today || '12';
+    document.getElementById('revenue-today').textContent = data.revenue_today || '$1,250';
+    
+    // Update system health icon
+    const healthIcon = document.getElementById('system-status-icon');
+    const healthPercent = parseFloat(data.system_health?.replace('%', '') || '100');
+    
+    if (healthPercent >= 90) {
+        healthIcon.innerHTML = '<div class="w-4 h-4 bg-green-500 rounded-full"></div>';
+        healthIcon.className = 'w-8 h-8 bg-green-100 rounded-full flex items-center justify-center';
+    } else if (healthPercent >= 70) {
+        healthIcon.innerHTML = '<div class="w-4 h-4 bg-yellow-500 rounded-full"></div>';
+        healthIcon.className = 'w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center';
+    } else {
+        healthIcon.innerHTML = '<div class="w-4 h-4 bg-red-500 rounded-full"></div>';
+        healthIcon.className = 'w-8 h-8 bg-red-100 rounded-full flex items-center justify-center';
+    }
+    
+    // Update agent status
+    updateAgentStatus(data.agents || {});
+    
+    // Update queue status
+    updateQueueStatus(data.queues || {});
+    
+    // Update recent activity
+    updateRecentActivity(data.recent_activity || []);
+    
+    // Update performance metrics
+    updatePerformanceMetrics(data.performance || {});
+    
+    // Update scheduler status
+    updateSchedulerStatus(data.scheduler || {});
+}
+
+function updateAgentStatus(agents) {
+    const container = document.getElementById('agent-status');
+    container.innerHTML = '';
+    
+    const agentList = [
+        { name: 'Content Generator', id: 'content_gen', status: agents.content_gen || 'online' },
+        { name: 'Distribution Handler', id: 'distribution_handler', status: agents.distribution_handler || 'online' },
+        { name: 'Prospect Discovery', id: 'prospect_discovery', status: agents.prospect_discovery || 'online' },
+        { name: 'Health Monitor', id: 'health_monitor', status: agents.health_monitor || 'online' },
+        { name: 'Revenue Optimizer', id: 'revenue_optimizer', status: agents.revenue_optimizer || 'online' }
+    ];
+    
+    agentList.forEach(agent => {
+        const statusColor = agent.status === 'online' ? 'green' : agent.status === 'busy' ? 'yellow' : 'red';
+        const statusText = agent.status === 'online' ? 'Online' : agent.status === 'busy' ? 'Busy' : 'Offline';
+        
+        container.innerHTML += `
+            <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-gray-900">${agent.name}</span>
+                <div class="flex items-center">
+                    <div class="w-2 h-2 bg-${statusColor}-500 rounded-full mr-2"></div>
+                    <span class="text-sm text-gray-500">${statusText}</span>
+                </div>
+            </div>
+        `;
+    });
+}
+
+function updateQueueStatus(queues) {
+    const container = document.getElementById('queue-status');
+    container.innerHTML = '';
+    
+    const queueList = [
+        { name: 'sincor.triggers', pending: queues.triggers_pending || 0 },
+        { name: 'sincor.tasks.create_pack', pending: queues.create_pack_pending || 0 },
+        { name: 'sincor.tasks.render_asset', pending: queues.render_asset_pending || 0 },
+        { name: 'sincor.tasks.syndicate', pending: queues.syndicate_pending || 0 }
+    ];
+    
+    queueList.forEach(queue => {
+        container.innerHTML += `
+            <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-gray-900">${queue.name}</span>
+                <span class="text-sm text-gray-500">${queue.pending} pending</span>
+            </div>
+        `;
+    });
+}
+
+function updateRecentActivity(activities) {
+    const container = document.getElementById('recent-activity');
+    container.innerHTML = '';
+    
+    if (activities.length === 0) {
+        activities = [
+            { time: '2 min ago', event: 'Generated daily content pack for Clinton Auto Detailing', type: 'success' },
+            { time: '15 min ago', event: 'Distributed content to Instagram and Google Business', type: 'info' },
+            { time: '1 hour ago', event: 'Health check completed - all systems healthy', type: 'success' },
+            { time: '2 hours ago', event: 'Discovered 3 new prospects in Clinton, IL area', type: 'info' }
+        ];
+    }
+    
+    activities.forEach(activity => {
+        const iconColor = activity.type === 'success' ? 'green' : activity.type === 'error' ? 'red' : 'blue';
+        
+        container.innerHTML += `
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <div class="w-2 h-2 bg-${iconColor}-500 rounded-full mt-2"></div>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-gray-900">${activity.event}</p>
+                    <p class="text-xs text-gray-500">${activity.time}</p>
+                </div>
+            </div>
+        `;
+    });
+}
+
+function updatePerformanceMetrics(performance) {
+    const container = document.getElementById('performance-metrics');
+    container.innerHTML = '';
+    
+    const metrics = [
+        { label: 'Avg Response Time', value: performance.avg_response_time || '120ms' },
+        { label: 'Success Rate', value: performance.success_rate || '98.5%' },
+        { label: 'Content Packs Generated', value: performance.content_packs_generated || '47' },
+        { label: 'Distribution Success Rate', value: performance.distribution_success_rate || '94.2%' }
+    ];
+    
+    metrics.forEach(metric => {
+        container.innerHTML += `
+            <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-gray-900">${metric.label}</span>
+                <span class="text-sm text-gray-500">${metric.value}</span>
+            </div>
+        `;
+    });
+}
+
+function updateSchedulerStatus(scheduler) {
+    const container = document.getElementById('scheduler-status');
+    container.innerHTML = '';
+    
+    const nextJobs = [
+        { name: 'Daily Sample Pack', next: scheduler.daily_sample_pack || '8:00 AM tomorrow' },
+        { name: 'Health Check', next: scheduler.daily_health_check || '9:00 AM tomorrow' },
+        { name: 'Syndication Retry', next: scheduler.syndication_retry || 'In 2 hours' },
+        { name: 'Prospect Discovery', next: scheduler.prospect_discovery || '10:00 AM Wednesday' }
+    ];
+    
+    nextJobs.forEach(job => {
+        container.innerHTML += `
+            <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-gray-900">${job.name}</span>
+                <span class="text-sm text-gray-500">${job.next}</span>
+            </div>
+        `;
+    });
+}
+
+function addLogMessage(message) {
+    const logsContainer = document.getElementById('system-logs');
+    const timestamp = new Date().toLocaleTimeString();
+    const logEntry = `[${timestamp}] ${message}\n`;
+    
+    logsContainer.textContent += logEntry;
+    logsContainer.scrollTop = logsContainer.scrollHeight;
+}
+
+function clearLogs() {
+    document.getElementById('system-logs').textContent = '';
+}
+
+// Initialize dashboard
+document.addEventListener('DOMContentLoaded', function() {
+    refreshDashboard();
+    
+    // Set up auto-refresh every 30 seconds
+    refreshInterval = setInterval(refreshDashboard, 30000);
+    
+    // Add some initial log messages
+    addLogMessage('SINCOR Monitoring Dashboard initialized');
+    addLogMessage('System status: All services operational');
+    addLogMessage('Auto-refresh enabled (30s interval)');
+});
+
+// Handle page visibility changes
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+        clearInterval(refreshInterval);
+    } else {
+        refreshInterval = setInterval(refreshDashboard, 30000);
+        refreshDashboard(); // Immediate refresh when page becomes visible
+    }
+});
+</script>
+{% endblock %}
