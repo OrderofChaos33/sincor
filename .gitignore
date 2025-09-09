@@ -1,8 +1,71 @@
+# Python
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Database
 *.db
+*.sqlite3
+*.sqlite
+
+# Logs
 *.log
-*.zip
+logs/
+
+# Environment
 .env
-.env.*
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Temporary files
+*.tmp
+*.temp
+
+# Email files (generated content)
+email_*.html
+email_*.txt
+
+# Generated content packs
+generated_packs/
+clinton_videos/
+
+# Test files
+test_*.py
+*_test.py
