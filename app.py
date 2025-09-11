@@ -196,62 +196,43 @@ def api_system_health():
     try:
         cpu_percent = psutil.cpu_percent(interval=1)
         memory = psutil.virtual_memory()
->>>>>>> Stashed changes
         
-        <div class="grid md:grid-cols-3 gap-8 mb-12">
-            <div class="bg-gray-800 p-6 rounded-lg text-center">
-                <h2 class="text-xl font-bold mb-4 text-green-400">[LIGHT] Instant BI</h2>
-                <p class="text-gray-300 mb-4">Get business intelligence in seconds, not weeks</p>
-                <div class="text-2xl font-bold text-green-400">$2,500 - $15,000</div>
-                <p class="text-sm text-gray-400">Per analysis</p>
-            </div>
-            
-            <div class="bg-gray-800 p-6 rounded-lg text-center">
-                <h2 class="text-xl font-bold mb-4 text-purple-400">[ROBOT] Agent Services</h2>
-                <p class="text-gray-300 mb-4">AI agents that scale your business operations</p>
-                <div class="text-2xl font-bold text-purple-400">$500 - $5,000/mo</div>
-                <p class="text-sm text-gray-400">Subscription</p>
-            </div>
-            
-            <div class="bg-gray-800 p-6 rounded-lg text-center">
-                <h2 class="text-xl font-bold mb-4 text-yellow-400">[CHART] Predictive Analytics</h2>
-                <p class="text-gray-300 mb-4">Forecast market trends and opportunities</p>
-                <div class="text-2xl font-bold text-yellow-400">$6,000 - $25,000</div>
-                <p class="text-sm text-gray-400">Per project</p>
-            </div>
-        </div>
+        # Try to get disk usage, fallback if it fails
+        try:
+            disk = psutil.disk_usage('/')
+            disk_percent = round(disk.percent, 1)
+            disk_used = round(disk.used / 1024**3, 2)
+            disk_total = round(disk.total / 1024**3, 2)
+        except:
+            disk_percent = 0.0
+            disk_used = 0.0
+            disk_total = 0.0
         
-        <div class="text-center">
-            <a href="/services" class="bg-green-600 hover:bg-green-700 px-8 py-4 rounded-lg font-semibold text-xl mr-4">
-                [ROCKET] View Services
-            </a>
-            <a href="/health" class="bg-blue-600 hover:bg-blue-700 px-8 py-4 rounded-lg font-semibold text-xl">
-                [CHART] Health Check
-            </a>
-        </div>
-        
-        <div class="mt-12 bg-gray-800 p-6 rounded-lg">
-            <h2 class="text-2xl font-bold mb-4 text-cyan-400">[TARGET] Enterprise Solutions</h2>
-            <div class="grid md:grid-cols-2 gap-4 text-gray-300">
-                <div>[HANDSHAKE] Partnership Framework: $50,000 - $200,000 revenue streams</div>
-                <div>[REFRESH] Recursive Value Products: Exponential growth models</div>
-                <div>[BOLT] Real-time Intelligence: Live market monitoring</div>
-                <div>[TARGET] Quality Scoring: Performance optimization</div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>'''
+        return jsonify({
+            'cpu': round(cpu_percent, 1),
+            'memory': round(memory.percent, 1),
+            'disk': disk_percent,
+            'memory_used': round(memory.used / 1024**3, 2),
+            'memory_total': round(memory.total / 1024**3, 2),
+            'disk_used': disk_used,
+            'disk_total': disk_total,
+            'timestamp': datetime.now().isoformat()
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/health')
 def health():
     return jsonify({
         'status': 'healthy',
-        'service': 'SINCOR Fresh Deployment',
-        'timestamp': datetime.now().isoformat(),
-        'paypal_configured': bool(os.getenv('PAYPAL_REST_API_ID')),
-        'environment': os.getenv('PAYPAL_ENV', 'production')
+        'service': 'SINCOR Business Automation Platform',
+        'timestamp': datetime.now().isoformat()
     })
+
+if __name__ == '__main__':
+    port = int(os.getenv('PORT', 5000))
+    print(f"Starting SINCOR Business Automation Platform on port {port}")
+    app.run(host='0.0.0.0', port=port, debug=False)
 
 @app.route('/services') 
 def services():
