@@ -1,0 +1,21 @@
+rails:
+  max_safety_risk: 0.5        # if risk ≥ 0.5 -> never swarm
+  forbid_swarm_on: ["PII", "external_write", "legal_hold"]
+
+weights:
+  novelty: 0.35
+  ambiguity: 0.25
+  time_pressure: 0.15
+  externality: 0.15
+  exploration: 0.10
+
+thresholds:
+  swarm_min: 0.55             # ≥ -> SWARM
+  swarm_exit_confidence: 0.70 # rejoin lattice when confidence passes
+  max_swarm_runtime_s: 900    # kill switch to avoid wandering
+
+swarm_pod:
+  size: {min: 5, max: 15}
+  gossip_interval_ms: 250
+  scratch_tokens: 64000
+  consensus: "quorum-3-of-5"   # accept artifact when 3 independent routes agree

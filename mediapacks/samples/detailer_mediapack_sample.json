@@ -1,0 +1,102 @@
+{
+  "mediapack_id": "detailer_premium_sample_002", 
+  "business_type": "Auto Detailing Services",
+  "target_business": "SAMPLE - Elite Auto Detailing",
+  "mode": "SAFE_MODE_DEMO",
+  "created_date": "2025-09-09",
+  "value_proposition": "$500+ value marketing pack for $99/month",
+  "sample_assets": {
+    "google_ads_campaign": {
+      "name": "Mobile Auto Detailing - Premium Service",
+      "ad_variants": [
+        {
+          "headline": "Mobile Auto Detailing - We Come To You",
+          "description": "Professional car detailing at your location. Interior + exterior packages from $89. Book online or call for same-day service!",
+          "keywords": ["mobile detailing", "car detailing", "auto detailing near me", "car wash service"],
+          "estimated_value": "$175/month"
+        },
+        {
+          "headline": "Premium Car Detailing - Transform Your Vehicle", 
+          "description": "Ceramic coating, paint correction, interior deep clean. Professional results guaranteed. Free quotes available.",
+          "keywords": ["ceramic coating", "paint correction", "premium detailing", "car restoration"],
+          "estimated_value": "$150/month"
+        }
+      ]
+    },
+    "social_media_content": {
+      "instagram_posts": [
+        {
+          "content": "✨ TRANSFORMATION TUESDAY ✨\n\nSwipe to see this amazing before & after!\n\n🚗 Complete detail package:\n• Exterior wash & clay bar\n• Paint correction\n• Ceramic coating application\n• Interior deep clean & conditioning\n\nYour car deserves the premium treatment! \n📱 Book online: [WEBSITE]\n📞 Call: [PHONE]\n\n#AutoDetailing #CarCare #MobileDetailing #[CITY]Detailing",
+          "image_concept": "Dramatic before/after transformation split image",
+          "estimated_reach": "2,000-3,500 locals"
+        }
+      ],
+      "facebook_posts": [
+        {
+          "content": "🚗 MOBILE AUTO DETAILING AT ITS FINEST 🚗\n\nWhy waste your weekend at a car wash when we can bring professional detailing to YOUR driveway?\n\n✅ Fully mobile service\n✅ Premium products only\n✅ Interior + exterior packages\n✅ Same-day service available\n✅ 100% satisfaction guarantee\n\nPackages starting at just $89!\n\nBook online: [WEBSITE]\nCall/text: [PHONE]\n\nServing [CITY] and surrounding areas!\n\n#MobileDetailing #CarCare #ProfessionalService",
+          "image_concept": "Mobile detailing van at customer location",
+          "estimated_reach": "1,500-2,500 locals"
+        }
+      ],
+      "estimated_value": "$225/month"
+    },
+    "email_templates": [
+      {
+        "subject": "⏰ Time for your car's seasonal detail?",
+        "content": "Hi [NAME],\n\nWith the changing season, your car faces new challenges:\n\n🍂 Fall: Leaves, sap, and prep for winter\n❄️ Winter: Salt protection and interior care\n🌸 Spring: Pollen removal and fresh start\n☀️ Summer: UV protection and heat damage prevention\n\nOur seasonal detail packages include:\n• Thorough exterior wash & wax\n• Interior deep clean & protection\n• Seasonal-specific treatments\n• FREE maintenance tips\n\nSeasonal Special: $119 (reg $149)\nMobile service - we come to you!\n\nBook today: [WEBSITE]\nQuestions? Call [PHONE]\n\nKeep your car looking its best!\n[BUSINESS_NAME]",
+        "template_type": "seasonal_promotion",
+        "estimated_value": "$125/month"
+      }
+    ],
+    "website_content": {
+      "landing_page_copy": {
+        "headline": "Professional Mobile Auto Detailing in [CITY]",
+        "subheading": "Premium car care that comes to you - at home, work, or anywhere convenient",
+        "service_packages": [
+          {
+            "name": "Basic Detail",
+            "price": "$89",
+            "includes": ["Exterior wash", "Interior vacuum", "Dashboard wipe", "Window cleaning"]
+          },
+          {
+            "name": "Premium Detail", 
+            "price": "$149",
+            "includes": ["Everything in Basic", "Clay bar treatment", "Wax application", "Deep interior clean", "Tire shine"]
+          },
+          {
+            "name": "Ultimate Detail",
+            "price": "$229", 
+            "includes": ["Everything in Premium", "Paint correction", "Ceramic coating prep", "Leather conditioning", "Engine bay clean"]
+          }
+        ],
+        "cta": "Book Online: [WEBSITE] | Call: [PHONE]",
+        "estimated_value": "$100/month"
+      }
+    }
+  },
+  "total_estimated_value": "$650/month",
+  "subscription_price": "$99/month", 
+  "value_ratio": "6.6x return on investment",
+  "compliance_notes": {
+    "mode": "SAMPLE_ONLY",
+    "business_consent": "NOT_OBTAINED",
+    "deployment_status": "DEMO_MODE",
+    "disclaimer": "This is a sample MediaPack for demonstration purposes only. No actual marketing campaigns have been created or deployed."
+  },
+  "customization_options": {
+    "business_name": "[CUSTOMIZABLE]",
+    "phone_number": "[CUSTOMIZABLE]",
+    "website": "[CUSTOMIZABLE]", 
+    "service_area": "[CUSTOMIZABLE]",
+    "package_pricing": "[CUSTOMIZABLE]",
+    "special_services": "[CUSTOMIZABLE]",
+    "seasonal_offers": "[CUSTOMIZABLE]"
+  },
+  "performance_projections": {
+    "estimated_monthly_leads": "20-35",
+    "estimated_conversion_rate": "25-40%",
+    "projected_new_customers": "5-14 per month", 
+    "estimated_revenue_increase": "$2,000-6,500/month",
+    "roi_calculation": "20-65x return on $99 investment"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "campaign_name": "Clinton Auto Detailing - Weekend Special",
+  "objective": "LEAD_GENERATION",
+  "budget": 20,
+  "targeting": {
+    "location": "Clinton, IA",
+    "radius": 15,
+    "interests": [
+      "Car ownership",
+      "Auto services"
+    ]
+  },
+  "ad_copy": {
+    "headline": "Licensed Auto Detail Pro - $25 OFF",
+    "text": "Clinton's only licensed & insured auto detailing. Weekend special - $25 off full detail. Mobile service available.",
+    "cta": "Learn More"
+  },
+  "lead_form": {
+    "fields": [
+      "Name",
+      "Phone",
+      "Email"
+    ],
+    "thank_you_url": "https://clintondetailing.com/booking",
+    "privacy_policy": "https://clintondetailing.com/privacy"
+  }
+}

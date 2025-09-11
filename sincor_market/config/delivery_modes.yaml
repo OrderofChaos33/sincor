@@ -1,0 +1,20 @@
+# config/delivery_modes.yaml
+# BI report generation workflow definitions (express vs deep dive).
+
+modes:
+  express:
+    deadline_minutes: 30
+    modules:
+      - data_pull
+      - auto_summarize
+      - light_viz
+    qa_threshold: 0.7
+  deepdive:
+    deadline_minutes: 240
+    modules:
+      - data_pull
+      - heavy_analysis
+      - peer_review
+      - viz
+      - narrative
+    qa_threshold: 0.85

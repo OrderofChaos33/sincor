@@ -1,0 +1,12 @@
+roles:
+  root:
+    principals: ["court@root"]   # you only
+    allow: ["force_mode", "seize", "pause", "emergency_write"]
+    cooldowns:
+      emergency_write_s: 600
+    blast_radius:
+      max_lots_per_min: 5
+
+audit:
+  dual_log: true
+  redact_artifacts: true

@@ -1,0 +1,12 @@
+{
+  "sms_template": {
+    "first_touch": "Hi {name}! Court's Auto Detailing - Licensed & Insured. $25 off this weekend, only 6 slots. Book: https://clintondetailing.com/booking - reply STOP to opt out.",
+    "follow_up": "Hi {name}, just checking if you're still interested in professional auto detailing? $25 OFF ends Sunday. Licensed & insured. Call: (815) 718-8936",
+    "timing": "Send within 5 minutes of lead capture"
+  },
+  "email_template": {
+    "subject": "Clinton's Licensed Auto Detail Pro - $25 OFF Weekend Special",
+    "body": "Hi {name},\n\nThank you for your interest in professional auto detailing!\n\n\ud83c\udfc6 Licensed & Insured - Clinton's Most Experienced Detail Professional\n\nWeekend Special: $25 OFF Full Detail Service\n\u2705 Licensed & Insured (only option in Clinton)\n\u2705 Highest rated detailing service  \n\u2705 Most experienced professional\n\u2705 Mobile service - we come to you\n\nFull interior + exterior detailing. We come to you in Clinton/Quad Cities. 90\u2013120 minutes.\n\nBook your slot: https://clintondetailing.com/booking\nOr call: (815) 718-8936\n\nOffer ends Sunday 11:59 pm.\n\nCourt's Auto Detailing\nClinton's Licensed & Insured Detail Pro",
+    "timing": "Send if no SMS response within 1 hour"
+  }
+}

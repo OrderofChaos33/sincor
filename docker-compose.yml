@@ -1,0 +1,143 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: sincor
+      POSTGRES_PASSWORD: sincor
+      POSTGRES_DB: sincor
+    ports: ["5432:5432"]
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      - ./infra/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+  redis:
+    image: redis:7
+    ports: ["6379:6379"]
+
+  lead_ingest:
+    build: ./services/lead_ingest
+    environment:
+      DB_DSN: postgresql://sincor:sincor@db:5432/sincor
+      REDIS_URL: redis://redis:6379/0
+    depends_on: [db, redis]
+    ports: ["8001:8000"]
+
+  lead_cleaner:
+    build: ./services/lead_cleaner
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    depends_on: [redis]
+
+  lead_scoring:
+    build: ./services/lead_scoring
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      DB_DSN: postgresql://sincor:sincor@db:5432/sincor
+    depends_on: [redis, db]
+
+  consent_vault:
+    build: ./services/consent_vault
+    environment:
+      DB_DSN: postgresql://sincor:sincor@db:5432/sincor
+      REDIS_URL: redis://redis:6379/0
+    depends_on: [db, redis]
+    ports: ["8004:8000"]
+
+  lead_router:
+    build: ./services/lead_router
+    environment:
+      REDIS_URL: redis://redis:6379/0
+      CONFIG_DIR: /app/config
+    volumes:
+      - ./config:/app/config:ro
+    depends_on: [redis]
+    ports: ["8005:8000"]
+
+  outreach_mediapax:
+    build: ./services/outreach_mediapax
+    environment:
+      REDIS_URL: redis://redis:6379/0
+    depends_on: [redis]
+
+  dashboard:
+    build: ./dashboard
+    environment:
+      DB_DSN: postgresql://sincor:sincor@db:5432/sincor
+    depends_on: [db]
+    ports: ["8010:8000"]
+
+  # Revenue Generating Services
+  booking_core:
+    build: ./services/booking_core
+    environment:
+      DB_DSN: postgresql://sincor:sincor@db:5432/sincor
+      REDIS_URL: redis://redis:6379/0
+    depends_on: [db, redis]
+    ports: ["8011:8000"]
+
+  subscriptions:
+    build: ./services/subscriptions
+    environment:
+      DB_DSN: postgresql://sincor:sincor@db:5432/sincor
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET}
+    depends_on: [db]
+    ports: ["8012:8000"]
+
+  marketplace:
+    build: ./services/marketplace
+    environment:
+      DB_DSN: postgresql://sincor:sincor@db:5432/sincor
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}
+      PAYPAL_CLIENT_ID: ${PAYPAL_CLIENT_ID}
+      PAYPAL_CLIENT_SECRET: ${PAYPAL_CLIENT_SECRET}
+    depends_on: [db]
+    ports: ["8013:8000"]
+
+  referrals:
+    build: ./services/referrals
+    environment:
+      DB_DSN: postgresql://sincor:sincor@db:5432/sincor
+      REDIS_URL: redis://redis:6379/0
+    depends_on: [db, redis]
+    ports: ["8014:8000"]
+
+  analytics_api:
+    build: ./services/analytics_api
+    environment:
+      DB_DSN: postgresql://sincor:sincor@db:5432/sincor
+      REDIS_URL: redis://redis:6379/0
+    depends_on: [db, redis]
+    ports: ["8015:8000"]
+
+  voice_hub:
+    build: ./services/voice_hub
+    environment:
+      DB_DSN: postgresql://sincor:sincor@db:5432/sincor
+      TWILIO_ACCOUNT_SID: ${TWILIO_ACCOUNT_SID}
+      TWILIO_AUTH_TOKEN: ${TWILIO_AUTH_TOKEN}
+      TWILIO_PHONE_NUMBER: ${TWILIO_PHONE_NUMBER}
+    depends_on: [db]
+    ports: ["8016:8000"]
+
+  social_proof:
+    build: ./services/social_proof
+    environment:
+      DB_DSN: postgresql://sincor:sincor@db:5432/sincor
+      REDIS_URL: redis://redis:6379/0
+    depends_on: [db, redis]
+    ports: ["8017:8000"]
+
+  tenant_gateway:
+    build: ./services/tenant_gateway
+    environment:
+      DB_DSN: postgresql://sincor:sincor@db:5432/sincor
+      REDIS_URL: redis://redis:6379/0
+      JWT_SECRET: ${JWT_SECRET}
+      TENANT_ADMIN_KEY: ${TENANT_ADMIN_KEY}
+    depends_on: [db, redis]
+    ports: ["8018:8000"]
+
+volumes:
+  dbdata:

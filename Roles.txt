@@ -1,0 +1,260 @@
+1) Role lattice (who talks to whom, and why)
+
+Organize the 43 into 6 “guilds” with explicit edges. Each agent must belong to exactly 1 primary guild and (optionally) 1 auxiliary guild for burst coverage.
+
+INTAKE / SCOUT (S1–S8)
+Discovery, triage, retrieval, enrichment. Output: normalized TaskDrafts.
+Edges: → ORCH, → NEG (if external needed), → MEM (indexing).
+
+ORCHESTRATION / PLANNING (O1–O6)
+Decompose, route, budget, deadlines, dependencies. Output: TaskGraph + AuctionSpec.
+Edges: ↔ MARKET, → PROD, → QA, → NEG.
+
+PRODUCTION / BUILD (P1–P18)
+Makers: writing, code, design, data, analytics, packaging.
+Edges: ↔ QA, ↔ MEM (artifact I/O), → ORCH (status), → OPS (deploy).
+
+NEGOTIATION / EXTERNAL (N1–N4)
+Vendor APIs, accounts, pricing, ToS risk, rate limits.
+Edges: ↔ ORCH, ↔ OPS, ↔ MEM (credentials vault).
+
+QA / VERIFICATION (Q1–Q4)
+Spec conformance, tests, eval suites, red-team checks.
+Edges: ↔ PROD, ↔ ORCH, → MEM (provenance), → OPS (release gates).
+
+OPS / MEMORY / COMPLIANCE (M1–M3)
+Versioning, audit, budgets, SLAs, policy checks, observability.
+Edges: ↔ everyone. Owns: ledgers, reputations, embeddings, credentials.
+
+2) Minimal agent interface (make them legible to each other)
+
+Every agent exposes the same surface:
+
+id: "P7"
+guild: "PROD"
+skills: { codegen: 0.84, data: 0.41, copy: 0.12 }
+cost_model: { unit: "credits/min", rate: 1.3, spinup: 0.2, iops: 0.1 }
+slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 64k }
+risk_flags: [ "external_write:false", "pii:false" ]
+reputation:
+  win_rate_30d: 0.62
+  n_tasks_30d: 118
+  qa_pass_rate_30d: 0.91
+  rework_rate_30d: 0.12
+availability: { concurrent: 2, cooldown_s: 60 }
+claims: ["python>=3.11", "openapi-client:railway", "ffmpeg"]
+inbox_topics: ["task.assign", "handoff.receive"]
+outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+3) Task lifecycle + handoff protocol (no more dropped batons)
+
+States: draft → planned → auctioned → assigned → in_progress → handoff_pending → qa → merged → archived
+Single source of truth: TaskToken (immutable ID + mutable ledger).
+
+TaskToken schema (core fields only):
+
+{
+  "task_id": "TT-2025-0903-0017",
+  "origin": "S2",
+  "intent": "Generate lead-magnet PDF for plumbers",
+  "spec": { "acceptance": ["≤10 MB", "brand: SINCOR", "CTA: /book"] },
+  "budget": { "hard": 120, "soft": 90, "currency": "credits" },
+  "deadline_unix": 1756939200,
+  "priority": 0.78,
+  "lineage": [{ "agent": "O3", "event": "decompose", "ts": 1756935600 }],
+  "assignments": [],
+  "artifacts": [],
+  "qa": [],
+  "risk": { "pii": false, "ext_write": false }
+}
+
+
+Handoff contract (atomic):
+
+Producer sets handoff_request with needs = ["layout.final", "brand.pass"] and handoff_payload (pointer to artifact + context).
+
+Receiver must ack within T_ack (e.g., 5s) or it auto-requeues to market with a handoff-only auction.
+
+All handoffs write lineage{from,to,ts,checksums}; QA reads lineage to auto-build tests.
+
+4) Task market (faster, fairer, harder to game)
+
+Use a sealed-bid second-price (Vickrey) auction per work unit with a quality-aware score. Orchestrator emits AuctionSpec; MARKET runs the auction; OPS enforces limits.
+
+Bid payload:
+
+{
+  "task_id": "TT-...",
+  "agent_id": "P7",
+  "eta_s": 900,
+  "ask": 24.0,
+  "confidence": 0.86,
+  "risk_adj": 0.04,
+  "slot": 1,
+  "explain": "Have existing template + brand pack cached"
+}
+
+
+Scoring (maximize):
+
+value = V * confidence * freshness
+cost  = ask + spinup_penalty + risk_cost
+diversity_bonus = λ * (1 - jaccard(skill_vec(agent), skill_vec(last_k_winners)))
+score = value - cost + diversity_bonus
+
+
+V is the unit value from ORCH (derived from priority, deadline tightness, downstream dependencies).
+
+freshness penalizes stale caches or outdated models.
+
+spinup_penalty if agent currently cold.
+
+risk_cost from OPS policy map (e.g., external write).
+
+λ 0.05–0.15 to avoid monoculture and encourage exploration.
+
+Winner selection: highest score wins; pay second price (next best score mapped back to cost).
+Guards: per-guild spend caps; per-agent pacing; collusion detector = correlated bid patterns > τ over 24h → shadow audits.
+
+Budget adherence: soft cap enforces VCG-like throttling; if second price > soft, ORCH may down-scope or re-decompose.
+
+5) Specialization: remove mush, fill gaps
+
+Represent each agent by a skill vector over a canonical taxonomy:
+
+TAXONOMY (example 16 dims)
+{“research”, “retrieval”, “synthesis”, “codegen”, “tooling”, “data-clean”,
+ “viz”, “design”, “ux”, “copy”, “qa-auto”, “qa-redteam”, “ops-deploy”,
+ “neg-api”, “legal-compliance”, “memory-index”}
+
+
+Overlap & gaps:
+
+Overlap(Pi,Pj) = Jaccard(top-k skills). If > 0.75 and niche tags match → merge or set disjoint task filters.
+
+Gap detection: maintain rolling task demand vector D(t); if D_dim/capacity < 0.6 → spin up a micro-agent or promote auxiliary specialization in under-loaded guild.
+
+Assignment hygiene:
+
+Each PROD agent gets a primary triad (e.g., codegen,data-clean,tooling). Everything else ≤0.4 weight.
+
+QA agents split: qa-auto vs qa-redteam to avoid “builder grading own homework.”
+
+6) Concrete configs (drop-in)
+
+AuctionSpec (emitted by ORCH):
+
+task_id: TT-2025-0903-0017
+lots:
+  - lot_id: L1
+    scope: "Outline + sources"
+    target_guild: "PROD"
+    required_skills: { synthesis: 0.7, research: 0.6 }
+    budget: 20
+    deadline_s: 900
+    diversity_lambda: 0.1
+  - lot_id: L2
+    scope: "Design + layout"
+    target_guild: "PROD"
+    required_skills: { design: 0.8, viz: 0.6 }
+    budget: 40
+    deadline_s: 1800
+  - lot_id: L3
+    scope: "QA conformance"
+    target_guild: "QA"
+    required_skills: { qa-auto: 0.7, qa-redteam: 0.3 }
+    budget: 15
+market_rules:
+  auction_type: "vickrey"
+  T_bidding_s: 3
+  T_ack_s: 5
+  cooldown_fail_s: 60
+  max_parallel_wins_per_agent: 1
+
+
+Handoff message (producer → QA):
+
+{
+  "topic": "handoff.request",
+  "from": "P12",
+  "to_guild": "QA",
+  "task_id": "TT-...",
+  "lot_id": "L2",
+  "artifacts": [{"uri": "mem://artifacts/TT.../draft-v3.pdf", "sha256": "…"}],
+  "checks": ["brand.palette", "cta.link", "filesize<=10MB"]
+}
+
+
+Agent filter (avoid destructive overlap):
+
+P12.filters:
+  accept_if:
+    required_skills.design >= 0.7
+    AND budget >= 30
+    AND priority >= 0.5
+  reject_if:
+    scope contains ["API negotiation","external write"]
+    OR required_skills.codegen > 0.7
+
+7) Orchestrator logic (pseudo)
+def decompose(task):
+    graph = plan(task)  # DAG of lots
+    for lot in topo_sort(graph):
+        spec = make_auction_spec(lot)
+        bids = collect_bids(spec, T=spec.T_bidding_s)
+        winner = vickrey_select(bids, diversity_lambda=spec.diversity_lambda)
+        assign(lot, winner.agent_id, pay=winner.second_price)
+
+8) QA gates that fix handoffs
+
+Gate 0 (Schema): TaskToken schema valid; lineage complete; acceptance criteria bound.
+
+Gate 1 (Spec): Deterministic tests from acceptance; run automatically.
+
+Gate 2 (Red-team): Prompt-injection, brand violations, privacy/ToS checks.
+
+Gate 3 (Humanable flag): If policy risk≥θ, mark “needs-human-review” instead of blocking other lots.
+
+Failed gates → handoff-only auction for rework with cooldown_fail_s on the failing agent.
+
+9) Market optimization knobs (you can tune live)
+
+Exploration vs exploitation: UCB multiplier on diversity bonus (0.05→0.2) when a guild’s win_rate variance is high.
+
+Budget pacing: Quadratic penalty if guild spend > daily curve; priority tasks bypass with signed override from ORCH.
+
+Latency SLOs: If P95 over target, increase T_bidding by +1s for that guild and throttle max_parallel_wins_per_agent.
+
+10) Observability (so you can prove it works)
+
+Dashboards:
+
+Auction: bid counts, spread, winner second-price curve.
+
+Handoffs: ack latency, failure modes, requeue rate.
+
+QA: pass/fail by guild, by agent, by criterion.
+
+Coverage: heatmap of D(t) vs capacity per skill.
+
+Alerts:
+
+Collusion suspicion (bid correlation > 0.9 across ≥10 auctions).
+
+Overlap anomaly (Jaccard > 0.8 for ≥3 agent pairs) → suggest merge or filters.
+
+Gap alert (demand/capacity < 0.5 for any skill dim across 24h).
+
+11) What to change in your current 43 immediately
+
+Assign each to one primary guild; cap each agent to 3 primary skills.
+
+Add the handoff-only auction and enforce T_ack=5s.
+
+Switch the market to Vickrey scoring above; enable diversity bonus λ=0.1.
+
+Split QA into auto vs red-team and forbid builders from self-QA.
+
+Run a 24-hour overlap/gap audit using Jaccard top-k and D(t); produce merges and micro-hires.
+
+If you paste your current agent list with skills/claims, I’ll spit back the overlap matrix, gap report, and a ready-to-drop YAML pack (guild assignments, filters, and AuctionSpec templates) so you can light this up without guesswork.

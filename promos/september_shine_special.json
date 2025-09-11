@@ -1,0 +1,72 @@
+{
+  "promo_name": "September Shine Special",
+  "mode": "SAFE_MODE",
+  "created_date": "2025-09-09",
+  "business": "Clinton Auto Detailing",
+  "offer_details": {
+    "discount_percent": 20,
+    "original_price": "$149",
+    "special_price": "$119", 
+    "savings_amount": "$30",
+    "service_included": "Premium wash + wax + full interior detailing",
+    "valid_through": "September 30, 2025",
+    "booking_phone": "(815) 718-8936",
+    "booking_website": "clintondetailing.com/booking"
+  },
+  "social_media_posts": {
+    "google_business": {
+      "headline": "🍂 September Shine Special - Save $30!",
+      "content": "Fall is coming - get your car detailed before the weather changes! \n\n✨ Premium wash + wax + interior detailing\n💰 Just $119 (regularly $149)\n📱 Easy online booking: clintondetailing.com/booking\n📞 Call: (815) 718-8936\n\nLimited time offer - expires September 30th!",
+      "image_suggestion": "Clean car with fall leaves background, '$30 OFF' badge prominent",
+      "call_to_action": "Book Now"
+    },
+    "facebook": {
+      "headline": "🚗 September Shine Special Alert! 🚗",
+      "content": "Don't let fall weather catch your car unprepared! \n\nOur premium detailing package includes:\n✅ Complete exterior wash & wax\n✅ Interior deep clean & conditioning  \n✅ Tire shine & trim protection\n✅ FREE air freshener\n\nNormally $149 → NOW ONLY $119! \n\nThat's $30 in your pocket! 💰\n\nBook online: clintondetailing.com/booking\nOr call: (815) 718-8936\n\n⏰ Offer expires September 30th - don't wait!",
+      "hashtags": "#CarDetailing #ClintonIL #September Special #AutoCare #MobileDetailing",
+      "image_suggestion": "Before/after car transformation with seasonal theme",
+      "post_type": "promotional"
+    },
+    "instagram": {
+      "headline": "September Shine ✨ Save $30!",
+      "content": "Fall prep for your ride! 🍂\n\n🚗 Premium wash + wax + interior\n💰 $119 (reg $149)\n📱 Book: clintondetailing.com/booking\n📞 (815) 718-8936\n\nEnds Sept 30th! ⏰",
+      "hashtags": "#ClintonDetailing #SeptemberSpecial #CarCare #DetailingDeals #Illinois #MobileDetailing #FallPrep",
+      "image_suggestion": "Clean car aesthetic with '20% OFF' overlay, fall color palette",
+      "story_version": {
+        "slide_1": "September Shine Special 🍂",
+        "slide_2": "Premium Detail Package ✨",
+        "slide_3": "Save $30 - Only $119! 💰",
+        "slide_4": "Book Now ➡️ Swipe Up!"
+      }
+    }
+  },
+  "email_template": {
+    "subject": "🍂 September Shine Special - Save $30 on Premium Detailing!",
+    "preview_text": "Get your car fall-ready with 20% off our premium package",
+    "content": "Fall weather is just around the corner...\n\nDon't let dirt, dust, and summer wear take a toll on your vehicle! Our September Shine Special gives you everything you need to protect your car before the harsh fall and winter weather hits.\n\n🌟 WHAT'S INCLUDED:\n• Complete exterior wash & premium wax\n• Interior deep cleaning & conditioning\n• Tire shine & trim protection  \n• Dashboard & leather treatment\n• FREE seasonal air freshener\n\n💰 SPECIAL PRICE: Just $119 (regularly $149)\n💵 YOU SAVE: $30\n\n📅 VALID THROUGH: September 30, 2025\n\n[BOOK NOW BUTTON] → clintondetailing.com/booking\nOr call us: (815) 718-8936\n\nWhy Clinton Auto Detailing?\n✅ Mobile service - we come to you\n✅ 5-star customer rating\n✅ 100% satisfaction guarantee\n✅ Same-day service available\n\nDon't wait - fall weather is coming fast! Book your September Shine Special today.\n\nBest regards,\nClinton Auto Detailing Team",
+    "cta_button": "Book September Special →"
+  },
+  "compliance_notes": {
+    "mode": "DRY_RUN_ONLY",
+    "posting_status": "DRAFT",
+    "approval_required": true,
+    "disclaimer": "Social media content is for review only. Manual posting required after approval."
+  },
+  "distribution_schedule": {
+    "google_business": "Daily for 7 days",
+    "facebook": "3 posts over 2 weeks", 
+    "instagram": "Feed post + 3 story series",
+    "email": "One-time send to customer list"
+  },
+  "performance_tracking": {
+    "promo_code": "SEPT20",
+    "tracking_phone": "(815) 718-8936",
+    "landing_page": "clintondetailing.com/booking",
+    "success_metrics": [
+      "Bookings with promo code usage",
+      "Phone calls mentioning September special",
+      "Website traffic from social links",
+      "Revenue attribution"
+    ]
+  }
+}

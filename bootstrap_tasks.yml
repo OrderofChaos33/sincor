@@ -1,0 +1,47 @@
+# bootstrap_tasks.yml
+mode: SAFE_MODE   # enforce DRY_RUN unless explicitly approved
+tasks:
+  - id: cad_funnel_audit
+    description: |
+      Audit Clinton Auto Detailing booking funnel.
+      Confirm online links, auto-confirmation emails, and SMS follow-ups.
+    output: booking_audit_report.md
+
+  - id: local_ads_setup
+    description: |
+      Generate 3 ad variants for detailing (Clinton + nearby Illinois towns).
+      Include copy + images.
+    output: ads/local_ads_sept.json
+
+  - id: social_offer_publish
+    description: |
+      Prepare "September Shine Special" promo.
+      Format for Google Business, Facebook, Instagram.
+    output: promos/sept_shine_pack.zip
+
+  - id: mediapack_pilot
+    description: |
+      Create 2 MediaPack samples (plumber + detailer).
+      Prepare outreach list of 5 local businesses (dry-run only).
+    output: mediapacks/samples/
+
+  - id: membership_plan
+    description: |
+      Implement $99/mo membership logic.
+      Generate flyer template + signup page mock.
+    output: memberships/plan_v1/
+
+  - id: compliance_reserve
+    description: |
+      Create ledger entry logic to allocate % of revenue to "Compliance Reserve".
+      Weekly + monthly reporting (dry-run).
+    output: compliance/ledger/
+
+  - id: compliance_core_check
+    description: |
+      Verify presence of core compliance files:
+        - policy/allowed_actions.yml
+        - broker/action_broker.py
+        - .github/CODEOWNERS
+      Add CI test to fail if api.paypal.com or PAYPAL_MODE=live detected.
+    output: compliance/core_check_report.md

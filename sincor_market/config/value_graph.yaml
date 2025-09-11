@@ -1,0 +1,101 @@
+# config/value_graph.yaml
+# Declarative multipliers and feedback edges for recursive value creation.
+
+version: 1
+
+# How many derivative assets/tasks a completed product typically spawns.
+value_multipliers:
+  media_pack: 3
+  book: 5
+  code_module: 2
+  case_study: 2
+  template: 4
+  report: 2
+  ad_set: 3
+  podcast: 3
+  video: 2
+
+# What derivatives to create (type + scope template) when a product completes.
+derivative_recipes:
+  media_pack:
+    - type: case_study
+      scope: "Draft case study from media outcomes"
+    - type: template
+      scope: "Extract reusable templates from media pack"
+    - type: ad_set
+      scope: "Generate 3 ad variants from media pack"
+  book:
+    - type: media_pack
+      scope: "Create promo media pack from book"
+    - type: report
+      scope: "Summarize book insights into executive report"
+    - type: template
+      scope: "Template-ize book outline for reuse"
+    - type: podcast
+      scope: "Podcast episode outline based on book chapter highlights"
+    - type: ad_set
+      scope: "Ad set promoting the book"
+  code_module:
+    - type: template
+      scope: "Generate code template and quickstart"
+    - type: case_study
+      scope: "Case study of module impact/perf"
+  case_study:
+    - type: ad_set
+      scope: "Ad variants from case study outcomes"
+    - type: report
+      scope: "Condensed 1-pager"
+  template:
+    - type: ad_set
+      scope: "Launch announcement ad variants"
+    - type: report
+      scope: "Usage guide / patterns"
+  report:
+    - type: ad_set
+      scope: "Promote report key findings"
+    - type: media_pack
+      scope: "Media assets for report release"
+  ad_set:
+    - type: template
+      scope: "Best-performing ad copied into template"
+    - type: case_study
+      scope: "Micro case study on ad performance"
+  podcast:
+    - type: media_pack
+      scope: "Clip, audiograms, show notes"
+    - type: ad_set
+      scope: "Promo ads for episode"
+  video:
+    - type: media_pack
+      scope: "Thumbnails, shorts, captions"
+
+# Feedback edges describe cross-product reinforcement (signals).
+# When source updates, send a signal to targets; orchestrator may schedule updates.
+feedback_edges:
+  book:
+    - template
+    - media_pack
+  media_pack:
+    - case_study
+    - ad_set
+  case_study:
+    - template
+    - report
+  report:
+    - ad_set
+  ad_set:
+    - case_study
+  template:
+    - ad_set
+
+# Default routing (guild) per product type (optional).
+routing:
+  media_pack: PROD
+  book: PROD
+  code_module: PROD
+  case_study: PROD
+  template: PROD
+  report: PROD
+  ad_set: PROD
+  podcast: PROD
+  video: PROD

@@ -1,0 +1,28 @@
+# SINCOR Production System - Complete Dependencies
+
+# Core Framework
+fastapi>=0.111.0
+uvicorn[standard]>=0.30.1
+pydantic>=2.7.4
+
+# Configuration & Data
+PyYAML>=6.0.1
+python-dotenv>=1.0.0
+numpy>=1.24.0
+
+# Database & Storage
+sqlite-utils>=3.36
+
+# Scheduling & Background Tasks  
+APScheduler>=3.10.4
+
+# Logging & Monitoring
+structlog>=23.0.0
+
+# Development & Testing
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+
+# Web & API
+requests>=2.31.0
+python-multipart>=0.0.6

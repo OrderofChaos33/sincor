@@ -1,0 +1,146 @@
+SINCOR Website Rebuild – Builder Checklist
+1. Foundation Setup
+
+ Repo sanity: single default branch = main.
+
+ Lock branch protection: no direct pushes, all changes via PR + preview.
+
+ Create a staging/preview deploy so nothing hits production without Court’s approval.
+
+2. Global Design Direction
+
+ Primary design language = clean, bright, high-conversion style (reference the blue screenshot, not the dark dashboard).
+
+ Typography hierarchy: clear H1 hero statement, subhead, strong CTA.
+
+ Color palette: brand blues/purples for trust; accent yellows/oranges for CTAs. No dark/black background unless it’s for dashboards.
+
+ Buttons: bold, high-contrast (yellow CTA = primary, blue secondary).
+
+3. Landing Pages (x9)
+
+Each landing page must include:
+
+ Hero section (headline, sub-headline, CTA button).
+
+ Core value proposition (why SINCOR, what problem it solves).
+
+ Proof/social proof (logos, testimonials, stats).
+
+ Feature highlights (bulleted, 3–4 per page).
+
+ Call-to-action repeated mid-page and bottom.
+
+ Footer with nav, contact, terms.
+
+Pages to rebuild (Court’s direction):
+
+Home (core CTA: 14-day free trial / $1 first month).
+
+Features overview.
+
+Media Packs.
+
+Pricing.
+
+Demo.
+
+Predictive Analytics.
+
+BI / Instant Business Intelligence.
+
+Agent Services.
+
+Enterprise Solutions.
+
+4. Dashboards (x4)
+
+For internal users after login:
+
+ Agent constellation monitor.
+
+ Data/BI reporting dashboard.
+
+ System health/status dashboard.
+
+ Revenue/monetization metrics dashboard.
+
+Dashboards = dark UI acceptable, but never for landing pages.
+
+5. Functionality
+
+ All CTAs link to correct signup flow.
+
+ Free trial + $1 first month logic intact.
+
+ Demo page = embedded video.
+
+ Pricing tables are clear, tiered, and responsive.
+
+6. Professional Standards
+
+ Responsive design (mobile-first testing).
+
+ Accessibility: alt tags, contrast ratios, keyboard navigation.
+
+ Performance: Lighthouse score >90.
+
+ SEO basics: title, meta description, OpenGraph tags on every page.
+
+ No broken links, no lorem ipsum.
+
+7. Approval Workflow
+
+ Each page previewed in staging before merge.
+
+ Court signs off on design before deployment.
+
+ No “quick fixes” in production. Ever.
+
+
+from graphviz import Digraph
+
+# Create a clean sitemap without emojis
+dot = Digraph("SINCOR_SiteMap", format="png")
+dot.attr(rankdir="TB", size="10")
+
+# Landing pages
+dot.node("Home", "Home (Trial CTA)")
+dot.node("Features", "Features Overview")
+dot.node("Media", "Media Packs")
+dot.node("Pricing", "Pricing")
+dot.node("Demo", "Demo")
+dot.node("Analytics", "Predictive Analytics")
+dot.node("BI", "Instant BI")
+dot.node("Agents", "Agent Services")
+dot.node("Enterprise", "Enterprise Solutions")
+
+# Dashboards (after login)
+dot.node("DashRoot", "Dashboard (Auth Required)", shape="box3d", style="filled", fillcolor="lightgrey")
+dot.node("Constellation", "Agent Constellation Monitor")
+dot.node("Reports", "BI Reporting Dashboard")
+dot.node("System", "System Health/Status")
+dot.node("Revenue", "Revenue/Monetization Metrics")
+
+# Structure
+# Home links to all landing pages
+for page in ["Features", "Media", "Pricing", "Demo", "Analytics", "BI", "Agents", "Enterprise"]:
+    dot.edge("Home", page)
+
+# CTA from all landing pages to trial/signup -> Dashboard root
+for page in ["Home", "Features", "Media", "Pricing", "Demo", "Analytics", "BI", "Agents", "Enterprise"]:
+    dot.edge(page, "DashRoot", label="Sign Up / Trial")
+
+# Dashboard root to specific dashboards
+for dash in ["Constellation", "Reports", "System", "Revenue"]:
+    dot.edge("DashRoot", dash)
+
+# Export image
+output_path = "/mnt/data/sincor_sitemap_clean"
+dot.render(output_path, format="png", cleanup=True)
+output_path + ".png"
+
+
+
+
+

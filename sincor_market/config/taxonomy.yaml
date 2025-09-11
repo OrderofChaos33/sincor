@@ -1,0 +1,17 @@
+taxonomy:
+  - research
+  - retrieval
+  - synthesis
+  - codegen
+  - tooling
+  - data-clean
+  - viz
+  - design
+  - ux
+  - copy
+  - qa-auto
+  - qa-redteam
+  - ops-deploy
+  - neg-api
+  - legal-compliance
+  - memory-index

@@ -1,0 +1,21 @@
+# config/value_policy.yaml
+# Controls for when and how derivative tasks are spawned and feedback applied.
+
+spawn:
+  enable: true
+  max_derivatives_per_completion: 5
+  min_confidence_to_spawn: 0.6       # require producer confidence or QA score
+  throttle_per_task: 3               # at most N derivatives per closing lot
+
+feedback:
+  enable: true
+  debounce_s: 300                    # suppress repeated signals within 5 minutes
+  max_fanout: 4
+
+priors:
+  default_priority: 0.6
+  derivative_priority_boost: 0.1     # derivatives start slightly higher
+  strategic_weight: 1.0
+
+naming:
+  task_prefix: "DERIVE"

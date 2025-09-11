@@ -1,0 +1,41 @@
+# SINCOR CODEOWNERS - Compliance Review Requirements
+# ================================================
+# This file defines mandatory code review requirements for compliance-critical files
+# All changes to these files require explicit approval from designated code owners
+
+# Global repository owner
+* @OrderofChaos33
+
+# Compliance and policy files - CRITICAL PROTECTION
+policy/ @OrderofChaos33
+compliance/ @OrderofChaos33
+broker/ @OrderofChaos33
+.github/CODEOWNERS @OrderofChaos33
+
+# Financial and revenue systems - REQUIRES APPROVAL  
+services/analytics_api/ @OrderofChaos33
+connect_real_paypal.py @OrderofChaos33
+memberships/ @OrderofChaos33
+
+# Production deployment configs - REQUIRES APPROVAL
+docker-compose.yml @OrderofChaos33
+*.env @OrderofChaos33
+railway.json @OrderofChaos33
+
+# Bootstrap and task configuration - REQUIRES APPROVAL
+bootstrap_tasks.yml @OrderofChaos33
+
+# CI/CD and testing - REQUIRES APPROVAL
+.github/workflows/ @OrderofChaos33
+test_*.py @OrderofChaos33
+*test*.py @OrderofChaos33
+
+# Database and infrastructure - REQUIRES APPROVAL
+infra/ @OrderofChaos33
+*.sql @OrderofChaos33
+
+# Notes:
+# - @OrderofChaos33 must approve all changes to compliance-critical files
+# - Changes to this CODEOWNERS file itself require approval
+# - This provides protection against unauthorized modifications to sensitive systems
+# - Automated checks should verify CODEOWNER approval before deployment

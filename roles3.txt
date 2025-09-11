@@ -1,0 +1,172 @@
+Here’s the tight plan you can drop into the market pack.
+
+1) Two modes, one brain
+
+STRUCTURED mode (default): your current SINCOR lattice (auction, handoffs, QA gates).
+
+SWARM mode (liquid intel): ephemeral pods (5–15 micro-agents) with looser roles, shared scratch, fast gossip, weak consistency. Output = a vetted artifact + rationale bundle.
+
+A ModeSelector sits in ORCH and decides per lot.
+
+# src/sincor/mode_select.py
+from dataclasses import dataclass
+
+@dataclass
+class Signal:
+    novelty: float        # unseen pattern? embedding distance vs corpus
+    ambiguity: float      # spec entropy / conflicting constraints
+    time_pressure: float  # deadline tightness vs historical P95
+    externality: float    # vendor/API unknowns, ToS risk
+    exploration_budget: float  # % budget earmarked for explore
+    safety_risk: float    # PII/ext_write/legal flags
+
+def choose_mode(sig: Signal, policy) -> str:
+    # hard rails first
+    if sig.safety_risk >= policy["rails"]["max_safety_risk"]:
+        return "STRUCTURED"
+    # score for swarm
+    swarm_score = (
+        policy["weights"]["novelty"]*sig.novelty +
+        policy["weights"]["ambiguity"]*sig.ambiguity +
+        policy["weights"]["time_pressure"]*sig.time_pressure +
+        policy["weights"]["externality"]*sig.externality +
+        policy["weights"]["exploration"]*sig.exploration_budget
+    )
+    return "SWARM" if swarm_score >= policy["thresholds"]["swarm_min"] else "STRUCTURED"
+
+2) Policy (YAML; tunable without code)
+# config/mode_policy.yaml
+rails:
+  max_safety_risk: 0.5        # if risk ≥ 0.5 -> never swarm
+  forbid_swarm_on: ["PII", "external_write", "legal_hold"]
+
+weights:
+  novelty: 0.35
+  ambiguity: 0.25
+  time_pressure: 0.15
+  externality: 0.15
+  exploration: 0.10
+
+thresholds:
+  swarm_min: 0.55             # ≥ -> SWARM
+  swarm_exit_confidence: 0.70 # rejoin lattice when confidence passes
+  max_swarm_runtime_s: 900    # kill switch to avoid wandering
+
+swarm_pod:
+  size: {min: 5, max: 15}
+  gossip_interval_ms: 250
+  scratch_tokens: 64_000
+  consensus: "quorum-3-of-5"   # accept artifact when 3 independent routes agree
+
+3) Liquid-Intel plumbing (minimal)
+
+Add SwarmAdapter that:
+
+Spins a pod from a Swarm Pool of lightweight archetypes (Scout, Synthesizer, Contrastive Critic, Red-Teamer, Mapper).
+
+Runs a multi-route search/synthesis (at least 3 independent chains).
+
+Produces (artifact, evidence, confidence); if confidence ≥ swarm_exit_confidence, emit a handoff.request → QA and rejoin the lattice; else escalate to ORCH for re-decomposition.
+
+# src/sincor/swarm.py
+class SwarmAdapter:
+    def __init__(self, policy): self.policy = policy
+    def run(self, lot, mem, tools) -> dict:
+        # spawn pod, run multi-route solve, compute consensus
+        # returns {"artifact": uri, "evidence": [...], "confidence": 0.0-1.0, "route_traces": [...]}
+        ...
+
+4) How a task flows
+
+ORCH computes signals (novelty, ambiguity, time pressure, etc.) from:
+
+embedding distance vs MEM corpus (novelty),
+
+spec entropy & conflicting constraints (ambiguity),
+
+deadline vs guild P95 (time pressure),
+
+vendor/API unknowns (externality),
+
+daily exploration budget (exploration).
+
+choose_mode() returns STRUCTURED or SWARM.
+
+If SWARM: SwarmAdapter.run() → handoff.request to QA → normal gates.
+
+If STRUCTURED: normal AuctionSpec → market → handoffs → QA.
+
+5) God Mode (root override; you only)
+
+Capabilities:
+
+force_mode(task|lot, mode) — override selector.
+
+seize(task) — immediate stop, checkpoint to MEM, freeze budgets.
+
+pause(guild|market) — drain and park auctions.
+
+emergency_write — temporary allowance to perform a blocked external write.
+
+Guards:
+
+RBAC: role=root bound to your key only.
+
+Dual-log every invocation: immutable ledger + human-readable event log.
+
+Blast-radius cap: max affected lots per minute.
+
+Cooldown: e.g., 10 min between emergency_write uses unless you also set two_person_rule=true (optional co-signer in future).
+
+# config/rbac.yaml
+roles:
+  root:
+    principals: ["court@root"]   # you only
+    allow: ["force_mode","seize","pause","emergency_write"]
+    cooldowns:
+      emergency_write_s: 600
+    blast_radius:
+      max_lots_per_min: 5
+audit:
+  dual_log: true
+  redact_artifacts: true
+
+6) QA + safety still decide release
+
+Even in SWARM: artifacts pass the same Gate 1/2/3 (schema/spec, red-team, humanable). Swarm buys speed and idea-surface, not carte blanche. This keeps legal/brand/PII safety invariant across modes.
+
+7) When to trust vs oversee
+
+Default: trust the selector + rails. You’ll get better outcomes by letting the system route 95% of work without you.
+
+Strict oversight: reserve for high-impact + high-risk changes (new payment flows, credential handling, anything public-facing with legal exposure). Use God Mode to gate releases, not to micromanage routing.
+
+Operational posture: weekly review of:
+
+Mode accuracy: % of SWARM runs that later needed rework.
+
+Time saved vs structured baseline.
+
+Safety deltas: any increase in red-team fail rates → tighten rails.
+
+Exploration ROI: artifacts from SWARM that seeded repeatable structured recipes.
+
+8) Exact edits to your pack
+
+Add config/mode_policy.yaml and src/sincor/mode_select.py, src/sincor/swarm.py.
+
+In scripts/simulate.py, wrap each lot:
+
+from sincor.mode_select import choose_mode, Signal
+from sincor.swarm import SwarmAdapter
+
+sig = Signal(novelty, ambiguity, time_pressure, externality, exploration_budget, safety_risk)
+mode = choose_mode(sig, policy)
+if mode == "SWARM":
+    out = SwarmAdapter(policy).run(lot, mem=None, tools=None)
+    # handoff to QA if out["confidence"] >= policy["thresholds"]["swarm_exit_confidence"]
+else:
+    winner, pay, bids = engine.run(lot, reg.by_guild(lot.target_guild), spec.market_rules)
+
+
+Add a tiny root CLI (scripts/root.py) that calls the God-Mode endpoints above (reads rbac.yaml).

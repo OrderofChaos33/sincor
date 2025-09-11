@@ -1,0 +1,111 @@
+TO: eenergy@protonmail.com
+SUBJECT: 🎁 Your Clinton Auto Detailing $500 Media Pack is Ready!
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Clinton Auto Detailing Media Pack</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; border-radius: 10px; }
+        .content { background: #f8f9fa; border: 3px solid #28a745; padding: 20px; margin: 20px 0; border-radius: 10px; }
+        .cta { background: #ff4757; color: white; padding: 20px 40px; text-decoration: none; border-radius: 50px; font-size: 18px; font-weight: bold; display: inline-block; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎁 YOUR $500 MEDIA PACK IS READY!</h1>
+        <h2>Clinton Auto Detailing</h2>
+        <p><strong>Complete Professional Marketing Suite</strong></p>
+    </div>
+    
+    <div class="content">
+        <h2>🔥 PACK CONTENTS:</h2>
+        CLINTON AUTO DETAILING
+PROFESSIONAL PRICING GUIDE
+
+Contact: (815) 718-8936 | Clinton, IL
+
+=== CORE SERVICES ===
+
+
+PAINT CORRECTION SERVICES:
+• Single Stage Polish: $150-200 (sedans), $200-250 (SUVs/trucks)
+• Two Stage Paint Correction: $300-400 (sedans), $400-500 (SUVs)
+• Multi Stage Correction (show cars): $500-700+
+
+CERAMIC COATING PACKAGES:
+• 1 Year Protection: $400-500
+• 3 Year Protection: $600-800
+• 5 Year Protection: $800-1200
+• Paint Protection Film: $1200-2500
+
+INTERIOR SERVICES:
+• Basic Interior Detail: $75-100
+• Premium Interior Detail: $150-200
+• Leather Treatment: $100-150
+• Full Interior Restoration: $300-500+
+
+MAINTENANCE PACKAGES:
+• Weekly Maintenance Wash: $35
+• Bi-weekly Service: $40
+• Monthly Wash & Wax: $50
+• Seasonal Protection: $150
+
+SPECIALTY ADD-ONS:
+• Headlight Restoration: $75
+• Engine Bay Detail: $100
+• Convertible Top Cleaning: $125
+• Pet Hair Removal: $50
+
+=== SERVICE AREA & POLICIES ===
+
+SERVICE AREA: Clinton, IL and surrounding communities
+• Free estimates within 15 miles
+• $25 travel fee for 15-25 mile radius
+• Extended travel available (call for quote)
+
+SATISFACTION GUARANTEE:
+"15+ Years Experience - if you're not completely satisfied, we'll make it right or refund your money."
+
+PAYMENT OPTIONS:
+✓ Cash, Check, All Major Credit Cards
+✓ PayPal, Venmo, Apple Pay accepted
+✓ Financing available for jobs over $500
+✓ Senior & Military Discounts: 10% off
+
+SCHEDULING:
+• Same-day service often available
+• Online booking at [website]
+• Text estimates: (815) 718-8936
+• Emergency service 24/7
+
+=== CONTACT INFORMATION ===
+📞 Phone: (815) 718-8936
+📍 Location: Clinton, IL
+💻 Website: [coming soon]
+📧 Email: info@clintonautodetailing.com
+
+Licensed • Bonded • Insured
+Better Business Bureau Member
+        
+        <p><strong>Ready to implement and start generating leads!</strong></p>
+        
+        <p><strong>Contact: (815) 718-8936</strong></p>
+    </div>
+    
+    <div style="text-align: center;">
+        <a href="mailto:sales@getsincor.com?subject=IMPLEMENT MY PACK&body=Hi, I received my media pack and want to implement it immediately!" class="cta">
+            🚀 IMPLEMENT MY PACK NOW
+        </a>
+    </div>
+    
+    <div style="text-align: center; margin-top: 30px;">
+        <p><strong>SINCOR Marketing Team</strong><br>
+        Call/Text: (815) 718-8936<br>
+        Email: sales@getsincor.com</p>
+    </div>
+</body>
+</html>

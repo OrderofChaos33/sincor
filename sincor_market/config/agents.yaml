@@ -1,0 +1,1204 @@
+agents:
+  - id: "S1"
+    guild: "INTAKE"
+    skills:
+      research: 0.82
+      retrieval: 0.72
+      synthesis: 0.62
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.35
+    cost_model: { unit: "credits/min", rate: 0.65, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "S2"
+    guild: "INTAKE"
+    skills:
+      research: 0.72
+      retrieval: 0.82
+      synthesis: 0.62
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.35
+    cost_model: { unit: "credits/min", rate: 0.70, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "S3"
+    guild: "INTAKE"
+    skills:
+      research: 0.82
+      retrieval: 0.00
+      synthesis: 0.72
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.62
+    cost_model: { unit: "credits/min", rate: 0.75, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "S4"
+    guild: "INTAKE"
+    skills:
+      research: 0.62
+      retrieval: 0.82
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.72
+    cost_model: { unit: "credits/min", rate: 0.80, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "S5"
+    guild: "INTAKE"
+    skills:
+      research: 0.82
+      retrieval: 0.72
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.62
+    cost_model: { unit: "credits/min", rate: 0.85, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "S6"
+    guild: "INTAKE"
+    skills:
+      research: 0.72
+      retrieval: 0.62
+      synthesis: 0.82
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.35
+    cost_model: { unit: "credits/min", rate: 0.90, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "S7"
+    guild: "INTAKE"
+    skills:
+      research: 0.00
+      retrieval: 0.82
+      synthesis: 0.72
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.62
+    cost_model: { unit: "credits/min", rate: 0.95, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "S8"
+    guild: "INTAKE"
+    skills:
+      research: 0.82
+      retrieval: 0.72
+      synthesis: 0.62
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.35
+    cost_model: { unit: "credits/min", rate: 1.00, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "O1"
+    guild: "ORCH"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.82
+      codegen: 0.00
+      tooling: 0.62
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.72
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.17, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 60, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "O2"
+    guild: "ORCH"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.82
+      codegen: 0.00
+      tooling: 0.72
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.62
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.24, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 60, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "O3"
+    guild: "ORCH"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.82
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.62
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.72
+    cost_model: { unit: "credits/min", rate: 1.31, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 60, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "O4"
+    guild: "ORCH"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.82
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.62
+      neg-api: 0.00
+      legal-compliance: 0.72
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.38, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 60, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "O5"
+    guild: "ORCH"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.82
+      codegen: 0.00
+      tooling: 0.72
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.62
+    cost_model: { unit: "credits/min", rate: 1.45, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 60, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "O6"
+    guild: "ORCH"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.82
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.72
+      neg-api: 0.00
+      legal-compliance: 0.62
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.52, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 60, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P1"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.82
+      tooling: 0.62
+      data-clean: 0.72
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 0.98, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P2"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.35
+      data-clean: 0.00
+      viz: 0.72
+      design: 0.82
+      ux: 0.62
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.06, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P3"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.62
+      codegen: 0.00
+      tooling: 0.35
+      data-clean: 0.00
+      viz: 0.72
+      design: 0.00
+      ux: 0.00
+      copy: 0.82
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.14, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P4"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.82
+      tooling: 0.72
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.62
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.22, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P5"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.35
+      data-clean: 0.82
+      viz: 0.72
+      design: 0.00
+      ux: 0.00
+      copy: 0.62
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.30, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P6"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.82
+      tooling: 0.62
+      data-clean: 0.72
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.38, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P7"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.35
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.82
+      ux: 0.72
+      copy: 0.62
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.46, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P8"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.82
+      tooling: 0.72
+      data-clean: 0.62
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.54, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P9"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.62
+      codegen: 0.00
+      tooling: 0.35
+      data-clean: 0.00
+      viz: 0.82
+      design: 0.72
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.62, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P10"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.72
+      codegen: 0.00
+      tooling: 0.35
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.62
+      copy: 0.82
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.70, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P11"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.82
+      tooling: 0.62
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.72
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.78, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P12"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.72
+      tooling: 0.82
+      data-clean: 0.62
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.86, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P13"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.35
+      data-clean: 0.00
+      viz: 0.72
+      design: 0.82
+      ux: 0.62
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.94, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P14"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.62
+      codegen: 0.00
+      tooling: 0.35
+      data-clean: 0.00
+      viz: 0.72
+      design: 0.00
+      ux: 0.00
+      copy: 0.82
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 2.02, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P15"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.82
+      tooling: 0.62
+      data-clean: 0.72
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 2.10, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P16"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.62
+      codegen: 0.00
+      tooling: 0.35
+      data-clean: 0.00
+      viz: 0.82
+      design: 0.72
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 2.18, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P17"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.62
+      codegen: 0.00
+      tooling: 0.35
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.82
+      copy: 0.72
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 2.26, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "P18"
+    guild: "PROD"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.82
+      tooling: 0.72
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.62
+      neg-api: 0.00
+      legal-compliance: 0.00
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 2.34, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 45, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 3, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "N1"
+    guild: "NEG"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.62
+      neg-api: 0.82
+      legal-compliance: 0.72
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.45, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 50, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "N2"
+    guild: "NEG"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.72
+      neg-api: 0.82
+      legal-compliance: 0.62
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.50, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 50, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "N3"
+    guild: "NEG"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.00
+      neg-api: 0.82
+      legal-compliance: 0.72
+      memory-index: 0.62
+    cost_model: { unit: "credits/min", rate: 1.55, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 50, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "N4"
+    guild: "NEG"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.62
+      neg-api: 0.82
+      legal-compliance: 0.00
+      memory-index: 0.72
+    cost_model: { unit: "credits/min", rate: 1.60, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 50, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "Q1"
+    guild: "QA"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.82
+      qa-redteam: 0.72
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.62
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.00, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 40, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "Q2"
+    guild: "QA"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.72
+      qa-redteam: 0.82
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.62
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.05, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 40, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "Q3"
+    guild: "QA"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.82
+      qa-redteam: 0.62
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.72
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.10, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 40, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "Q4"
+    guild: "QA"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.62
+      qa-redteam: 0.82
+      ops-deploy: 0.00
+      neg-api: 0.00
+      legal-compliance: 0.72
+      memory-index: 0.00
+    cost_model: { unit: "credits/min", rate: 1.15, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 40, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 2, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "M1"
+    guild: "OPS"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.72
+      neg-api: 0.00
+      legal-compliance: 0.62
+      memory-index: 0.82
+    cost_model: { unit: "credits/min", rate: 1.25, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 55, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 4, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "M2"
+    guild: "OPS"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.82
+      neg-api: 0.00
+      legal-compliance: 0.62
+      memory-index: 0.72
+    cost_model: { unit: "credits/min", rate: 1.30, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 55, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 4, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]
+
+  - id: "M3"
+    guild: "OPS"
+    skills:
+      research: 0.00
+      retrieval: 0.00
+      synthesis: 0.00
+      codegen: 0.00
+      tooling: 0.00
+      data-clean: 0.00
+      viz: 0.00
+      design: 0.00
+      ux: 0.00
+      copy: 0.00
+      qa-auto: 0.00
+      qa-redteam: 0.00
+      ops-deploy: 0.62
+      neg-api: 0.00
+      legal-compliance: 0.72
+      memory-index: 0.82
+    cost_model: { unit: "credits/min", rate: 1.35, spinup: 0.2, iops: 0.1 }
+    slo: { p95_latency_s: 55, max_batch: 3, max_ctx_tokens: 65536 }
+    risk_flags: ["external_write:false", "pii:false"]
+    reputation: { win_rate_30d: 0.50, n_tasks_30d: 0, qa_pass_rate_30d: 0.90, rework_rate_30d: 0.10 }
+    availability: { concurrent: 4, cooldown_s: 60 }
+    claims: ["python>=3.11"]
+    inbox_topics: ["task.assign", "handoff.receive"]
+    outbox_topics: ["status.update", "artifact.ready", "handoff.request"]

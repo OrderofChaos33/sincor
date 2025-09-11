@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+
+{% block title %}SINCOR - Automatic Lead Generation for Service Industry{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-gradient-to-br from-blue-600 to-purple-700 text-white py-20">
+    <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto text-center">
+            <h1 class="text-6xl md:text-8xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 via-white to-blue-200 drop-shadow-2xl tracking-tight leading-none" style="font-family: 'Inter', -apple-system, system-ui, sans-serif; text-shadow: 0 0 30px rgba(255,255,255,0.3);">INSTANT INTELLIGENCE. INFINITE EDGE.</h1>
+            <p class="text-xl md:text-2xl mb-8 text-blue-100 font-semibold">Marketing, Intelligence, Data & Advertising, powered by swarm AI</p>
+            <div class="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
+                <a href="{{ url_for('contact') }}" class="inline-block bg-yellow-500 text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-yellow-400 transition duration-200 transform hover:scale-105">Get Started Today</a>
+                <a href="/monitoring" class="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition duration-200">System Monitor</a>
+            </div>
+            <div class="mt-6 space-x-2">
+                <a href="/demo/access" class="inline-block text-blue-200 hover:text-white text-sm underline">Try Member Dashboard</a>
+                <span class="text-blue-300">•</span>
+                <a href="/admin/access" class="inline-block text-blue-200 hover:text-white text-sm underline">Try Admin Dashboard</a>
+            </div>
+            <p class="text-blue-200 mt-4">Complete AI-powered business automation platform</p>
+        </div>
+    </div>
+</section>
+
+<!-- SINCOR Platform Overview -->
+<section class="py-20 bg-gray-900 text-white">
+    <div class="container mx-auto px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">Complete AI Business Intelligence Platform</h2>
+                <p class="text-xl text-gray-300 mb-8">26 integrated services powered by swarm AI technology</p>
+                <div class="inline-flex items-center bg-green-500 text-white px-6 py-3 rounded-full text-lg font-bold">
+                    <span class="w-3 h-3 bg-green-300 rounded-full mr-3 animate-pulse"></span>
+                    SYSTEM OPERATIONAL: 100% UPTIME
+                </div>
+            </div>
+
+            <!-- Core AI Services Grid -->
+            <div class="grid md:grid-cols-4 gap-6 mb-16">
+                
+                <!-- Marketing Intelligence -->
+                <div class="bg-gray-800 rounded-xl p-6 border border-purple-500 hover:bg-gray-750 transition-all">
+                    <div class="text-center mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-purple-400">Marketing Intelligence</h3>
+                    </div>
+                    <ul class="text-sm text-gray-300 space-y-2">
+                        <li>• Content Generation</li>
+                        <li>• Media Pack Creation</li>
+                        <li>• Distribution Handler</li>
+                        <li>• Social Media Automation</li>
+                    </ul>
+                </div>
+
+                <!-- Lead Processing -->
+                <div class="bg-gray-800 rounded-xl p-6 border border-blue-500 hover:bg-gray-750 transition-all">
+                    <div class="text-center mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-blue-400">Lead Processing</h3>
+                    </div>
+                    <ul class="text-sm text-gray-300 space-y-2">
+                        <li>• Lead Ingest & Routing</li>
+                        <li>• Lead Scoring Engine</li>
+                        <li>• Lead Cleaner</li>
+                        <li>• Auction System</li>
+                    </ul>
+                </div>
+
+                <!-- Business Intelligence -->
+                <div class="bg-gray-800 rounded-xl p-6 border border-green-500 hover:bg-gray-750 transition-all">
+                    <div class="text-center mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-green-400">Analytics Engine</h3>
+                    </div>
+                    <ul class="text-sm text-gray-300 space-y-2">
+                        <li>• 17-Point Revenue System</li>
+                        <li>• Predictive Analytics</li>
+                        <li>• Performance Metrics</li>
+                        <li>• A/B Testing Lab</li>
+                    </ul>
+                </div>
+
+                <!-- Revenue Systems -->
+                <div class="bg-gray-800 rounded-xl p-6 border border-yellow-500 hover:bg-gray-750 transition-all">
+                    <div class="text-center mb-4">
+                        <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <svg class="w-6 h-6 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-yellow-400">Revenue Systems</h3>
+                    </div>
+                    <ul class="text-sm text-gray-300 space-y-2">
+                        <li>• Marketplace Engine</li>
+                        <li>• Booking Core</li>
+                        <li>• Subscription Management</li>
+                        <li>• LTV Forecasting</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Advanced Services Grid -->
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                
+                <!-- Enterprise Solutions -->
+                <div class="bg-gray-800 rounded-xl p-6 border border-red-500 hover:bg-gray-750 transition-all">
+                    <div class="text-center mb-4">
+                        <h3 class="text-xl font-bold text-red-400">Enterprise Suite</h3>
+                        <p class="text-gray-400 text-sm mt-2">Complete business automation</p>
+                    </div>
+                    <ul class="text-sm text-gray-300 space-y-1">
+                        <li>• Voice Hub & Outreach</li>
+                        <li>• Tenant Gateway</li>
+                        <li>• Partner API</li>
+                        <li>• Chargeback Shield</li>
+                        <li>• Status Page</li>
+                        <li>• Consent Vault</li>
+                    </ul>
+                </div>
+
+                <!-- AI Agent Services -->
+                <div class="bg-gray-800 rounded-xl p-6 border border-cyan-500 hover:bg-gray-750 transition-all">
+                    <div class="text-center mb-4">
+                        <h3 class="text-xl font-bold text-cyan-400">AI Agent Network</h3>
+                        <p class="text-gray-400 text-sm mt-2">43-agent swarm constellation</p>
+                    </div>
+                    <ul class="text-sm text-gray-300 space-y-1">
+                        <li>• Content Generation Agents</li>
+                        <li>• Distribution Handlers</li>
+                        <li>• Prospect Discovery</li>
+                        <li>• Revenue Optimization</li>
+                        <li>• Health Monitoring</li>
+                        <li>• Scheduler System</li>
+                    </ul>
+                </div>
+
+                <!-- Data & Growth -->
+                <div class="bg-gray-800 rounded-xl p-6 border border-pink-500 hover:bg-gray-750 transition-all">
+                    <div class="text-center mb-4">
+                        <h3 class="text-xl font-bold text-pink-400">Growth Engine</h3>
+                        <p class="text-gray-400 text-sm mt-2">Viral expansion systems</p>
+                    </div>
+                    <ul class="text-sm text-gray-300 space-y-1">
+                        <li>• Referral Systems</li>
+                        <li>• Social Proof Engine</li>
+                        <li>• Nurture Packs</li>
+                        <li>• Kiosk Generator</li>
+                        <li>• Recycling Exchange</li>
+                        <li>• Suppression Graph</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center">
+                <a href="/monitoring" class="inline-block bg-gradient-to-r from-purple-500 to-blue-500 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:from-purple-600 hover:to-blue-600 transition duration-200 transform hover:scale-105 mr-4">
+                    View System Status
+                </a>
+                <a href="{{ url_for('contact') }}" class="inline-block bg-yellow-500 text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-yellow-400 transition duration-200 transform hover:scale-105">
+                    Get Full Access
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Legacy Media Packs Section (for compatibility) -->
+<section class="py-12 bg-gray-800">
+    <div class="container mx-auto px-6">
+        <div class="max-w-6xl mx-auto text-center">
+            <h3 class="text-2xl font-bold text-white mb-4">Legacy Lead Generation Packages</h3>
+            <p class="text-gray-400 mb-8">Original service industry lead generation system (now integrated into main platform)</p>
+            <div class="grid md:grid-cols-3 gap-6">
+                
+                <!-- Basic Package -->  
+                <div class="bg-gray-700 rounded-lg p-6 border border-gray-600">
+                    <div class="text-center mb-4">
+                        <h4 class="text-lg font-bold text-blue-400 mb-2">BASIC PACK</h4>
+                        <div class="text-3xl font-bold text-white">$175</div>
+                        <div class="text-green-400 text-sm">Most Popular</div>
+                    </div>
+                    <ul class="text-sm text-gray-300 space-y-1">
+                        <li>✓ 5 Professional Media Assets</li>
+                        <li>✓ Lead Generation Scripts</li>
+                        <li>✓ Email Templates</li>
+                        <li>✓ Social Media Content</li>
+                    </ul>
+                </div>
+
+                <!-- Professional Package -->
+                <div class="bg-gray-700 rounded-lg p-6 border border-purple-500">
+                    <div class="text-center mb-4">
+                        <h4 class="text-lg font-bold text-purple-400 mb-2">PRO PACK</h4>
+                        <div class="text-3xl font-bold text-white">$375</div>
+                        <div class="text-purple-400 text-sm">Best Value</div>
+                    </div>
+                    <ul class="text-sm text-gray-300 space-y-1">
+                        <li>✓ Everything in Basic</li>
+                        <li>✓ Video Sales Letters</li>
+                        <li>✓ Landing Page Templates</li>
+                        <li>✓ CRM Integration</li>
+                    </ul>
+                </div>
+
+                <!-- Enterprise Package -->
+                <div class="bg-gray-700 rounded-lg p-6 border border-yellow-500">
+                    <div class="text-center mb-4">
+                        <h4 class="text-lg font-bold text-yellow-400 mb-2">ENTERPRISE</h4>
+                        <div class="text-3xl font-bold text-white">$975</div>
+                        <div class="text-yellow-400 text-sm">Full Suite</div>
+                    </div>
+                    <ul class="text-sm text-gray-300 space-y-1">
+                        <li>✓ Everything in Pro</li>
+                        <li>✓ Custom Branding</li>
+                        <li>✓ White Label Rights</li>
+                        <li>✓ Priority Support</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

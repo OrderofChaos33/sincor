@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SINCOR MediaPack Membership - $99/month</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .hero {
+            text-align: center;
+            color: white;
+            padding: 60px 20px;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+        }
+        .plans-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .plan-card {
+            border: 3px solid #e0e7ff;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .plan-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .plan-card.featured {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+        .plan-price {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .plan-features {
+            text-align: left;
+            margin: 20px 0;
+        }
+        .plan-features li {
+            margin: 10px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        .plan-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        .featured .plan-features li::before {
+            color: #fff;
+        }
+        .cta-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px 0;
+        }
+        .cta-button:hover {
+            background: #218838;
+        }
+        .featured .cta-button {
+            background: white;
+            color: #667eea;
+        }
+        .featured .cta-button:hover {
+            background: #f8f9ff;
+        }
+        .safe-mode-banner {
+            background: #d4edda;
+            border: 2px solid #c3e6cb;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: #155724;
+            text-align: center;
+        }
+        .testimonials {
+            background: #f8f9ff;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+        .testimonial {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .faq {
+            margin: 40px 0;
+        }
+        .faq-item {
+            background: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        .guarantee-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="safe-mode-banner">
+            <strong>🔒 SAFE MODE:</strong> This is a mockup signup page. No actual payments are processed in demo mode.
+        </div>
+
+        <div class="hero">
+            <h1>SINCOR MediaPack</h1>
+            <p>Professional marketing that works while you work</p>
+            <p>🚀 Get $500+ value marketing for just $99/month</p>
+        </div>
+
+        <div class="plans-section">
+            <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 20px;">Choose Your Plan</h2>
+            <p style="text-align: center; font-size: 1.2rem; color: #666;">Start your 7-day free trial. Cancel anytime.</p>
+
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <h3 style="font-size: 1.8rem; color: #667eea;">MediaPack Basic</h3>
+                    <div class="plan-price">$99<span style="font-size: 1rem;">/month</span></div>
+                    <p>Perfect for small businesses ready to grow</p>
+                    
+                    <ul class="plan-features">
+                        <li>Monthly Google Ads campaigns (up to $200 value)</li>
+                        <li>3 weekly social media posts (Facebook & Instagram)</li>
+                        <li>2 email marketing campaigns per month</li>
+                        <li>Google Business Profile optimization</li>
+                        <li>Basic performance reporting</li>
+                        <li>Email support</li>
+                    </ul>
+                    
+                    <a href="#signup" class="cta-button">Start Free Trial</a>
+                    <p style="font-size: 0.9rem; color: #666;">No setup fees • Cancel anytime</p>
+                </div>
+
+                <div class="plan-card featured">
+                    <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 50px; margin-bottom: 20px; font-weight: bold;">MOST POPULAR</div>
+                    <h3 style="font-size: 1.8rem;">MediaPack Premium</h3>
+                    <div class="plan-price">$199<span style="font-size: 1rem;">/month</span></div>
+                    <p>Complete marketing automation for serious growth</p>
+                    
+                    <ul class="plan-features">
+                        <li><strong>Everything in Basic, plus:</strong></li>
+                        <li>Daily social media content (7 posts/week)</li>
+                        <li>Advanced Google Ads management</li>
+                        <li>Custom landing page creation</li>
+                        <li>4 email campaigns + automation sequences</li>
+                        <li>SMS marketing campaigns (2/month)</li>
+                        <li>Priority phone support</li>
+                        <li>Monthly strategy calls</li>
+                    </ul>
+                    
+                    <a href="#signup" class="cta-button">Start Free Trial</a>
+                    <p style="font-size: 0.9rem;">Save 2 hours daily • Grow 3x faster</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="guarantee-box">
+            <h3>💯 30-Day Money-Back Guarantee</h3>
+            <p>Not seeing results in 30 days? Get a full refund. No questions asked.</p>
+        </div>
+
+        <div class="testimonials">
+            <h2 style="text-align: center; margin-bottom: 30px;">What Our Members Say</h2>
+            
+            <div class="testimonial">
+                <p><strong>"SINCOR tripled our leads in the first month. The $99 pays for itself with just one new customer."</strong></p>
+                <p style="color: #666; margin-top: 10px;">- Mike Johnson, Elite Plumbing (Sample Testimonial)</p>
+            </div>
+            
+            <div class="testimonial">
+                <p><strong>"I was spending 10 hours a week on marketing. Now SINCOR handles everything and gets better results."</strong></p>
+                <p style="color: #666; margin-top: 10px;">- Sarah Chen, Crystal Clean Services (Sample Testimonial)</p>
+            </div>
+        </div>
+
+        <div class="faq">
+            <h2 style="text-align: center; margin-bottom: 30px;">Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <h4>How does the free trial work?</h4>
+                <p>Start your 7-day free trial immediately. We'll create your first marketing campaigns right away. No credit card required to start.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h4>Do I need to provide my own ad spend budget?</h4>
+                <p>Yes, you'll pay Google/Facebook directly for ad spend. We manage and optimize your campaigns to maximize your ROI.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h4>Can I cancel anytime?</h4>
+                <p>Absolutely. Cancel with one click in your member dashboard. No cancellation fees or long-term contracts.</p>
+            </div>
+            
+            <div class="faq-item">
+                <h4>What makes SINCOR different?</h4>
+                <p>We're the only service that combines AI-powered content creation, multi-channel distribution, and performance tracking in one affordable package.</p>
+            </div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px; border-radius: 20px; text-align: center; margin: 40px 0;">
+            <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Ready to Grow Your Business?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">Join hundreds of businesses using SINCOR to automate their marketing</p>
+            
+            <div id="signup" style="background: white; padding: 40px; border-radius: 15px; color: #333; max-width: 500px; margin: 0 auto;">
+                <h3 style="margin-bottom: 20px;">Start Your Free Trial</h3>
+                
+                <form style="text-align: left;">
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Business Name</label>
+                        <input type="text" placeholder="Your Business Name" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Email Address</label>
+                        <input type="email" placeholder="your@email.com" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Phone Number</label>
+                        <input type="tel" placeholder="(555) 123-4567" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Plan</label>
+                        <select style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;">
+                            <option value="mediapack_basic">MediaPack Basic - $99/month</option>
+                            <option value="mediapack_premium" selected>MediaPack Premium - $199/month (Recommended)</option>
+                        </select>
+                    </div>
+                    
+                    <button type="button" onclick="alert('SAFE MODE: Signup form is for demo only')" style="width: 100%; background: #28a745; color: white; border: none; padding: 15px; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer;">
+                        Start My Free Trial →
+                    </button>
+                    
+                    <p style="text-align: center; font-size: 0.9rem; color: #666; margin-top: 15px;">
+                        🔒 7-day free trial • No credit card required • Cancel anytime
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        <div style="text-align: center; padding: 40px; color: #666;">
+            <p>© 2025 SINCOR. All rights reserved. | <a href="#" style="color: #667eea;">Terms</a> | <a href="#" style="color: #667eea;">Privacy</a></p>
+            <p style="margin-top: 10px; background: #f8f9fa; padding: 10px; border-radius: 8px;">
+                <strong>DEMO MODE:</strong> This signup page is for demonstration purposes only in SAFE_MODE compliance.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

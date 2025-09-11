@@ -1,0 +1,17 @@
+# config/escalation.yaml
+# Escalation triggers and paths for BI report delivery.
+
+triggers:
+  low_confidence: 0.65
+  low_quality: 0.7
+  high_value_client_segment: enterprise
+  repeated_low_feedback: 2   # consecutive low ratings
+
+levels:
+  L1:
+    action: supervisor_agent_review
+  L2:
+    action: human_analyst_ping
+    contact_channel: slack://bi_oversight_team
+  fail_safe:
+    action: auto_refund_or_credit

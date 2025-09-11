@@ -1,0 +1,59 @@
+{
+  "pack_id": "clinton_pack_1757391647",
+  "brand_context": {
+    "business_name": "Clinton Auto Detailing",
+    "phone": "(815) 718-8936",
+    "services": [
+      "Paint Correction",
+      "Ceramic Coating",
+      "Interior Detailing",
+      "Wash & Wax"
+    ],
+    "value_props": [
+      "15+ Years Experience",
+      "Mobile Service",
+      "Satisfaction Guaranteed"
+    ],
+    "location": "Clinton, IL",
+    "email_target": "eenergy@protonmail.com"
+  },
+  "assets": [
+    {
+      "id": "hero_video_script",
+      "type": "video_script",
+      "content": "\nCLINTON AUTO DETAILING - 30 Second Hero Video Script\n\n[SCENE 1 - Before Shot]\nVOICEOVER: \"Your car deserves better than just clean...\"\n\n[SCENE 2 - Transformation Montage]\n- Paint correction removing swirl marks\n- Ceramic coating application\n- Interior deep cleaning\n- Final buff and shine\n\n[SCENE 3 - After Shot with Contact]\nVOICEOVER: \"Clinton Auto Detailing - 15+ years of perfection\"\nTEXT OVERLAY: \"(815) 718-8936\"\nTEXT OVERLAY: \"Mobile Service Available\"\n\n[END CARD]\n\"Call now for your free estimate!\"\n(815) 718-8936\n",
+      "value": "$167",
+      "channels": [
+        "instagram_reels",
+        "google_business_profile"
+      ],
+      "file_path": "content/clinton_pack_1757391647_video_script.txt"
+    },
+    {
+      "id": "service_flyer_brief",
+      "type": "design_brief",
+      "content": "\nCLINTON AUTO DETAILING - Service Flyer Design\n\nHEADER: \"Clinton Auto Detailing\"\nTAGLINE: \"Professional Auto Detailing - Mobile Service Available\"\n\nSERVICES GRID (4 panels):\n1. PAINT CORRECTION\n   - Remove swirl marks & scratches\n   - Professional compound & polish\n   - Starting at $150\n\n2. CERAMIC COATING  \n   - Long-lasting protection\n   - Enhanced shine & durability\n   - Starting at $400\n\n3. INTERIOR DETAILING\n   - Deep clean all surfaces\n   - Leather conditioning\n   - Starting at $75\n\n4. WASH & WAX\n   - Hand wash & dry\n   - Premium wax protection\n   - Starting at $50\n\nCONTACT SECTION:\nPhone: (815) 718-8936\n\"15+ Years Experience | Satisfaction Guaranteed\"\n\"Serving Clinton, IL and surrounding areas\"\n\nDESIGN NOTES:\n- Use automotive blue/silver color scheme\n- Include before/after car images\n- Professional, clean layout\n- Mobile-friendly for Instagram\n",
+      "value": "$167",
+      "channels": [
+        "instagram_feed",
+        "facebook"
+      ],
+      "file_path": "content/clinton_pack_1757391647_flyer_brief.txt"
+    },
+    {
+      "id": "pricing_sheet_content",
+      "type": "document_content",
+      "content": "\nCLINTON AUTO DETAILING - PROFESSIONAL PRICING SHEET\n\nCONTACT: (815) 718-8936 | Clinton, IL\n\nPAINT CORRECTION SERVICES:\n- Single Stage Polish: $150-200\n- Two Stage Correction: $300-400  \n- Multi Stage (Show Car): $500-700\n\nCERAMIC COATING PACKAGES:\n- 1 Year Protection: $400-500\n- 3 Year Protection: $600-800\n- 5 Year Protection: $800-1200\n\nINTERIOR SERVICES:\n- Basic Interior Detail: $75-100\n- Premium Interior: $150-200\n- Full Interior Restoration: $300-500\n\nMAINTENANCE PACKAGES:\n- Monthly Wash & Wax: $50\n- Bi-weekly Maintenance: $40\n- Weekly Service: $35\n\nSPECIALTY SERVICES:\n- Headlight Restoration: $75\n- Engine Bay Cleaning: $100\n- Convertible Top Cleaning: $125\n\nMOBILE SERVICE:\n- Available within 25 miles of Clinton, IL\n- $25 travel fee for distances over 15 miles\n- Fully equipped mobile unit\n\nSATISFACTION GUARANTEE:\n\"15+ years serving Central Illinois. Your satisfaction is our priority - if you're not completely happy, we'll make it right!\"\n\nBOOKING:\nCall (815) 718-8936 for free estimate\nSame-day service often available\n",
+      "value": "$166",
+      "channels": [
+        "email",
+        "in_person"
+      ],
+      "file_path": "content/clinton_pack_1757391647_pricing_sheet.txt"
+    }
+  ],
+  "total_value": "$500",
+  "created_at": "2025-09-09T04:20:47.505386",
+  "status": "ready_for_delivery",
+  "delivery_email": "eenergy@protonmail.com"
+}

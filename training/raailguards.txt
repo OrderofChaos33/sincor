@@ -1,0 +1,704 @@
+P0 — Must-do to go live (functionally safe)
+Platform hygiene
+
+ .env → secrets: move creds to .env (never commit), add .env.sample with placeholders.
+
+ Health checks: each service exposes GET /health and returns deps status (DB, Redis).
+
+ Idempotency: lead_ingest enforces idempotency keys (X-Idempotency-Key → Redis TTL).
+
+ Auth: protect /leads with an API key in Authorization: Bearer <key>. Rotate via env.
+
+ CORS: restrict origins to your domains. Deny * in prod.
+
+Lead ingestion
+
+ Schema versioning: support schema: lead.v1/lead.v2; reject unknown with 4xx + reason.
+
+ Rate limiting: per-IP and per-source (Redis token bucket).
+
+ Input logging: structured logs (no PII in logs). Redact email/phone by default.
+
+Cleaner (no data leaks)
+
+ Email: syntax + MX + SMTP ping already present; add timeouts and circuit breaker.
+
+ Phone: add LRN/line-type check (open-source lib) and normalize E.164.
+
+ IP risk: integrate MaxMind GeoIP local DB; simple proxy/VPN heuristics (ASN, DC ranges).
+
+ Dedupe: keep 14-day TTL; add source-scoped dedupe (same email across sources optional).
+
+Scoring
+
+ Heuristic weights in config (config/scoring.yaml) instead of hardcoded.
+
+ Feedback hook: write delivery_ledger.status back to a learning_events table for later ML.
+
+Consent vault
+
+ Proof retrieval: add GET /consent/{lead_id} (auth required).
+
+ Signer: store sha256 + HMAC with a secret to prove artifact integrity.
+
+ Retention: policy flag (e.g., 3 years) + scheduled purge.
+
+Router
+
+ Caps & pacing: per-destination caps (hourly/daily) + leaky-bucket pacing.
+
+ Retry policy: 429/5xx backoff, max attempts, idempotency to adapters.
+
+ Dead-letter: any failed delivery → stream.leads.dlq + metric.
+
+Adapters (make money paths real)
+
+ Local booking: call your calendar API (or Squarespace/Calendly); map fields; capture booking URL.
+
+ Gift cards: call Square Gift Cards endpoint (or your gift-card URL), store transaction id in ledger.
+
+ SaaS checkout: create Stripe/Chargebee checkout session; store session id; handle webhook → payment.success.
+
+Observability
+
+ Metrics: p50/p95 latency per stage; throughput; error rate; queue depth; conversion.
+
+ Dashboards: Metabase/Superset charts for: intake→cleaned→scored→delivered funnel, returns, revenue/lead.
+
+ Alerts: pager/email on: router error rate >2%, DLQ non-empty, p95 > 1.2s, consent write failures.
+
+P1 — Operational safety & scale
+Outreach (MediaPax)
+
+ Transports: wire an ESP (Mailgun/SES) + SMS (Twilio) + DM (LinkedIn API if applicable).
+
+ Frequency caps: per-lead per-channel (e.g., ≤2 emails/week, ≤1 SMS/week).
+
+ Suppression lists: global and per-campaign; never message unsubscribed/DNC contacts.
+
+ A/B hooks: subject/body variants; store variant id; measure response.
+
+Reverse-IP / Hidden visitor capture
+
+ Local resolver: add a tiny service to map IP→org via MaxMind + your firmographic map.
+
+ Attribution: push org hints into lead.attributes when the pageview has no form fill.
+
+ Privacy: don’t infer individuals; keep at company level for B2B.
+
+Compliance envelope
+
+ Unsubscribe: every outbound email/SMS includes opt-out; store opt-out timestamp + source.
+
+ DNC/TCPA: add an internal DNC table and check pre-dial/pre-SMS; log affirmative consent artifacts.
+
+ CAN-SPAM/GDPR: data access & deletion endpoints (internal use, authenticated).
+
+Data model & migrations
+
+ Alembic/SQL migrations: add a migrations/ folder; never hand-edit schema in prod.
+
+ Seed scripts: sample buyers, smartlists, and one vertical seed with sane defaults.
+
+CI/CD
+
+ Lint & type check: ruff/black/mypy in GitHub Actions.
+
+ Unit tests: at least for rules engine, adapters, and validator edge cases.
+
+ Compose test: CI job that builds all services and runs a smoke test (post a sample lead).
+
+P2 — Profit multipliers
+Adaptive scoring (real learning)
+
+ Weekly retrain: LightGBM/LogReg using learning events (delivered, paid, returned).
+
+ Shadow deploy: deploy model behind a feature flag; compare uplift before making it authoritative.
+
+ Price assist: optional multiplier hint to router when confidence is high.
+
+Ping-Post & Auction mode (if/when you want it)
+
+ Ping endpoint: minimal fields → get bid; only post full on accept.
+
+ Rule DSL: buyer min price floors, geo filters, concurrency caps in YAML.
+
+ Fairness: reputation score penalizes high return buyers; throttle bad actors.
+
+Admin UI
+
+ SmartLists editor: CRUD lists/rules; validate before publish.
+
+ Caps/weights panel: live edits to pacing/priority with audit log.
+
+ Consent viewer: fetch artifact, show HMAC and timestamp.
+
+Per-service TODOs (file-level)
+services/lead_ingest/
+
+ Add Authorization middleware (API key).
+
+ Accept X-Idempotency-Key and enforce in Redis.
+
+ Return queue_id + trace id header.
+
+services/lead_cleaner/
+
+ Add timeouts (SMTP/mx), short-circuit after first hard fail.
+
+ E.164 normalization; add line_type in attributes.
+
+ Add ASN/DC list for crude proxy flag; configurable in config/iprisk.yaml.
+
+services/lead_scoring/
+
+ Move weights to config/scoring.yaml.
+
+ Emit lead.scored with both raw and normalized scores.
+
+ Write outcome hooks for model training dataset.
+
+services/consent_vault/
+
+ GET /consent/{lead_id} (auth), returns digest + metadata (no raw HTML unless privileged).
+
+ HMAC signer and verification endpoint.
+
+ Retention sweeper (daily cron).
+
+services/lead_router/
+
+ Implement caps/pacing + concurrency.
+
+ Exponential backoff with jitter on adapter failures.
+
+ DLQ publish with reason & payload hash (no PII).
+
+services/outreach_mediapax/
+
+ Pluggable transports; retry policy per channel.
+
+ Per-lead/channel schedule; time-of-day windows.
+
+ Store message ids + status callbacks.
+
+dashboard/
+
+ Funnel chart (received→cleaned→scored→delivered).
+
+ Error heatmap by service.
+
+ Revenue by source/vertical; returns/chargebacks if applicable.
+
+Testing matrix (use this to sign off)
+
+ Smoke: post 1 valid lead → reaches expected destination; ledger row created.
+
+ Dupe: post same email/phone twice within 10 min → second is quarantined.
+
+ Bad email: invalid domain → rejected with reason.
+
+ No consent: tcpa=false → blocked pre-routing.
+
+ Caps: set hourly cap=1; send 2 leads → second deferred or refused.
+
+ Adapter fail: simulate 500 on booking; verify retries/backoff then DLQ.
+
+ Outreach: lead scored for outreach → pack generated, message queued, suppression honored.
+
+ Consent retrieval: fetch artifact; verify SHA256 + HMAC.
+
+Ops & runbook
+
+ RUNBOOK.md: start/stop, env vars, endpoints, smoke test, rollback.
+
+ ALERTS.md: what fires, why, how to triage.
+
+ DATARETENTION.md: consent lifetime, purge policy, backups.
+
+Where to start (fastest impact)
+
+P0 auth/idempotency/rate-limit on /leads.
+
+Router caps/pacing + adapter retries/DLQ.
+
+Booking + Gift-card adapters wired to real endpoints.
+
+Metrics & dashboards so you can see the machine work.
+
+
+PR-1: Lock down /leads (auth + idempotency + rate-limit)
+
+Files:
+
+services/lead_ingest/requirements.txt
+
+services/lead_ingest/app.py
+
+requirements.txt (append)
+
+prometheus_client==0.20.0
+
+
+app.py (drop in the changes below; keep your existing imports)
+
+# --- add imports ---
+from fastapi import Depends, Header
+import time, hashlib
+import aioredis
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
+
+API_KEY = os.getenv("INGEST_API_KEY", "dev-key")
+RATE_LIMIT_RPS = float(os.getenv("INGEST_RPS", "5"))  # per IP
+IDEMP_TTL = int(os.getenv("IDEMP_TTL_SECONDS", "3600"))
+
+REQS = Counter("ingest_requests_total", "Total ingest hits")
+REJECTS = Counter("ingest_rejects_total", "Rejected requests by reason", ["reason"])
+LAT = Histogram("ingest_latency_seconds", "Ingest handler latency")
+
+async def get_r():
+    if not hasattr(app.state, "r2"):
+        app.state.r2 = await aioredis.from_url(os.getenv("REDIS_URL", "redis://redis:6379/0"))
+    return app.state.r2
+
+async def auth(authorization: str = Header(None)):
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="unauthorized")
+    token = authorization.split(" ", 1)[1].strip()
+    if token != API_KEY:
+        raise HTTPException(status_code=403, detail="forbidden")
+
+async def rate_limit(ip: str):
+    r = await get_r()
+    key = f"ratelimit:{ip}:{int(time.time())}"  # 1s window
+    count = await r.incr(key)
+    await r.expire(key, 2)
+    if count > RATE_LIMIT_RPS:
+        REJECTS.labels("rate_limit").inc()
+        raise HTTPException(status_code=429, detail="rate limit")
+
+async def idempotency_guard(idem_key: str | None):
+    if not idem_key:
+        return
+    r = await get_r()
+    k = f"idem:{hashlib.sha256(idem_key.encode()).hexdigest()}"
+    exists = await r.setnx(k, "1")
+    if not exists:
+        REJECTS.labels("idempotent_replay").inc()
+        raise HTTPException(status_code=409, detail="duplicate")
+    await r.expire(k, IDEMP_TTL)
+
+@app.get("/metrics")
+async def metrics():
+    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+
+# --- modify existing endpoint: add Depends and guards ---
+@app.post("/leads")
+@LAT.time()
+async def ingest(lead: Lead, request: Request, authorization: None = Depends(auth), 
+                 x_idempotency_key: str | None = Header(None),
+                 x_forwarded_for: str | None = Header(None)):
+    ip = (x_forwarded_for or request.client.host or "unknown").split(",")[0].strip()
+    await rate_limit(ip)
+    await idempotency_guard(x_idempotency_key)
+    # ... keep your existing DB insert and xadd to STREAM_IN here ...
+    REQS.inc()
+    return {"status": "queued", "lead_id": str(lead.lead_id)}
+
+
+.env.example (append)
+
+INGEST_API_KEY=replace-me
+INGEST_RPS=5
+IDEMP_TTL_SECONDS=3600
+
+PR-2: Router hardening (caps, pacing, retries, DLQ)
+
+Files:
+
+config/routing/caps.yaml (new)
+
+libs/pkg_bus/bus.py (add DLQ constant)
+
+services/lead_router/app.py (caps + backoff + DLQ)
+
+config/routing/caps.yaml
+
+destinations:
+  LOCAL_DETAILING_ELIGIBLE: { hourly: 40, daily: 250, concurrency: 8 }
+  SAAS_ELIGIBLE:            { hourly: 1000, daily: 5000, concurrency: 50 }
+  OUTREACH:                 { hourly: 500, daily: 5000, concurrency: 25 }
+
+
+libs/pkg_bus/bus.py (append constants)
+
+STREAM_DLQ = "stream.leads.dlq"
+
+
+services/lead_router/app.py (key inserts)
+
+# new imports
+import random, time
+import aioredis
+from libs.pkg_bus.bus import STREAM_DLQ
+
+with open(os.path.join(CONFIG_DIR, "routing/caps.yaml")) as f:
+    CAPS = yaml.safe_load(f)["destinations"]
+
+async def rconn():
+    if not hasattr(app.state, "r"):
+        app.state.r = await redis()
+    return app.state.r
+
+def cap_keys(dest):
+    now = time.gmtime()
+    day = f"{now.tm_year}{now.tm_mon:02}{now.tm_mday:02}"
+    hour = f"{day}{now.tm_hour:02}"
+    return (f"cap:{dest}:day:{day}", f"cap:{dest}:hour:{hour}", f"cap:{dest}:concurrency")
+
+async def within_caps(dest):
+    r = await rconn()
+    daily, hourly, conc = cap_keys(dest)
+    cfg = CAPS.get(dest, {})
+    if cfg.get("daily") and int(await r.get(daily) or 0) >= cfg["daily"]:
+        return False
+    if cfg.get("hourly") and int(await r.get(hourly) or 0) >= cfg["hourly"]:
+        return False
+    if cfg.get("concurrency") and int(await r.get(conc) or 0) >= cfg["concurrency"]:
+        return False
+    return True
+
+async def inc_caps(dest):
+    r = await rconn()
+    daily, hourly, conc = cap_keys(dest)
+    await r.incr(daily); await r.expire(daily, 60*60*26)
+    await r.incr(hourly); await r.expire(hourly, 60*90)
+    await r.incr(conc)
+
+async def dec_conc(dest):
+    r = await rconn()
+    _, _, conc = cap_keys(dest)
+    await r.decr(conc)
+
+async def try_deliver(lead, dest, attempt=1, max_attempts=4):
+    # jittered exponential backoff on adapter exceptions or 5xx responses
+    try:
+        await inc_caps(dest)
+        res = await deliver(lead, dest)
+        await dec_conc(dest)
+        return res
+    except Exception as e:
+        await dec_conc(dest)
+        if attempt >= max_attempts:
+            # DLQ
+            await xadd(await redis(), STREAM_DLQ, {
+                "lead_id": lead["lead_id"], "dest": dest,
+                "err": str(e), "attempts": attempt
+            })
+            return {"status":"failed", "error": str(e)}
+        await asyncio.sleep((2 ** attempt) + random.random())
+        return await try_deliver(lead, dest, attempt+1, max_attempts)
+
+async def handler(msg):
+    lead = msg["lead"]
+    lists = eligible_lists(lead)
+    dest = "OUTREACH" if not lists else lists[0]
+    if not await within_caps(dest):
+        # Push to DLQ with reason 'caps'
+        await xadd(await redis(), STREAM_DLQ, {"lead_id": lead["lead_id"], "dest": dest, "err": "caps_exceeded"})
+        return
+    res = await try_deliver(lead, dest)
+    await xadd(await redis(), STREAM_DELIVERED, {"lead_id": lead["lead_id"], "destination": dest, "result": res})
+
+PR-3: Consent Vault retrieval + integrity (HMAC)
+
+Files:
+
+services/consent_vault/requirements.txt
+
+services/consent_vault/app.py
+
+requirements.txt (append)
+
+prometheus_client==0.20.0
+
+
+app.py (add HMAC signer + GET endpoint + metrics)
+
+import hmac, hashlib
+from fastapi import HTTPException, Path, Depends, Header
+from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
+
+HMAC_SECRET = os.getenv("CONSENT_HMAC_SECRET", "dev-secret")
+ACCESS_KEY = os.getenv("CONSENT_ACCESS_KEY", "dev-key")
+
+HITS = Counter("consent_requests_total", "Consent vault hits")
+
+async def auth(authorization: str = Header(None)):
+    if authorization != f"Bearer {ACCESS_KEY}":
+        raise HTTPException(status_code=403, detail="forbidden")
+
+def sign_digest(sha256_hex: str) -> str:
+    return hmac.new(HMAC_SECRET.encode(), sha256_hex.encode(), hashlib.sha256).hexdigest()
+
+@app.get("/metrics")
+async def metrics():
+    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+
+@app.get("/consent/{lead_id}", dependencies=[Depends(auth)])
+async def get_consent(lead_id: str = Path(...)):
+    HITS.inc()
+    row = await app.state.db.fetchrow("SELECT ts, ip, referrer, sha256_hex FROM consent_artifacts WHERE lead_id=$1", lead_id)
+    if not row:
+        raise HTTPException(status_code=404, detail="not found")
+    return {
+        "lead_id": lead_id,
+        "ts": str(row["ts"]),
+        "ip": str(row["ip"]) if row["ip"] else None,
+        "referrer": row["referrer"],
+        "sha256_hex": row["sha256_hex"],
+        "hmac": sign_digest(row["sha256_hex"])
+    }
+
+
+.env.example (append)
+
+CONSENT_HMAC_SECRET=replace-me
+CONSENT_ACCESS_KEY=replace-me
+
+PR-4: Booking + Gift Card adapters (real money paths)
+
+Files:
+
+services/lead_router/adapters/local_booking.py
+
+services/lead_router/adapters/saas_checkout.py
+
+local_booking.py (replace stub with safe webhook)
+
+import httpx, os
+
+BOOKING_WEBHOOK = os.getenv("BOOKING_WEBHOOK")  # e.g. your site’s booking intake endpoint
+SQUARE_GIFTCARD_URL = os.getenv("SQUARE_GIFTCARD_URL")  # optional: direct gift card purchase URL
+
+async def send_to_booking(lead: dict):
+    payload = {
+        "name": lead.get("attributes", {}).get("name"),
+        "email": lead.get("contact", {}).get("email"),
+        "phone": lead.get("contact", {}).get("phone"),
+        "notes": f"Lead {lead.get('lead_id')} from {lead.get('meta',{}).get('utm',{}).get('source')}"
+    }
+    out = {"status":"skipped"}
+    async with httpx.AsyncClient(timeout=10) as c:
+        if BOOKING_WEBHOOK:
+            r = await c.post(BOOKING_WEBHOOK, json=payload)
+            out = {"status": "queued", "booking_webhook_status": r.status_code}
+    if SQUARE_GIFTCARD_URL:
+        out["giftcard_url"] = SQUARE_GIFTCARD_URL  # include in follow-up comms
+    return out
+
+
+saas_checkout.py (create checkout session via your SaaS/payments—placeholder call)
+
+import httpx, os
+
+CHECKOUT_WEBHOOK = os.getenv("SAAS_CHECKOUT_WEBHOOK")  # your backend endpoint that creates checkout sessions
+
+async def send_to_saas(lead: dict):
+    if not CHECKOUT_WEBHOOK:
+        return {"status": "noop", "reason": "no_checkout_webhook"}
+    payload = {
+        "lead_id": lead.get("lead_id"),
+        "email": lead.get("contact", {}).get("email"),
+        "plan": lead.get("attributes", {}).get("plan", "standard")
+    }
+    async with httpx.AsyncClient(timeout=10) as c:
+        r = await c.post(CHECKOUT_WEBHOOK, json=payload)
+        try:
+            data = r.json()
+        except Exception:
+            data = {"status_code": r.status_code}
+    return {"status":"started_checkout", "resp": data}
+
+
+.env.example (append)
+
+BOOKING_WEBHOOK=https://yourdomain.com/api/booking-intake
+SQUARE_GIFTCARD_URL=https://squareup.com/gift/your-slug
+SAAS_CHECKOUT_WEBHOOK=https://yourdomain.com/api/create-checkout
+
+PR-5: Basic metrics & health everywhere
+
+Pattern to add in each service app.py:
+
+from fastapi import Response
+from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
+
+@app.get("/health")
+async def health():
+    # You can expand to check DB/Redis connectivity per service
+    return {"ok": True}
+
+@app.get("/metrics")
+async def metrics():
+    return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+
+
+Then expose the ports already mapped in docker-compose.yml. Spin up node-exporter/Prometheus later; for now you can just curl /metrics.
+
+PR-6: CI smoke test (no surprises in PRs)
+
+Files:
+
+.github/workflows/compose-smoke.yml (new)
+
+name: Compose Smoke
+on:
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - run: docker compose -f docker-compose.yml build
+      - run: docker compose -f docker-compose.yml up -d db redis
+      - run: docker compose -f docker-compose.yml up -d lead_ingest lead_cleaner lead_scoring lead_router consent_vault outreach_mediapax
+      - run: |
+          sleep 5
+          curl -sSf localhost:8001/health
+          curl -sSf localhost:8005/health
+
+Quick smoke script (local)
+# 1) env
+cp .env.example .env
+sed -i 's/replace-me/dev-key/g' .env
+
+# 2) up
+docker compose up --build -d
+
+# 3) test ingest (replace API key)
+curl -s -X POST http://localhost:8001/leads \
+ -H "Authorization: Bearer dev-key" \
+ -H "Content-Type: application/json" \
+ -H "X-Idempotency-Key: test-123" \
+ -d '{
+   "schema":"lead.v1",
+   "lead_id":"b3d3f1bb-4bcd-45d0-bc7d-7c1a12f08f11",
+   "vertical":"auto_detailing",
+   "ts":"2025-09-05T20:00:00Z",
+   "contact":{"email":"test@example.com","phone":"+15551234567","ip":"8.8.8.8","state":"IA"},
+   "meta":{"utm":{"source":"google"}},
+   "attributes":{"name":"Court"},
+   "consent":{"tcpa": true, "timestamp":"2025-09-05T20:00:00Z"}
+ }' | jq
+
+# 4) watch router logs
+docker compose logs -f lead_router
+
+Order of operations (if you want the shortest path to $$)
+
+PR-1 lock down ingress (prevents spam/abuse instantly).
+
+PR-4 wire booking + gift cards + SaaS checkout (money path).
+
+PR-2 caps/pacing/retries/DLQ (stability under load).
+
+PR-3 consent retrieval + HMAC (compliance moat).
+
+PR-5/6 metrics + CI smoke (operators can sleep).
+
+Want me to tailor the booking adapter to your exact calendar (Calendly/Squarespace/WordPress plugin) or drop a Square example that pre-fills amount/memo?
+
+Worked for 28 seconds
+
+Here’s a concise checklist of missing pieces and sensible add‑ons the builder should implement immediately to harden and extend the system. Items are grouped by functional area and highlight best practices from industry guidance.
+
+🔐 Security and Compliance
+
+Encrypt all traffic: Terminate TLS at an ingress proxy so internal services see only HTTPS
+simform.com
+.
+
+Multi‑factor authentication (MFA) for any admin dashboard or API console
+simform.com
+.
+
+Lock down data access: Implement least‑privilege roles at the DB level and never expose DB ports outside the network
+simform.com
+.
+
+Deploy a web application firewall (WAF) in front of your API gateway
+simform.com
+.
+
+Regular vulnerability scanning and penetration testing to catch new attack vectors
+simform.com
+.
+
+HMAC‑sign consent artifacts in the consent vault; expose a GET /consent/{lead_id} with HMAC verification (as in PR‑3).
+
+📦 Microservice Resilience & Versioning
+
+Immutable containers: use immutable Docker images and container restarts rather than in‑place patches
+simform.com
+.
+
+Version your APIs: adopt URI or header-based versioning for each service to avoid drift across environments
+simform.com
+.
+
+Centralised logging & monitoring: ship logs from all services to a single aggregator (e.g., Loki/Elastic) and expose unified metrics; this aids error tracking and root‑cause analysis
+simform.com
+.
+
+DevOps practices: integrate CI/CD so every branch builds via docker compose up --build and runs a smoke test before merging
+simform.com
+.
+
+🛠 Infrastructure & Observability
+
+Health checks & metrics on every service (/health, /metrics).
+
+Rate‑limiting & idempotency: enforce per-IP token buckets and idempotency keys on /leads.
+
+Dead Letter Queue (DLQ): capture failed deliveries with error context.
+
+Caps & pacing: configure hourly/daily caps per buyer/channel, with concurrency throttles.
+
+Retained consent: add retrieval and purge endpoints for consent artifacts; sign artifacts via HMAC.
+
+💰 Money paths & Adapters
+
+Booking integration: replace the local booking stub with your actual booking API. Include fallback gift‑card URLs for auto detailing.
+
+SaaS checkout integration: call your subscription service (Stripe, Chargebee) from saas_checkout.py and handle webhooks (payment success, cancellation).
+
+Outreach transports: wire the outreach service to real email/SMS/DM providers (Mailgun/Twilio/LinkedIn), add frequency caps and suppression lists.
+
+🔁 Data & Scoring
+
+External enrichment (optional): build a reverse‑IP/firmographic service for anonymous visitors, but keep it internal to avoid data leakage.
+
+Adaptive scoring: log delivery outcomes to a learning_events table and retrain a simple model weekly; start with heuristics in config/scoring.yaml.
+
+Smart‑list editor: create a small UI/API to edit routing lists and buyer caps without redeploying.
+
+✅ Quick action plan
+
+Implement API key auth, idempotency, and rate limiting in lead_ingest/app.py.
+
+Harden the router with caps, retry/backoff logic, and DLQ.
+
+Finish the consent vault: add HMAC signing and retrieval endpoints.
+
+Replace stubs in local booking and SaaS checkout with real calls.
+
+Add metrics and health checks to all services and wire CI smoke tests.
+
+Configure centralised logging/monitoring and set up dashboards (Metabase/Grafana).
+
+Implementing the above will close the most critical gaps and set the foundation for a secure, scalable, and profitable lead‑gen system
+
+.

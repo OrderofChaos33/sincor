@@ -1,0 +1,88 @@
+{
+  "campaign_name": "Clinton Auto Detailing - September Local Push",
+  "mode": "SAFE_MODE",
+  "created_date": "2025-09-09",
+  "target_locations": [
+    "Clinton, IL",
+    "Bloomington, IL", 
+    "Normal, IL",
+    "Decatur, IL",
+    "Lincoln, IL"
+  ],
+  "ad_variants": [
+    {
+      "id": "variant_a_premium_mobile",
+      "headline": "Mobile Detailing That Comes To YOU",
+      "description": "Professional auto detailing at your home or office. Interior + exterior packages starting at $89. Clinton Auto Detailing - where quality meets convenience.",
+      "call_to_action": "Book Now",
+      "targeting": {
+        "location": "Clinton, Bloomington, Normal, Decatur, Lincoln IL",
+        "radius_miles": 25,
+        "keywords": ["mobile detailing", "car wash", "auto detailing", "car cleaning"],
+        "demographics": "Adults 25-55, household income $40k+"
+      },
+      "image_concept": "Clean white car with mobile detailing van in background, professional detailer working",
+      "budget_recommendation": "$20/day",
+      "estimated_reach": "2,000-3,500 people/day"
+    },
+    {
+      "id": "variant_b_september_special", 
+      "headline": "September Shine Special - Save 20%",
+      "description": "Beat the fall weather! Get your car detailed before the season changes. Premium wash + wax + interior for just $119 (reg $149). Limited time offer!",
+      "call_to_action": "Claim Discount",
+      "targeting": {
+        "location": "Clinton, Bloomington, Normal, Decatur, Lincoln IL",
+        "radius_miles": 25,
+        "keywords": ["car detailing deals", "auto wash discount", "seasonal car care"],
+        "demographics": "Adults 30-60, own vehicles"
+      },
+      "image_concept": "Before/after split image showing dramatic car transformation with '20% OFF' badge",
+      "budget_recommendation": "$25/day",
+      "estimated_reach": "2,500-4,000 people/day"
+    },
+    {
+      "id": "variant_c_quality_focus",
+      "headline": "Why Clinton Auto Detailing?", 
+      "description": "🏆 5-star rated • ⚡ Same-day service • 💯 100% satisfaction guarantee • 📱 Easy online booking. Experience the difference quality makes.",
+      "call_to_action": "See Reviews",
+      "targeting": {
+        "location": "Clinton, Bloomington, Normal, Decatur, Lincoln IL", 
+        "radius_miles": 25,
+        "keywords": ["best car detailing", "5 star auto detailing", "professional car wash"],
+        "demographics": "Quality-conscious consumers, 25-65"
+      },
+      "image_concept": "Collage of satisfied customers with their gleaming cars, 5-star ratings overlay",
+      "budget_recommendation": "$15/day",
+      "estimated_reach": "1,800-2,800 people/day"
+    }
+  ],
+  "compliance_notes": {
+    "mode": "DRY_RUN_ONLY",
+    "live_deployment": false,
+    "approval_required": true,
+    "disclaimer": "Ad variants are concepts only. Actual deployment requires manual review and approval."
+  },
+  "campaign_settings": {
+    "total_daily_budget": "$60",
+    "campaign_duration": "30 days",
+    "optimization_goal": "conversions",
+    "tracking": {
+      "conversion_pixel": "clintondetailing.com/booking",
+      "phone_tracking": "(815) 718-8936"
+    }
+  },
+  "performance_estimates": {
+    "total_daily_reach": "6,300-10,300 people",
+    "estimated_clicks": "63-103 per day",
+    "conversion_rate_estimate": "3-5%",
+    "estimated_bookings": "2-5 per day",
+    "roi_projection": "$178-445 revenue per day"
+  },
+  "next_steps": [
+    "Review ad copy and targeting with business owner",
+    "Create actual ad creatives/images", 
+    "Set up Google Ads account with proper billing",
+    "Configure conversion tracking",
+    "Launch with A/B testing between variants"
+  ]
+}

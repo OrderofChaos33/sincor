@@ -1,0 +1,85 @@
+{
+  "mediapack_id": "plumber_premium_sample_001",
+  "business_type": "Plumbing Services",
+  "target_business": "SAMPLE - Precision Plumbing",
+  "mode": "SAFE_MODE_DEMO",
+  "created_date": "2025-09-09",
+  "value_proposition": "$500+ value marketing pack for $99/month",
+  "sample_assets": {
+    "google_ads_campaign": {
+      "name": "Emergency Plumbing - Local Leads",
+      "ad_variants": [
+        {
+          "headline": "24/7 Emergency Plumber - Same Day Service",
+          "description": "Licensed plumber in [CITY]. Leaks, clogs, water heater repair. Call now for immediate service. Free estimates!",
+          "keywords": ["emergency plumber", "plumber near me", "water leak repair", "24 hour plumber"],
+          "estimated_value": "$150/month"
+        }
+      ]
+    },
+    "social_media_content": {
+      "facebook_posts": [
+        {
+          "content": "💧 PLUMBING EMERGENCY? We're here 24/7!\n\n✅ Licensed & insured\n✅ Same-day service\n✅ Free estimates\n✅ All plumbing repairs\n\nDon't let a small leak become a big problem!\nCall [PHONE] or visit [WEBSITE]",
+          "image_concept": "Professional plumber fixing pipe with '24/7 SERVICE' badge",
+          "estimated_reach": "1,000-2,000 locals"
+        }
+      ],
+      "google_business_posts": [
+        {
+          "content": "🚰 Quick tip: Hear dripping? Even small leaks waste 3,000+ gallons yearly and can cause major damage. Our certified plumbers fix leaks fast - usually same day! Free estimates. Call [PHONE]",
+          "post_type": "tip/educational"
+        }
+      ],
+      "estimated_value": "$200/month"
+    },
+    "email_templates": [
+      {
+        "subject": "Your Plumbing Maintenance Reminder",
+        "content": "Hi [NAME],\n\nIt's been 6 months since your last plumbing service. Here's a quick checklist to prevent costly emergencies:\n\n• Check faucets for leaks\n• Test water pressure\n• Inspect toilet for running water\n• Clear drain strainers\n\nNeed professional maintenance? We offer:\n✓ Full system inspection - $89\n✓ Preventive maintenance plans\n✓ Emergency repair guarantee\n\nSchedule today: [PHONE]\n\nBest regards,\n[BUSINESS_NAME]",
+        "template_type": "maintenance_reminder",
+        "estimated_value": "$100/month"
+      }
+    ],
+    "website_content": {
+      "landing_page_copy": {
+        "headline": "Emergency Plumber [CITY] - 24/7 Same Day Service",
+        "subheading": "Licensed, insured, and trusted by [CITY] homeowners for over [YEARS] years",
+        "services_list": [
+          "Emergency leak repair",
+          "Drain cleaning & unclogging", 
+          "Water heater repair/replacement",
+          "Pipe repair & replacement",
+          "Bathroom plumbing",
+          "Kitchen plumbing"
+        ],
+        "cta": "Call Now: [PHONE] or Get Free Estimate Online",
+        "estimated_value": "$75/month"
+      }
+    }
+  },
+  "total_estimated_value": "$525/month",
+  "subscription_price": "$99/month",
+  "value_ratio": "5.3x return on investment",
+  "compliance_notes": {
+    "mode": "SAMPLE_ONLY",
+    "business_consent": "NOT_OBTAINED",
+    "deployment_status": "DEMO_MODE",
+    "disclaimer": "This is a sample MediaPack for demonstration purposes only. No actual marketing campaigns have been created or deployed."
+  },
+  "customization_options": {
+    "business_name": "[CUSTOMIZABLE]",
+    "phone_number": "[CUSTOMIZABLE]", 
+    "website": "[CUSTOMIZABLE]",
+    "service_area": "[CUSTOMIZABLE]",
+    "years_experience": "[CUSTOMIZABLE]",
+    "special_offers": "[CUSTOMIZABLE]"
+  },
+  "performance_projections": {
+    "estimated_monthly_leads": "15-25",
+    "estimated_conversion_rate": "20-30%",
+    "projected_new_customers": "3-8 per month",
+    "estimated_revenue_increase": "$1,500-4,000/month",
+    "roi_calculation": "15-40x return on $99 investment"
+  }
+}

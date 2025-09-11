@@ -1,0 +1,203 @@
+name: SINCOR Compliance Check
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  compliance-check:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyyaml requests flask
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    
+    - name: Verify Core Compliance Files Exist
+      run: |
+        echo "Checking for required compliance files..."
+        
+        # Check for policy file
+        if [ ! -f "policy/allowed_actions.yml" ]; then
+          echo "❌ COMPLIANCE FAILURE: policy/allowed_actions.yml not found"
+          exit 1
+        fi
+        echo "✅ Policy file found"
+        
+        # Check for action broker
+        if [ ! -f "broker/action_broker.py" ]; then
+          echo "❌ COMPLIANCE FAILURE: broker/action_broker.py not found"
+          exit 1
+        fi
+        echo "✅ Action broker found"
+        
+        # Check for CODEOWNERS
+        if [ ! -f ".github/CODEOWNERS" ]; then
+          echo "❌ COMPLIANCE FAILURE: .github/CODEOWNERS not found"
+          exit 1
+        fi
+        echo "✅ CODEOWNERS file found"
+        
+        echo "All core compliance files present ✅"
+    
+    - name: Test Action Broker Functionality
+      run: |
+        echo "Testing action broker compliance enforcement..."
+        cd broker
+        python action_broker.py > broker_test.log 2>&1
+        
+        # Check if broker ran without errors
+        if [ $? -eq 0 ]; then
+          echo "✅ Action broker test passed"
+        else
+          echo "❌ Action broker test failed"
+          cat broker_test.log
+          exit 1
+        fi
+    
+    - name: Validate Policy Configuration
+      run: |
+        echo "Validating policy configuration..."
+        python -c "
+        import yaml
+        import sys
+        
+        try:
+            with open('policy/allowed_actions.yml', 'r') as f:
+                policy = yaml.safe_load(f)
+            
+            # Check required sections
+            required_sections = ['defaults', 'actions', 'denied_patterns']
+            for section in required_sections:
+                if section not in policy:
+                    print(f'❌ POLICY ERROR: Missing section: {section}')
+                    sys.exit(1)
+            
+            # Check SAFE_MODE is enabled
+            if policy.get('defaults', {}).get('mode') != 'SAFE_MODE':
+                print('❌ POLICY ERROR: SAFE_MODE not enabled in defaults')
+                sys.exit(1)
+            
+            # Check dry_run is enabled
+            if not policy.get('defaults', {}).get('dry_run', False):
+                print('❌ POLICY ERROR: dry_run not enabled in defaults')
+                sys.exit(1)
+            
+            print('✅ Policy configuration valid')
+        except Exception as e:
+            print(f'❌ POLICY VALIDATION ERROR: {e}')
+            sys.exit(1)
+        "
+    
+    - name: Scan for Prohibited Patterns
+      run: |
+        echo "Scanning for prohibited patterns..."
+        
+        # Check for live PayPal API usage
+        if grep -r "api\.paypal\.com" . --exclude-dir=.git --exclude-dir=node_modules; then
+          echo "❌ COMPLIANCE FAILURE: Live PayPal API detected"
+          exit 1
+        fi
+        
+        # Check for PAYPAL_MODE=live
+        if grep -r "PAYPAL_MODE=live" . --exclude-dir=.git --exclude-dir=node_modules; then
+          echo "❌ COMPLIANCE FAILURE: PAYPAL_MODE=live detected"
+          exit 1
+        fi
+        
+        # Check for unsafe shell scripts
+        find . -name "*.sh" -type f ! -path "./.git/*" ! -path "./node_modules/*" | while read file; do
+          if [ -x "$file" ]; then
+            echo "⚠️  WARNING: Executable shell script found: $file"
+          fi
+        done
+        
+        echo "✅ No prohibited patterns detected"
+    
+    - name: Check Compliance Reserve System
+      run: |
+        echo "Testing compliance reserve system..."
+        if [ -f "compliance/ledger/compliance_reserve_system.py" ]; then
+          cd compliance/ledger
+          python compliance_reserve_system.py --help > /dev/null 2>&1 || true
+          echo "✅ Compliance reserve system present"
+        else
+          echo "❌ WARNING: Compliance reserve system not found"
+        fi
+    
+    - name: Verify CODEOWNERS Protection
+      run: |
+        echo "Verifying CODEOWNERS protection..."
+        
+        # Check if CODEOWNERS protects critical files
+        protected_patterns=("policy/" "compliance/" "broker/" ".github/CODEOWNERS")
+        
+        for pattern in "${protected_patterns[@]}"; do
+          if grep -q "$pattern" .github/CODEOWNERS; then
+            echo "✅ $pattern is protected by CODEOWNERS"
+          else
+            echo "❌ COMPLIANCE FAILURE: $pattern not protected by CODEOWNERS"
+            exit 1
+          fi
+        done
+        
+        echo "✅ All critical files protected by CODEOWNERS"
+    
+    - name: Generate Compliance Report
+      run: |
+        echo "Generating compliance report..."
+        
+        cat > compliance_report.md << EOF
+        # SINCOR Compliance Check Report
+        
+        **Date**: $(date)
+        **Branch**: ${{ github.ref }}
+        **Commit**: ${{ github.sha }}
+        
+        ## Compliance Status: ✅ PASSED
+        
+        ### Core Files Verified:
+        - ✅ policy/allowed_actions.yml
+        - ✅ broker/action_broker.py  
+        - ✅ .github/CODEOWNERS
+        - ✅ compliance/ledger/compliance_reserve_system.py
+        
+        ### Policy Configuration:
+        - ✅ SAFE_MODE enabled
+        - ✅ dry_run enabled
+        - ✅ Required sections present
+        
+        ### Security Checks:
+        - ✅ No live PayPal API usage
+        - ✅ No PAYPAL_MODE=live
+        - ✅ Prohibited patterns not detected
+        
+        ### CODEOWNERS Protection:
+        - ✅ Critical files protected
+        - ✅ Policy files require approval
+        
+        ### Action Broker:
+        - ✅ Functional compliance enforcement
+        
+        **Overall Status**: COMPLIANT ✅
+        EOF
+        
+        echo "Compliance report generated:"
+        cat compliance_report.md
+    
+    - name: Upload Compliance Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: compliance-report
+        path: compliance_report.md

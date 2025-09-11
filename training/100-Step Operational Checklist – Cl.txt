@@ -1,0 +1,201 @@
+100-Step Operational Checklist – Clinton Auto Detailing Video Project
+
+Create /project_root folder.
+
+Create /audio/raw subfolder.
+
+Create /audio/master subfolder.
+
+Create /video_assets/stock subfolder.
+
+Create /video_assets/photos subfolder.
+
+Create /branding subfolder.
+
+Create /storyboards subfolder.
+
+Create /drafts subfolder.
+
+Create /final subfolder.
+
+Create /qc_reports subfolder.
+
+Create /delivery subfolder.
+
+Place 6 narration MP3s into /audio/raw.
+
+Open 1_business_introduction.mp3 in Audacity.
+
+Normalize to –1 dB peak.
+
+Export as WAV → /audio/master/1_business_introduction_master.wav.
+
+Repeat normalization/export for all 6 files.
+
+Verify all master WAV files play correctly.
+
+Gather at least 3 HD stock clips for intro video.
+
+Gather at least 3 HD stock clips for services video.
+
+Gather at least 3 HD stock clips for testimonial video.
+
+Gather at least 3 HD stock clips for before/after video.
+
+Gather at least 3 HD stock clips for behind-the-scenes video.
+
+Gather at least 3 HD stock clips for call-to-action video.
+
+Place all clips in /video_assets/stock.
+
+Collect before/after photos from CAD archive.
+
+Upscale low-res photos with Topaz or equivalent.
+
+Save enhanced photos into /video_assets/photos.
+
+Copy clinton_logo.png into /branding.
+
+Save brand color palette file into /branding.
+
+Save approved font files into /branding.
+
+Open 1_business_introduction_master.wav.
+
+Transcribe narration into text file.
+
+Break narration into sentence-level chunks.
+
+Assign one visual per sentence.
+
+Write time estimates beside each chunk.
+
+Save storyboard as PDF in /storyboards.
+
+Repeat storyboard process for each of 6 videos.
+
+Open DaVinci Resolve.
+
+Create new project named CAD_Business_Intro.
+
+Save project file into /drafts.
+
+Import 1_business_introduction_master.wav.
+
+Place on Audio Track A1.
+
+Lock A1 track.
+
+Import relevant stock clips into Stock bin.
+
+Import relevant photos into Photos bin.
+
+Import branding files into Branding bin.
+
+Drag first clip to timeline aligned with narration start.
+
+Apply cross dissolve at clip beginning.
+
+Continue adding visuals per storyboard.
+
+Add logo overlay to top right corner.
+
+Insert lower-third with phone number.
+
+Insert lower-third with “Clinton, IL”.
+
+Add service names as animated text.
+
+Import licensed background music.
+
+Lower music volume to –18 LUFS under narration.
+
+Watch full sequence in preview.
+
+Adjust timing mismatches by trimming visuals.
+
+Save project.
+
+Repeat setup/edit for remaining 5 videos.
+
+After all edits, watch each draft fully.
+
+Check for blank screens longer than 1s.
+
+Check narration clarity.
+
+Check logo visibility.
+
+Check text readability at 50% zoom.
+
+Correct any flagged issues.
+
+Export intro video at 1080p, 20 Mbps.
+
+Export intro video at 720p, 12 Mbps.
+
+Export intro video as 9:16 vertical.
+
+Repeat export in 3 formats for each of 6 videos.
+
+Save all final files in /final.
+
+Create qc_notes.md for intro video.
+
+Note timestamped issues if any.
+
+Repeat QC notes for each video.
+
+Verify playback of each file on desktop.
+
+Verify playback of each file on mobile.
+
+Check file sizes are <250 MB.
+
+If oversized, re-export with reduced bitrate.
+
+Generate checksums for each final file.
+
+Save checksums into delivery_log.md.
+
+Log export time and settings for each video.
+
+Upload intro video to YouTube.
+
+Add optimized title with keywords.
+
+Add description with phone number + location.
+
+Add tags (auto detailing, Clinton IL, ceramic coating, etc.).
+
+Set thumbnail with logo + clean car photo.
+
+Upload intro video to Facebook.
+
+Upload intro video to Instagram (vertical).
+
+Repeat upload for all 6 videos.
+
+Embed intro video on clintondetailing.com.
+
+Embed service showcase on clintondetailing.com.
+
+Create social post linking to testimonial video.
+
+Create social post linking to before/after video.
+
+Create social post linking to behind-the-scenes video.
+
+Create social post linking to call-to-action video.
+
+Double-check all embeds function correctly.
+
+Save screenshots of live posts in /delivery.
+
+Update delivery_log.md with upload URLs.
+
+Notify Director Agent that all six videos are live.
+
+Archive project folder into /archive/[date]_CAD_Videos.
+
+Celebrate completed launch with ✅ across entire checklist.

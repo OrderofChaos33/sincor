@@ -1,0 +1,94 @@
+Railway config (must-dos)
+
+Custom Start Command: python src/sincor/orchestrator.py
+
+Env vars (project-wide):
+
+DATABASE_URL (Railway Postgres connection string)
+
+SINCOR_ENV=prod
+
+FEATURE_MONETIZATION=on
+
+FEATURE_VALUE_SPAWN=on (start at “off” if you want a cold open)
+
+FEATURE_FEEDBACK=off (enable later)
+
+SUPERVISOR_GODMODE_KEY=… (long random; your key only)
+
+SEGMENT_DEFAULT=standard
+
+LOG_LEVEL=info
+
+PORT=8000 ← either set this, or change orchestrator to read PORT from env
+
+Healthcheck: GET /healthz (Railway should target port 8000).
+
+Resources: start 1× CPU/512–1024MB; watch memory spikes during load.
+
+One-time jobs (run once, or make idempotent)
+
+seed_db.py → loads monetization, value graph, delivery modes, escalation.
+
+init_agents.py → registers the constellation (43 roles).
+Make both idempotent (safe if you need to re-run).
+
+Rollout order (no surprises)
+
+Deploy with FEATURE_VALUE_SPAWN=off, FEATURE_FEEDBACK=off.
+
+Run seed_db, then init_agents.
+
+Hit /healthz, then run simulate_task.py to confirm the loop.
+
+Turn FEATURE_VALUE_SPAWN=on for a subset (e.g., product_type=book only).
+
+After 24–48h, enable FEATURE_FEEDBACK if backlog and SLA are stable.
+
+Observability (minimum viable truth)
+
+Structured logs per task: price_offer, base_cost, margin_factor, surge_multiplier, exploration_applied, segment, revenue_priority, auction.value_hint, quote_accepted.
+
+Dashboards: margin by segment (P50/P90), acceptance vs price bands, RP vs wait time, backlog size, SLA hits/misses.
+
+Alerts: backlog > threshold, acceptance rate drop > X%, healthz failures, memory > 80%.
+
+Safety rails
+
+SLA override: if nearing deadline, ignore RP and dispatch.
+
+Starvation guard: boost tasks waiting past N minutes regardless of value.
+
+Price caps: surge cap per product; provider-payout floor enforced.
+
+Kill switches: FEATURE_MONETIZATION / FEATURE_VALUE_SPAWN / FEATURE_FEEDBACK all toggleable at runtime via env reload.
+
+Security / access
+
+Lock any “god mode” routes/features behind SUPERVISOR_GODMODE_KEY.
+
+Don’t expose internal admin endpoints publicly; restrict by IP or auth proxy if possible.
+
+Persistence & data hygiene
+
+Railway disks are ephemeral; keep all state in Postgres (and any cache in Redis if you add it).
+
+Version your configs in DB (policies table with version column) so you can audit and roll back.
+
+Common foot-guns to avoid
+
+PORT mismatch (Railway sets PORT; either set PORT=8000 in env or change orchestrator to read PORT).
+
+Forgetting to run seed_db/init_agents before first boot → empty system looks “healthy” but does nothing.
+
+Duplicate configs in repo and DB → single-source monetization.yaml et al; log applied version.
+
+Over-weighting RP → low-value tasks starve; watch wait-time distribution.
+
+Clean rollback plan
+
+Flip FEATURE_VALUE_SPAWN=off and FEATURE_FEEDBACK=off.
+
+Revert monetization params to last known-good policy version in DB (keep a “policy_version” marker).
+
+Redeploy orchestrator; no schema changes required.

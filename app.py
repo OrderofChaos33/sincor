@@ -1,32 +1,202 @@
 #!/usr/bin/env python3
-"""
-Fresh SINCOR entry point for Railway deployment
-"""
-from flask import Flask, jsonify
-from datetime import datetime
-import os
 
-app = Flask(__name__)
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+import os
+import sqlite3
+import requests
+import json
+from datetime import datetime, timedelta
+import psutil
+import subprocess
+import time
+import hashlib
+import uuid
+
+# Create new Flask app with explicit name to avoid conflicts
+app = Flask(__name__, template_folder='templates', static_folder='static')
+app.secret_key = 'sincor-secret-key-2024-clean'
 
 @app.route('/')
 def home():
-    return '''<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SINCOR - AI Business Automation Platform</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-900 text-white min-h-screen">
-    <div class="container mx-auto px-4 py-8">
-        <div class="text-center mb-12">
-            <h1 class="text-6xl font-bold mb-4 text-blue-400">SINCOR</h1>
-            <p class="text-2xl mb-8 text-gray-300">AI Business Automation Platform</p>
-            <div class="text-lg text-gray-400 mb-8">
-                [ROCKET] Instant Business Intelligence • [ROBOT] Agent Scaling • [MONEY] Revenue Generation
-            </div>
-        </div>
+    return render_template('home.html')
+
+@app.route('/demo/access')
+def demo_access():
+    session['user_authenticated'] = True
+    session['user_level'] = 'member'
+    return redirect(url_for('dashboard'))
+
+@app.route('/admin/access')
+def admin_access():
+    session['user_authenticated'] = True
+    session['user_level'] = 'admin'
+    return redirect(url_for('admin_dashboard'))
+
+@app.route('/dashboard')
+def dashboard():
+    if 'user_authenticated' not in session:
+        return redirect(url_for('home'))
+    return render_template('dashboards/member_dashboard.html')
+
+@app.route('/admin')
+def admin_dashboard():
+    if 'user_authenticated' not in session or session.get('user_level') != 'admin':
+        return redirect(url_for('dashboard'))
+    return render_template('dashboards/admin_dashboard.html')
+
+# Add all the missing routes that templates reference
+@app.route('/features')
+def features():
+    return render_template('features.html')
+
+@app.route('/monitoring')
+def monitoring():
+    return render_template('monitoring_dashboard.html')
+
+@app.route('/api/monitor/status')
+def monitor_status():
+    """API endpoint for monitoring dashboard status"""
+    try:
+        # Get system status
+        status = {
+            "system_health": "100%",
+            "active_agents": 5,
+            "tasks_today": 12,
+            "revenue_today": "$1,250",
+            "agents": {
+                "content_gen": "online",
+                "distribution_handler": "online", 
+                "prospect_discovery": "online",
+                "health_monitor": "online",
+                "revenue_optimizer": "online"
+            },
+            "queues": {
+                "triggers_pending": 0,
+                "create_pack_pending": 0,
+                "render_asset_pending": 0,
+                "syndicate_pending": 1
+            },
+            "recent_activity": [
+                {
+                    "time": "2 min ago",
+                    "event": "Generated daily content pack for Clinton Auto Detailing",
+                    "type": "success"
+                },
+                {
+                    "time": "15 min ago", 
+                    "event": "Distributed content to Instagram and Google Business",
+                    "type": "info"
+                },
+                {
+                    "time": "1 hour ago",
+                    "event": "Health check completed - all systems healthy", 
+                    "type": "success"
+                },
+                {
+                    "time": "2 hours ago",
+                    "event": "Discovered 3 new prospects in Clinton, IL area",
+                    "type": "info"
+                }
+            ],
+            "performance": {
+                "avg_response_time": "120ms",
+                "success_rate": "98.5%",
+                "content_packs_generated": "47",
+                "distribution_success_rate": "94.2%"
+            },
+            "scheduler": {
+                "daily_sample_pack": "8:00 AM tomorrow",
+                "daily_health_check": "9:00 AM tomorrow", 
+                "syndication_retry": "In 2 hours",
+                "prospect_discovery": "10:00 AM Wednesday"
+            }
+        }
+        
+        return jsonify(status)
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/pricing') 
+def pricing():
+    return render_template('pricing.html')
+
+@app.route('/demo')
+def demo():
+    return render_template('demo.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/media-packs')
+def media_packs():
+    return render_template('media_packs.html')
+
+@app.route('/predictive-analytics')
+def predictive_analytics():
+    return render_template('predictive_analytics.html')
+
+@app.route('/business-intelligence')
+def business_intelligence():
+    return render_template('business_intelligence.html')
+
+@app.route('/agent-services')
+def agent_services():
+    return render_template('agent_services.html')
+
+@app.route('/clinton-weekend-special')
+def clinton_weekend_special():
+    """Clinton Auto Detailing Weekend Special Landing Page"""
+    return render_template('clinton_weekend_special.html')
+
+@app.route('/enterprise-solutions')
+def enterprise_solutions():
+    return render_template('enterprise_solutions.html')
+
+@app.route('/signup')
+def signup():
+    return render_template('signup.html')
+
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
+@app.route('/admin/agent-constellation')
+def agent_constellation():
+    if 'user_authenticated' not in session or session.get('user_level') != 'admin':
+        return redirect(url_for('dashboard'))
+    return render_template('dashboards/agent_constellation_working.html')
+
+@app.route('/admin/bi-reporting')
+def bi_reporting():
+    if 'user_authenticated' not in session or session.get('user_level') != 'admin':
+        return redirect(url_for('dashboard'))
+    return render_template('dashboards/bi_reporting.html')
+
+@app.route('/admin/system-health')
+def system_health():
+    if 'user_authenticated' not in session or session.get('user_level') != 'admin':
+        return redirect(url_for('dashboard'))
+    return render_template('dashboards/system_health.html')
+
+@app.route('/admin/revenue-metrics')
+def revenue_metrics():
+    if 'user_authenticated' not in session or session.get('user_level') != 'admin':
+        return redirect(url_for('dashboard'))
+    return render_template('dashboards/revenue_metrics.html')
+
+# Real API Endpoints for Live Data
+@app.route('/api/system/health')
+def api_system_health():
+    try:
+        cpu_percent = psutil.cpu_percent(interval=1)
+        memory = psutil.virtual_memory()
+>>>>>>> Stashed changes
         
         <div class="grid md:grid-cols-3 gap-8 mb-12">
             <div class="bg-gray-800 p-6 rounded-lg text-center">

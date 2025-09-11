@@ -1,0 +1,67 @@
+# policy/allowed_actions.yml
+# Compliance-first policy file for Claude CLI agent
+# ------------------------------------------------
+# This file defines what actions are permitted, in what mode, and with what limits.
+# All other actions are blocked unless explicitly whitelisted here.
+
+defaults:
+  mode: SAFE_MODE        # default execution mode
+  dry_run: true          # simulate only, no real-world side effects
+  logging: true          # log all actions to logs/claude_exec.log
+  max_output_size: 5MB   # cap to prevent runaway file generation
+  require_codeowners: true  # CODEOWNERS must approve changes to this file
+
+actions:
+  # ---- Revenue-Building Tasks ----
+  - name: create_ads
+    paths: ["ads/"]
+    allowed: true
+    limits:
+      max_files: 10
+      file_types: [".json", ".md"]
+      external_calls: false
+
+  - name: create_promos
+    paths: ["promos/"]
+    allowed: true
+    limits:
+      max_files: 10
+      file_types: [".json", ".zip"]
+      external_calls: false
+
+  - name: create_mediapacks
+    paths: ["mediapacks/"]
+    allowed: true
+    limits:
+      max_files: 5
+      file_types: [".json", ".zip", ".md"]
+      external_calls: false
+
+  # ---- Compliance / Audit Tasks ----
+  - name: compliance_checks
+    paths: ["compliance/"]
+    allowed: true
+    limits:
+      max_files: 5
+      file_types: [".md", ".yml"]
+      external_calls: false
+
+  - name: audit_logs
+    paths: ["logs/"]
+    allowed: true
+    limits:
+      append_only: true
+      file_types: [".log"]
+
+# ---- Explicit Denials ----
+denied_patterns:
+  - "api.paypal.com"
+  - "PAYPAL_MODE=live"
+  - "*.sh"          # no arbitrary shell scripts
+  - "*.exe"         # no binaries
+  - "curl *"        # block network calls unless whitelisted
+
+# ---- Reviewer Notes ----
+# - Any change to this file must be approved by @OrderofChaos33 (CODEOWNER).
+# - If an agent tries an action not listed here, it must halt and log "BLOCKED BY POLICY".
+# - This file itself should be protected in GitHub branch protections

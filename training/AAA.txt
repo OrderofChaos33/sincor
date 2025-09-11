@@ -1,0 +1,388 @@
+Pre-reqs (do once)
+
+Events: Standardize on these topics (already close):
+stream.leads.received, .cleaned, .scored, .delivered, .paid, .returned, .dlq, stream.outreach.queued.
+
+Auth: Reuse the Bearer-token middleware you added in lead_ingest for any new public endpoints.
+
+PII Rules: A simple helper libs/pkg_guard/pii.py with redact_email/phone and a safe_log() wrapper.
+
+1) White-Label / Multi-Tenant
+
+Service: services/tenant_gateway/
+
+Add files
+
+services/tenant_gateway/{app.py, Dockerfile, requirements.txt}
+
+libs/pkg_tenant/{__init__.py, auth.py} (JWT signing/verification)
+
+ENV
+
+TENANT_JWT_ISSUER=your-issuer
+TENANT_JWT_SECRET=replace-me
+
+
+Events
+
+Consumes: none
+
+Emits: none (acts as config/auth gateway)
+
+Endpoints
+
+POST /tenants (internal-admin): create tenant, issue API key + JWT signing key
+
+GET /tenants/{id}/config (tenant-auth): returns SmartLists + caps for that tenant
+
+PUT /tenants/{id}/config (tenant-auth): update rules/caps
+
+DB
+
+tenants(id, name, api_key_hash, jwt_public, created_at)
+
+tenant_configs(tenant_id, smartlists_yaml, caps_yaml, updated_at)
+
+Router hook
+
+In lead_router/app.py, resolve tenant by X-Tenant header; load tenant SmartLists + caps from cache (Redis) falling back to DB.
+
+Acceptance
+
+Create tenant → POST a lead with X-Tenant and tenant API key → router uses that tenant’s SmartLists and caps.
+
+2) Data-as-a-Service (Anonymized Analytics)
+
+Service: services/analytics_api/
+
+Add files
+
+services/analytics_api/{app.py, Dockerfile, requirements.txt}
+
+ENV
+
+ANALYTICS_ACCESS_KEY=replace-me
+
+
+Events
+
+Consumes: (reads DB directly)
+
+Emits: none
+
+Endpoints
+
+GET /reports/funnel?from=&to=&tenant= → JSON (received→cleaned→scored→delivered rates)
+
+GET /reports/roi?group_by=vertical|source → aggregated revenue/lead
+
+GET /exports/benchmarks.csv → anonymized industry benchmarks
+
+DB
+
+Use delivery_ledger + leads; create materialized views:
+
+mv_funnel_daily(tenant, date, received, cleaned, scored, delivered)
+
+mv_revenue_daily(tenant, date, gross, returns)
+
+Privacy
+
+Strip PII; never return raw emails/phones.
+
+Acceptance
+
+Seed two days of test data; GET /reports/funnel returns expected counts.
+
+3) Add-On Marketplace (Templates / MediaPax Packs)
+
+Service: services/marketplace/
+
+Add files
+
+services/marketplace/{app.py, storage.py, requirements.txt}
+
+services/outreach_mediapax/generator.py → read purchased template IDs
+
+ENV
+
+MARKETPLACE_SIGNING_SECRET=replace-me
+PAYMENTS_WEBHOOK=optional
+
+
+Endpoints
+
+POST /catalog/items (admin)
+
+GET /catalog (public)
+
+POST /purchase (tenant-auth) → returns receipt id
+
+GET /receipts/{id} (tenant-auth)
+
+DB
+
+catalog(id, title, price_cents, type, payload_ref, active)
+
+purchases(id, tenant_id, item_id, ts, amount_cents, status)
+
+Integration
+
+On successful purchase, store the template id; outreach_mediapax uses these when generating packs for that tenant.
+
+Acceptance
+
+Create an item → purchase → generate pack for a test lead and verify the purchased template is used.
+
+4) Affiliate / Referral Engine
+
+Service: services/referrals/
+
+Add files
+
+services/referrals/{app.py, rules.py, requirements.txt}
+
+ENV
+
+REFERRAL_COOKIE_DAYS=30
+
+
+Endpoints
+
+POST /ref/codes (tenant-auth): create codes per campaign
+
+GET /ref/:code.js → embeddable script sets ref=CODE cookie
+
+POST /ref/conversions (internal): called by checkout/booking to attribute
+
+DB
+
+ref_codes(id, tenant_id, code, payout_cents, active)
+
+ref_attributions(id, code, fingerprint, first_seen, last_seen)
+
+ref_conversions(id, code, amount_cents, ts)
+
+Events
+
+Emits referral.converted for payouts
+
+Acceptance
+
+Hit ref/:code.js → cookie set → simulate checkout → conversion recorded.
+
+5) Sponsored Placements / Auction
+
+Service: extend router
+
+Add files
+
+config/routing/bids.yaml (min_price floors, buyer priorities)
+
+Router changes
+
+Add mode: "auction" to destinations; compute score = w1*price + w2*quality + w3*reputation.
+
+Reputation = low returns, fast callbacks.
+
+DB (optional)
+
+buyer_reputation(buyer_id, score, updated_at)
+
+Acceptance
+
+Configure two buyers with different min prices + reputation → ensure higher composite score wins; DLQ on no-bid.
+
+6) Call-Center Integration
+
+Service: services/voice_hub/
+
+Add files
+
+services/voice_hub/{app.py, dialer.py, webhooks.py, requirements.txt}
+
+ENV
+
+VOICE_PROVIDER=twilio
+TWILIO_SID=...
+TWILIO_TOKEN=...
+TWILIO_FROM=+1...
+CALL_WINDOW_LOCAL=09:00-20:00
+
+
+Endpoints
+
+POST /dial (internal): lead payload → place call → record outcome
+
+POST /webhooks/voice-status (public): provider callback
+
+Events
+
+Consumes: stream.leads.route (optional)
+
+Emits: voice.call_started, voice.call_connected, voice.voicemail, voice.no_answer
+
+DB
+
+calls(id, lead_id, status, duration, recording_url, ts)
+
+Acceptance
+
+Simulate a dial with a test number → webhook updates status → ledger updated.
+
+7) Appointment Micro-SaaS (Standalone Booking)
+
+Service: services/booking_core/ (if you outgrow external calendars)
+
+Add files
+
+services/booking_core/{app.py, calendar.py, slots.py, requirements.txt}
+
+Small React admin in apps/booking_admin/ (optional)
+
+ENV
+
+BOOKING_TIMEZONE=America/Chicago
+BOOKING_BUFFER_MIN=15
+
+
+Endpoints
+
+GET /slots?from=&to=
+
+POST /appointments
+
+POST /appointments/{id}/cancel
+
+DB
+
+resources(id, tenant_id, name)
+
+slots(resource_id, start_ts, end_ts, status)
+
+appointments(id, resource_id, lead_id, contact, start_ts, status)
+
+Integration
+
+local_booking.py adapter hits this instead of 3rd parties.
+
+Acceptance
+
+Create slots → book via router → appointment stored + confirmation returned.
+
+8) Subscription Management (Recurring for SMBs)
+
+Service: services/subscriptions/
+
+Add files
+
+services/subscriptions/{app.py, billing.py, webhooks.py}
+
+ENV
+
+BILLING_PROVIDER=stripe
+STRIPE_KEY=...
+
+
+Endpoints
+
+POST /plans (admin)
+
+POST /subscribe (tenant or end-customer)
+
+POST /webhooks/billing → handles renewals, failures, cancels
+
+DB
+
+plans(id, tenant_id, code, price_cents, interval)
+
+subscriptions(id, tenant_id, customer_ref, plan_id, status, current_period_end)
+
+Events
+
+Emits subscription.renewed, subscription.failed, subscription.canceled
+
+Acceptance
+
+Create plan → subscribe test customer → simulate webhook → status updated.
+
+9) Dynamic Pricing / Quote Generator
+
+Service: services/pricing_engine/
+
+Add files
+
+services/pricing_engine/{app.py, model.py, features.py, requirements.txt}
+
+config/pricing.yaml (heuristics + feature weights)
+
+Endpoints
+
+POST /price → input: lead/vertical/context; output: price, confidence, rationale
+
+Router hook
+
+Before delivery, call pricing engine for min_price or suggested_offer fields; store in lead.meta.
+
+Acceptance
+
+Send sample leads with different attributes; verify consistent pricing and logged rationales.
+
+10) Social Proof Widget
+
+Service: services/social_proof/ + static snippet
+
+Add files
+
+services/social_proof/{app.py, events.py}
+
+static/widgets/socialproof.js (embeddable)
+
+ENV
+
+SOCIALPROOF_MAX_EVENTS=20
+
+
+Endpoints
+
+GET /widget.js → loads recent anonymized events for a tenant
+
+GET /events?tenant=&vertical= → returns last N “booked/purchased” events
+
+DB
+
+Use delivery_ledger (read-only). Cache pre-formatted events in Redis.
+
+Acceptance
+
+Embed <script src=".../widget.js?tenant=TEN"></script> on a dummy page → see live “X just booked” toasts.
+
+Rollout Order (fastest time-to-cash)
+
+Sponsored placements/auction (router change, immediate revenue uplift).
+
+Booking + subscriptions (locks in SMB recurring $$).
+
+Marketplace (sell templates/MediaPax packs).
+
+Affiliate/referrals (self-propagating growth).
+
+Analytics/DaaS (found money from your ledger).
+
+Call-center & social proof (conversion lift).
+
+White-label (bigger strategic play; do once core is stable).
+
+PR Hygiene (repeat for each module)
+
+Small PRs (≤400 LOC).
+
+Include .env.example updates.
+
+Add /health + /metrics.
+
+One postman/curl snippet in PR description.
+
+One Acceptance scenario (as above).
+
+Tag me when merged; I’ll give you the next diff pack (e.g., Stripe webhook handler or Twilio dialer) ready to paste.
