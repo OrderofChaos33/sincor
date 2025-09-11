@@ -2,7 +2,6 @@
 
 # Core Framework
 Flask==3.0.0
-gunicorn==21.2.0
 
 # Database & Caching
 redis==5.0.1
