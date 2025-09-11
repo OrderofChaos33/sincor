@@ -226,7 +226,8 @@ def health():
     return jsonify({
         'status': 'healthy',
         'service': 'SINCOR Business Automation Platform',
-        'timestamp': datetime.now().isoformat()
+        'timestamp': datetime.now().isoformat(),
+        'deployment_version': '2025-01-11-v2'
     })
 
 if __name__ == '__main__':
