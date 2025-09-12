@@ -55,6 +55,23 @@
     }
 </style>
 
+<!-- Launch Date Banner -->
+<div class="bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 text-white py-4 text-center relative overflow-hidden">
+    <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+    <div class="relative z-10 container mx-auto px-6">
+        <div class="flex items-center justify-center space-x-4">
+            <div class="text-3xl">🚀</div>
+            <div class="text-lg md:text-xl font-bold">
+                SINCOR AI Platform Launch: <span class="text-yellow-200">October 21, 2025</span> • Enterprise Pre-Registration Now Open
+            </div>
+            <div class="text-3xl">🚀</div>
+        </div>
+        <div class="mt-2 text-sm opacity-90">
+            Enterprise consultation available for qualified clients • Development preview only • No guaranteed results • Subject to regulatory compliance
+        </div>
+    </div>
+</div>
+
 <!-- Hero Section -->
 <section class="gradient-bg text-white relative overflow-hidden min-h-screen flex items-center">
     <div class="absolute inset-0">
@@ -90,6 +107,28 @@
                 Deploy 43 specialized AI agents designed to deliver business intelligence and scale enterprise operations with precision.
             </p>
             
+            <!-- Platform Status Notice -->
+            <div class="mb-12 p-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl max-w-4xl mx-auto border border-white border-opacity-20">
+                <div class="text-center">
+                    <h3 class="text-2xl font-bold mb-3">🎯 Platform Development Update</h3>
+                    <p class="text-lg mb-4">SINCOR AI Platform is currently in active development with full enterprise deployment scheduled for <strong class="text-yellow-300">October 21, 2025</strong></p>
+                    <div class="grid md:grid-cols-3 gap-4 text-sm">
+                        <div class="bg-white bg-opacity-10 p-3 rounded-lg">
+                            <div class="font-semibold">✅ Enterprise Architecture</div>
+                            <div class="opacity-80">Completed</div>
+                        </div>
+                        <div class="bg-white bg-opacity-10 p-3 rounded-lg">
+                            <div class="font-semibold">🔧 Agent Deployment</div>
+                            <div class="opacity-80">In Progress</div>
+                        </div>
+                        <div class="bg-white bg-opacity-10 p-3 rounded-lg">
+                            <div class="font-semibold">🚀 Platform Launch</div>
+                            <div class="opacity-80">October 2025</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="grid md:grid-cols-3 gap-8 mb-16 max-w-6xl mx-auto">
                 <div class="glass-effect rounded-2xl p-8 card-hover">
                     <div class="text-6xl mb-4">⚡</div>
@@ -109,11 +148,11 @@
             </div>
             
             <div class="space-x-6 mb-12">
-                <a href="{{ url_for('demo_access') }}" class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 px-12 py-5 rounded-xl font-bold text-xl inline-block revenue-glow transform hover:scale-105 transition-all duration-300" role="button" aria-label="Launch SINCOR Command Center Dashboard">
-                    🚀 Launch Command Center
+                <a href="{{ url_for('demo_access') }}" class="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-12 py-5 rounded-xl font-bold text-xl inline-block transform hover:scale-105 transition-all duration-300" role="button" aria-label="Request Development Preview Access">
+                    🔍 Request Development Preview
                 </a>
-                <a href="{{ url_for('contact') }}" class="glass-effect border-2 border-white text-white px-12 py-5 rounded-xl font-bold text-xl hover:bg-white hover:text-gray-900 inline-block transform hover:scale-105 transition-all duration-300" role="button" aria-label="Request Enterprise AI Consultation">
-                    📞 Enterprise Consultation
+                <a href="{{ url_for('contact') }}" class="glass-effect border-2 border-white text-white px-12 py-5 rounded-xl font-bold text-xl hover:bg-white hover:text-gray-900 inline-block transform hover:scale-105 transition-all duration-300" role="button" aria-label="Schedule Enterprise Pre-Launch Consultation">
+                    📞 Schedule Pre-Launch Consultation
                 </a>
             </div>
             
@@ -421,14 +460,50 @@
         </div>
         <p class="text-xl opacity-90">Premium Enterprise Solutions • Strategic Partnerships • Global Scale</p>
         
-        <!-- Compliance Disclaimers -->
-        <div class="mt-12 p-6 bg-white bg-opacity-10 rounded-lg max-w-4xl mx-auto">
-            <p class="text-sm opacity-80 mb-4">
-                <strong>Important Disclaimers:</strong> All performance metrics, scaling capabilities, and ROI projections are simulated estimates based on system design specifications and are not guaranteed results. Actual performance may vary based on implementation, usage patterns, and client requirements. SINCOR utilizes NVIDIA NeMo Guardrails for responsible AI deployment and safety compliance.
-            </p>
-            <p class="text-sm opacity-80">
-                *Agent capacity and scaling metrics are theoretical maximums based on system architecture. Results may vary by deployment environment and resource allocation. All enterprise solution descriptions are for illustrative purposes and require custom implementation and compliance review for specific industry requirements.
-            </p>
+        <!-- Comprehensive Legal Disclaimers -->
+        <div class="mt-12 p-8 bg-white bg-opacity-15 rounded-2xl max-w-5xl mx-auto border border-white border-opacity-30">
+            <div class="text-center mb-6">
+                <h3 class="text-xl font-bold text-yellow-300 mb-2">⚖️ IMPORTANT LEGAL DISCLAIMERS</h3>
+                <p class="text-sm opacity-90">Please read all disclaimers carefully before engaging with SINCOR services</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+                <div class="space-y-4">
+                    <div class="bg-red-500 bg-opacity-20 p-4 rounded-lg border-l-4 border-red-400">
+                        <h4 class="font-bold text-red-200 mb-2">🚨 PERFORMANCE DISCLAIMERS</h4>
+                        <p class="text-red-100">ALL performance metrics, scaling capabilities, ROI projections, revenue estimates, and system capacity claims are SIMULATED THEORETICAL ESTIMATES based on system design specifications. NO GUARANTEE of actual performance, results, or outcomes. Individual results will vary significantly based on implementation complexity, market conditions, business factors, and numerous variables beyond our control.</p>
+                    </div>
+                    
+                    <div class="bg-orange-500 bg-opacity-20 p-4 rounded-lg border-l-4 border-orange-400">
+                        <h4 class="font-bold text-orange-200 mb-2">🏦 FINANCIAL SERVICES</h4>
+                        <p class="text-orange-100">SINCOR is NOT a licensed investment advisor, broker-dealer, or financial institution. Our solutions do NOT constitute financial, investment, or trading advice. All financial applications require regulatory approval and compliance review by qualified professionals. Users must comply with SEC, FINRA, and applicable financial regulations.</p>
+                    </div>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-blue-500 bg-opacity-20 p-4 rounded-lg border-l-4 border-blue-400">
+                        <h4 class="font-bold text-blue-200 mb-2">🏥 HEALTHCARE COMPLIANCE</h4>
+                        <p class="text-blue-100">SINCOR solutions are NOT medical devices and do NOT provide medical diagnosis, treatment, or advice. Healthcare implementations must comply with HIPAA, FDA regulations, and applicable healthcare laws. All healthcare applications require review by qualified medical professionals and regulatory approval.</p>
+                    </div>
+                    
+                    <div class="bg-yellow-500 bg-opacity-20 p-4 rounded-lg border-l-4 border-yellow-400">
+                        <h4 class="font-bold text-yellow-200 mb-2">🤖 AI SAFETY & LIABILITY</h4>
+                        <p class="text-yellow-100">SINCOR utilizes NVIDIA NeMo Guardrails for responsible AI deployment. However, AI systems may produce inaccurate, biased, or inappropriate outputs. Users are solely responsible for validating all AI-generated content and ensuring compliance with applicable laws and industry standards.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-6 p-4 bg-red-600 bg-opacity-30 rounded-lg border border-red-400">
+                <p class="text-sm text-red-100">
+                    <strong>LIMITATION OF LIABILITY:</strong> To the maximum extent permitted by law, SINCOR disclaims all warranties and shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages, including but not limited to loss of profits, data, business interruption, or any other commercial damages or losses arising from use of our services.
+                </p>
+            </div>
+            
+            <div class="mt-4 text-center">
+                <p class="text-xs opacity-70">
+                    *Platform scheduled for launch October 21, 2025. Current demonstrations are development previews. All enterprise implementations require custom deployment and regulatory compliance review.
+                </p>
+            </div>
         </div>
         
         <!-- Footer -->
