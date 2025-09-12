@@ -1,0 +1,38 @@
+modules = ["web", "bash", "python-3.11"]
+[agent]
+expertMode = true
+
+[nix]
+channel = "stable-25_05"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Railway Local Test"
+
+[[workflows.workflow]]
+name = "Railway Local Test"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "gunicorn simple:app --bind 0.0.0.0:5000 --workers 2 --worker-class gthread"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["gunicorn", "simple:app", "--bind", "0.0.0.0:$PORT", "--workers", "${WEB_CONCURRENCY:-2}", "--threads", "${THREADS:-4}", "--worker-class", "gthread", "--timeout", "${TIMEOUT:-60}", "--log-level", "${LOG_LEVEL:-info}"]

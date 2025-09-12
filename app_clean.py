@@ -75,6 +75,18 @@ def faq():
 def contact():
     return render_template('contact.html')
 
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
+
+@app.route('/legal')
+def legal():
+    return render_template('legal.html')
+
 @app.route('/health')
 def health():
     return {'status': 'healthy', 'service': 'SINCOR'}

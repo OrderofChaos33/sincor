@@ -1,0 +1,43 @@
+# SINCOR Advanced Agent Health Monitoring System Requirements
+# 2025 Industry Best Practices Implementation
+
+# Core Flask Framework
+flask==3.1.2
+flask-socketio==5.3.4
+
+# Real-time Communication
+python-socketio==5.11.0
+eventlet==0.36.1
+
+# System Monitoring
+psutil==5.9.5
+
+# Data Processing & Analytics
+numpy==1.24.3
+scipy==1.11.1
+
+# Database
+sqlite3  # Built into Python
+
+# OpenTelemetry (Industry Standard Observability)
+opentelemetry-api==1.20.0
+opentelemetry-sdk==1.20.0
+opentelemetry-exporter-prometheus==1.12.0rc1
+
+# Prometheus Integration
+prometheus-client==0.17.1
+
+# Async Support
+asyncio  # Built into Python 3.7+
+aiohttp==3.8.5
+
+# Logging & Configuration
+pyyaml==6.0.1
+python-dotenv==1.0.0
+
+# Development & Testing
+pytest==7.4.2
+pytest-asyncio==0.21.1
+
+# Performance Monitoring
+memory-profiler==0.61.0

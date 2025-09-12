@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Legal Information - SINCOR{% endblock %}
+
+{% block content %}
+<div class="bg-gray-50 min-h-screen py-12">
+    <div class="container mx-auto px-6 max-w-4xl">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h1 class="text-4xl font-bold mb-8 text-gray-800">Legal Information</h1>
+            
+            <div class="prose prose-lg max-w-none">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Business Registration</h2>
+                <div class="bg-gray-100 p-4 rounded-lg mb-6">
+                    <p><strong>Legal Business Name:</strong> [Legal Entity Name Required]</p>
+                    <p><strong>Business Registration Number:</strong> [Registration Number Required]</p>
+                    <p><strong>Tax Identification Number:</strong> [Tax ID Required]</p>
+                    <p><strong>Jurisdiction:</strong> [State/Country of Incorporation Required]</p>
+                    <p><strong>Business Address:</strong> [Complete Business Address Required]</p>
+                </div>
+
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Compliance & Certifications</h2>
+                <div class="space-y-4 mb-6">
+                    <div class="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+                        <h4 class="font-semibold text-blue-800">Data Privacy Compliance</h4>
+                        <p class="text-blue-700">GDPR (General Data Protection Regulation), CCPA (California Consumer Privacy Act)</p>
+                    </div>
+                    <div class="p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+                        <h4 class="font-semibold text-green-800">AI Safety & Ethics</h4>
+                        <p class="text-green-700">NVIDIA NeMo Guardrails integration for responsible AI deployment</p>
+                    </div>
+                    <div class="p-4 bg-purple-50 rounded-lg border-l-4 border-purple-500">
+                        <h4 class="font-semibold text-purple-800">Industry Standards</h4>
+                        <p class="text-purple-700">SOC 2 Type II (in progress), ISO 27001 (planned)</p>
+                    </div>
+                </div>
+
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Industry-Specific Disclaimers</h2>
+                <div class="space-y-4 mb-6">
+                    <div class="p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+                        <h4 class="font-semibold text-red-800">Financial Services</h4>
+                        <p class="text-red-700">SINCOR is not a licensed investment advisor, broker-dealer, or financial institution. Our financial services solutions are technology tools only and do not constitute financial, investment, or trading advice. All financial applications require regulatory compliance review and approval by qualified financial professionals. Users must comply with all applicable securities laws and regulations including SEC, FINRA, and other regulatory requirements.</p>
+                    </div>
+                    <div class="p-4 bg-orange-50 rounded-lg border-l-4 border-orange-500">
+                        <h4 class="font-semibold text-orange-800">Healthcare</h4>
+                        <p class="text-orange-700">SINCOR solutions are not medical devices and do not provide medical diagnosis, treatment, or advice. Healthcare implementations must comply with HIPAA, FDA regulations, and other applicable healthcare laws. All healthcare applications require review by qualified medical professionals and regulatory approval where applicable.</p>
+                    </div>
+                    <div class="p-4 bg-yellow-50 rounded-lg border-l-4 border-yellow-500">
+                        <h4 class="font-semibold text-yellow-800">Manufacturing & Industrial</h4>
+                        <p class="text-yellow-700">Manufacturing solutions must comply with relevant safety standards, environmental regulations, and industry-specific compliance requirements. Implementation requires safety review and approval by qualified engineers.</p>
+                    </div>
+                </div>
+
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Performance & Results Disclaimers</h2>
+                <div class="p-6 bg-yellow-100 rounded-lg border-2 border-yellow-400 mb-6">
+                    <h4 class="font-bold text-yellow-800 mb-3">Important Notice Regarding Performance Claims</h4>
+                    <ul class="list-disc pl-6 space-y-2 text-yellow-800">
+                        <li>All performance metrics, ROI projections, and scaling capabilities are simulated estimates based on system design specifications</li>
+                        <li>Actual results may vary significantly based on implementation, data quality, infrastructure, and business conditions</li>
+                        <li>No guarantee of specific performance outcomes, revenue generation, or business results</li>
+                        <li>Past performance or simulated results do not guarantee future performance</li>
+                        <li>Individual results depend on numerous factors beyond our control</li>
+                        <li>All enterprise solution descriptions require custom implementation and compliance review</li>
+                    </ul>
+                </div>
+
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Intellectual Property</h2>
+                <p class="mb-6">All SINCOR software, documentation, trademarks, and intellectual property are protected by applicable copyright, trademark, and intellectual property laws. Unauthorized use, reproduction, or distribution is prohibited.</p>
+
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Legal Documents</h2>
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <a href="{{ url_for('privacy') }}" class="p-4 bg-blue-50 rounded-lg border border-blue-200 hover:bg-blue-100 transition-colors">
+                        <h4 class="font-semibold text-blue-800">Privacy Policy</h4>
+                        <p class="text-blue-600 text-sm">Data collection, usage, and protection practices</p>
+                    </a>
+                    <a href="{{ url_for('terms') }}" class="p-4 bg-purple-50 rounded-lg border border-purple-200 hover:bg-purple-100 transition-colors">
+                        <h4 class="font-semibold text-purple-800">Terms of Service</h4>
+                        <p class="text-purple-600 text-sm">Service terms, limitations, and user responsibilities</p>
+                    </a>
+                </div>
+
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800">Contact Legal Department</h2>
+                <div class="bg-gray-100 p-4 rounded-lg">
+                    <p><strong>Legal Inquiries:</strong> legal@sincor.com</p>
+                    <p><strong>Privacy Matters:</strong> privacy@sincor.com</p>
+                    <p><strong>Compliance Issues:</strong> compliance@sincor.com</p>
+                    <p><strong>General Counsel:</strong> [To Be Appointed]</p>
+                </div>
+
+                <div class="mt-8 p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+                    <p class="text-sm text-red-800">
+                        <strong>Legal Notice:</strong> This legal information page is for informational purposes only and does not constitute legal advice. Consult with qualified legal counsel for specific legal matters. SINCOR reserves the right to update this information as business operations and legal requirements evolve.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

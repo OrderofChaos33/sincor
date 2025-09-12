@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(if exist __pycache__ rmdir /s /q __pycache__)",
+      "Bash(curl:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(git branch:*)",
+      "Bash(git pull:*)",
+      "Read(C:\\Users\\cjay4\\OneDrive\\Pictures\\Screenshots/**)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Read(C:\\Users\\cjay4\\OneDrive\\Pictures\\Screenshots/**)",
+      "WebFetch(domain:web-production-6c66a7.up.railway.app)",
+      "Read(C:\\Users\\cjay4\\OneDrive\\Pictures\\Screenshots/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

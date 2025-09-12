@@ -1,0 +1,17 @@
+flask
+gunicorn
+requests
+python-dotenv
+cryptography
+ecdsa
+flask
+flask-socketio
+gunicorn
+moviepy
+numpy
+psutil
+python-dotenv
+pyyaml
+qrcode
+requests
+scikit-learn

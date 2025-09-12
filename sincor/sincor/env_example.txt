@@ -1,0 +1,10 @@
+# ==== Provider API Keys ====
+LINKEDIN_COOKIE=
+CRUNCHBASE_API_KEY=
+GOOGLE_MAPS_API_KEY=
+NEWS_API_KEY=
+G2_API_KEY=
+# CRM push target (webhook or API key)
+CRM_WEBHOOK_URL=
+# Config override (optional)
+SCOUT_CONFIG=./config.yaml
