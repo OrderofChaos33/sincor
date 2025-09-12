@@ -889,8 +889,9 @@ def route_to_outreach(lead_record):
 
 if __name__ == '__main__':
     print("Starting SINCOR Clean App...")
-    # For development only
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    # Get port from environment variable for Railway deployment
+    port = int(os.environ.get('PORT', 8000))
+    app.run(host='0.0.0.0', port=port, debug=False)
 
 # Production WSGI application entry point
 application = app
