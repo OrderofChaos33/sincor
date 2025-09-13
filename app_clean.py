@@ -9,7 +9,7 @@ app.secret_key = 'sincor-secret-key-2024-clean'
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('home_simple.html')
 
 @app.route('/demo/access')
 def demo_access():
