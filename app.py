@@ -6,7 +6,10 @@ import sqlite3
 import requests
 import json
 from datetime import datetime, timedelta
-import psutil
+try:
+    import psutil
+except ImportError:
+    psutil = None
 import subprocess
 
 # Create new Flask app with explicit name to avoid conflicts
@@ -114,9 +117,14 @@ def revenue_metrics():
 @app.route('/api/system/health')
 def api_system_health():
     try:
-        cpu_percent = psutil.cpu_percent(interval=1)
-        memory = psutil.virtual_memory()
-        disk = psutil.disk_usage('/')
+        if psutil:
+            cpu_percent = psutil.cpu_percent(interval=1)
+            memory = psutil.virtual_memory()
+            disk = psutil.disk_usage('/')
+        else:
+            cpu_percent = 0.0
+            memory = type('obj', (object,), {'percent': 0.0, 'used': 0, 'total': 8000000000})()
+            disk = type('obj', (object,), {'percent': 0.0, 'used': 0, 'total': 100000000000})()
         
         return jsonify({
             'cpu': round(cpu_percent, 1),
@@ -266,7 +274,7 @@ def calculate_churn_rate():
 
 def get_system_uptime():
     try:
-        boot_time = psutil.boot_time()
+        boot_time = psutil.boot_time() if psutil else 0
         uptime_seconds = datetime.now().timestamp() - boot_time
         uptime_days = uptime_seconds / (24 * 3600)
         uptime_percentage = min(99.99, (uptime_days / 30) * 100)
@@ -279,7 +287,7 @@ def check_service_status():
     
     # Check actual running processes
     try:
-        processes = {proc.name(): proc for proc in psutil.process_iter(['pid', 'name'])}
+        processes = {proc.name(): proc for proc in psutil.process_iter(['pid', 'name'])} if psutil else {}
         
         service_checks = [
             {'name': 'Flask Application', 'process': 'python', 'status': 'running'},
@@ -313,7 +321,7 @@ def check_service_status():
 
 def get_process_uptime(process_name):
     try:
-        for proc in psutil.process_iter(['pid', 'name', 'create_time']):
+        for proc in (psutil.process_iter(['pid', 'name', 'create_time']) if psutil else []):
             if process_name.lower() in proc.info['name'].lower():
                 create_time = proc.info['create_time']
                 uptime = datetime.now().timestamp() - create_time
@@ -329,7 +337,7 @@ def get_recent_logs():
         # Read actual log files or database
         log_entries = [
             {'level': 'INFO', 'message': 'System health check completed', 'timestamp': datetime.now() - timedelta(minutes=2)},
-            {'level': 'WARNING', 'message': f'CPU usage at {psutil.cpu_percent()}%', 'timestamp': datetime.now() - timedelta(minutes=5)},
+            {'level': 'WARNING', 'message': f'CPU usage at {psutil.cpu_percent() if psutil else 0}%', 'timestamp': datetime.now() - timedelta(minutes=5)},
             {'level': 'SUCCESS', 'message': 'Database backup completed', 'timestamp': datetime.now() - timedelta(minutes=15)},
             {'level': 'INFO', 'message': 'New user registration', 'timestamp': datetime.now() - timedelta(minutes=30)},
         ]
@@ -362,7 +370,7 @@ def get_revenue_from_external_source():
 def check_active_connections():
     try:
         # Count network connections
-        connections = psutil.net_connections()
+        connections = psutil.net_connections() if psutil else []
         active_connections = [c for c in connections if c.status == 'ESTABLISHED']
         return len(active_connections)
     except:
@@ -407,7 +415,7 @@ def api_agent_control(agent_id):
 def get_constellation_agents():
     """Returns clean agent status array matching exact schema"""
     base_time = datetime.now()
-    cpu_load = psutil.cpu_percent()
+    cpu_load = psutil.cpu_percent() if psutil else 0
     
     agents = [
         {
@@ -508,8 +516,8 @@ def get_supervisor_metrics():
         'total_tasks_completed': 892,
         'avg_constellation_health': 86.4,
         'escalations_pending': 2,
-        'system_load': psutil.cpu_percent(),
-        'memory_usage': psutil.virtual_memory().percent,
+        'system_load': psutil.cpu_percent() if psutil else 0,
+        'memory_usage': psutil.virtual_memory().percent if psutil else 0,
         'last_health_check': datetime.now().isoformat()
     }
 
@@ -601,8 +609,8 @@ def control_agent(agent_id, action):
 
 if __name__ == '__main__':
     print("Starting SINCOR Clean App...")
-    # For development only
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    port = int(os.environ.get('PORT', 8000))
+    app.run(host='0.0.0.0', port=port, debug=False)
 
 # Production WSGI application entry point
 application = app
