@@ -1,16 +1,58 @@
 // SINCOR Website JavaScript
+// Optimized for performance and accessibility
 
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // Mobile menu toggle
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    
-    if (mobileMenuButton && mobileMenu) {
-        mobileMenuButton.addEventListener('click', function() {
-            mobileMenu.classList.toggle('hidden');
-        });
-    }
+(function() {
+    'use strict';
+
+    // Performance optimization: Cache DOM queries
+    let mobileMenuButton, mobileMenu;
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+        // Initialize cached elements
+        mobileMenuButton = document.getElementById('mobile-menu-button');
+        mobileMenu = document.getElementById('mobile-menu');
+
+        // Enhanced mobile menu toggle with accessibility
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                const isHidden = mobileMenu.classList.contains('hidden');
+
+                mobileMenu.classList.toggle('hidden');
+
+                // Update ARIA attributes for accessibility
+                mobileMenuButton.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+                mobileMenu.setAttribute('aria-hidden', isHidden ? 'false' : 'true');
+
+                // Focus management
+                if (isHidden) {
+                    const firstMenuItem = mobileMenu.querySelector('a');
+                    if (firstMenuItem) firstMenuItem.focus();
+                }
+            });
+
+            // Close mobile menu on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    mobileMenuButton.setAttribute('aria-expanded', 'false');
+                    mobileMenu.setAttribute('aria-hidden', 'true');
+                    mobileMenuButton.focus();
+                }
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuButton.setAttribute('aria-expanded', 'false');
+                        mobileMenu.setAttribute('aria-hidden', 'true');
+                    }
+                }
+            });
+        }
 
     // Smooth scrolling for anchor links
     const anchorLinks = document.querySelectorAll('a[href^="#"]');
@@ -237,6 +279,47 @@ function authenticateAdmin() {
         }
     });
 }
+
+    // Lazy loading implementation for performance
+    function initLazyLoading() {
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.classList.remove('lazy-load');
+                            img.classList.add('loaded');
+                            observer.unobserve(img);
+                        }
+                    }
+                });
+            });
+
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+    }
+
+    // Initialize lazy loading
+    initLazyLoading();
+
+    // Service worker registration for caching
+    if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('ServiceWorker registration successful');
+                })
+                .catch(function(error) {
+                    console.log('ServiceWorker registration failed');
+                });
+        });
+    }
+
+    })(); // Close IIFE
 
 // Export functions for use in other scripts
 window.SINCOR = {

@@ -1,0 +1,13 @@
+﻿# Environment
+.env
+.env.*
+*.env
+
+# Prevent bad nested copy from returning
+sincor/sincor/
+
+# Python/OS
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

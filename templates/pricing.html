@@ -1,262 +1,310 @@
 {% extends "base.html" %}
 
-{% block title %}Pricing - SINCOR Enterprise Solutions{% endblock %}
+{% block title %}Pricing - SINCOR AI Enterprise{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="bg-gradient-to-br from-blue-600 to-purple-700 text-white py-16">
-    <div class="container mx-auto px-6">
-        <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6">SINCOR Enterprise Pricing</h1>
-            <p class="text-xl md:text-2xl mb-8 text-blue-100">7 Premium Business Solutions • 47 AI Agents • Complete Enterprise Automation</p>
+<style>
+    .pricing-hero {
+        background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 25%, #2d1b69 50%, #11998e 75%, #38ef7d 100%);
+        background-size: 400% 400%;
+        animation: etherealGradient 20s ease infinite;
+    }
+
+    .pricing-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+    }
+
+    .pricing-card:hover {
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 0 25px 60px rgba(102, 126, 234, 0.3);
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    .enterprise-highlight {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .premium-tier {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .premium-tier::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+        0% { left: -100%; }
+        100% { left: 100%; }
+    }
+</style>
+
+<!-- Ultra-Premium Pricing Hero -->
+<section class="min-h-screen pricing-hero relative overflow-hidden flex items-center justify-center">
+    <div class="neural-network absolute inset-0 opacity-10"></div>
+
+    <div class="container mx-auto px-6 text-center relative z-10">
+        <div class="max-w-6xl mx-auto">
+            <div class="ultra-glass rounded-full px-8 py-4 mb-12 inline-block">
+                <span class="text-emerald-400 font-mono text-sm tracking-wider">SINCOR AI ENTERPRISE PRICING</span>
+            </div>
+
+            <h1 class="text-7xl lg:text-8xl font-black text-white mb-8 leading-tight">
+                Enterprise <span class="morphing-text">Intelligence</span>
+            </h1>
+
+            <p class="text-2xl lg:text-3xl mb-16 text-gray-100 max-w-4xl mx-auto leading-relaxed">
+                Professional AI solutions designed for enterprise-scale operations and unlimited growth potential.
+            </p>
+
+            <div class="flex flex-col lg:flex-row gap-8 justify-center">
+                <a href="{{ url_for('contact') }}" class="bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white px-12 py-6 rounded-2xl text-xl font-bold transition-all premium-glow shadow-2xl">
+                    Get Custom Quote
+                </a>
+                <a href="{{ url_for('demo') }}" class="ultra-glass hover:bg-white/20 text-white px-12 py-6 rounded-2xl text-xl font-semibold transition-all border-2 border-white/20">
+                    Try Enterprise Demo
+                </a>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- Product Pricing -->
-<section class="py-20 bg-gray-50">
-    <div class="container mx-auto px-6">
-        <!-- Agent Constellation -->
-        <div class="max-w-6xl mx-auto mb-16">
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-                <div class="bg-gradient-to-r from-blue-600 to-cyan-600 px-8 py-6">
-                    <h2 class="text-3xl font-bold text-white mb-2">🤖 Agent Constellation™</h2>
-                    <p class="text-blue-100">AI Agent Marketplace & Orchestration Platform</p>
-                </div>
-                <div class="p-8">
-                    <div class="grid md:grid-cols-3 gap-8">
-                        <div class="text-center border-2 border-gray-200 rounded-xl p-6">
-                            <h3 class="text-xl font-bold mb-4">Starter Edition</h3>
-                            <div class="text-3xl font-bold text-blue-600 mb-4">$15,000<span class="text-lg text-gray-600">/month</span></div>
-                            <ul class="text-left space-y-2 mb-6">
-                                <li>✓ Up to 10 active AI agents</li>
-                                <li>✓ Basic marketplace access</li>
-                                <li>✓ Standard support</li>
-                                <li>✓ 25+ integrations</li>
-                                <li>✓ Mid-market companies</li>
-                            </ul>
-                        </div>
-                        <div class="text-center border-2 border-yellow-500 rounded-xl p-6 transform scale-105">
-                            <div class="bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-bold mb-4">Most Popular</div>
-                            <h3 class="text-xl font-bold mb-4">Professional Edition</h3>
-                            <div class="text-3xl font-bold text-yellow-600 mb-4">$45,000<span class="text-lg text-gray-600">/month</span></div>
-                            <ul class="text-left space-y-2 mb-6">
-                                <li>✓ Up to 50 active AI agents</li>
-                                <li>✓ Full marketplace access</li>
-                                <li>✓ 24/7 priority support</li>
-                                <li>✓ 100+ integrations</li>
-                                <li>✓ Large enterprises</li>
-                            </ul>
-                        </div>
-                        <div class="text-center border-2 border-gray-200 rounded-xl p-6">
-                            <h3 class="text-xl font-bold mb-4">Enterprise Edition</h3>
-                            <div class="text-3xl font-bold text-purple-600 mb-4">$125,000<span class="text-lg text-gray-600">/month</span></div>
-                            <ul class="text-left space-y-2 mb-6">
-                                <li>✓ Unlimited AI agents</li>
-                                <li>✓ White-label options</li>
-                                <li>✓ Premium support team</li>
-                                <li>✓ Unlimited integrations</li>
-                                <li>✓ Global enterprises</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- Premium Pricing Tiers -->
+<section class="py-32 bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden">
+    <div class="neural-network absolute inset-0 opacity-10"></div>
 
-        <!-- Cor-Tec's AI Platform -->
-        <div class="max-w-6xl mx-auto mb-16">
-            <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-                <div class="bg-gradient-to-r from-purple-600 to-pink-600 px-8 py-6">
-                    <h2 class="text-3xl font-bold text-white mb-2">🧠 Cor-Tec's AI Platform™</h2>
-                    <p class="text-purple-100">Complete AI Business Automation Ecosystem</p>
+    <div class="container mx-auto px-6 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-24">
+                <div class="ultra-glass rounded-full px-8 py-4 mb-8 inline-block">
+                    <span class="text-emerald-400 font-mono text-sm tracking-wider">ENTERPRISE AI TIERS</span>
                 </div>
-                <div class="p-8">
-                    <div class="grid md:grid-cols-3 gap-8">
-                        <div class="text-center border-2 border-gray-200 rounded-xl p-6">
-                            <h3 class="text-xl font-bold mb-4">Professional Edition</h3>
-                            <div class="text-3xl font-bold text-purple-600 mb-4">$25,000<span class="text-lg text-gray-600">/month</span></div>
-                            <ul class="text-left space-y-2 mb-6">
-                                <li>✓ 5 AI modules included</li>
-                                <li>✓ Basic predictive analytics</li>
-                                <li>✓ Business hours support</li>
-                                <li>✓ 100,000 monthly transactions</li>
-                                <li>✓ Mid-market enterprises</li>
-                            </ul>
-                        </div>
-                        <div class="text-center border-2 border-yellow-500 rounded-xl p-6 transform scale-105">
-                            <div class="bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-bold mb-4">Recommended</div>
-                            <h3 class="text-xl font-bold mb-4">Enterprise Edition</h3>
-                            <div class="text-3xl font-bold text-yellow-600 mb-4">$75,000<span class="text-lg text-gray-600">/month</span></div>
-                            <ul class="text-left space-y-2 mb-6">
-                                <li>✓ 15 AI modules included</li>
-                                <li>✓ Advanced predictive analytics</li>
-                                <li>✓ 24/7 premium support</li>
-                                <li>✓ 1,000,000 monthly transactions</li>
-                                <li>✓ Large enterprises</li>
-                            </ul>
-                        </div>
-                        <div class="text-center border-2 border-gray-200 rounded-xl p-6">
-                            <h3 class="text-xl font-bold mb-4">Enterprise Plus</h3>
-                            <div class="text-3xl font-bold text-pink-600 mb-4">$200,000<span class="text-lg text-gray-600">/month</span></div>
-                            <ul class="text-left space-y-2 mb-6">
-                                <li>✓ Unlimited AI modules</li>
-                                <li>✓ Real-time analytics</li>
-                                <li>✓ Dedicated support team</li>
-                                <li>✓ Unlimited transactions</li>
-                                <li>✓ Global corporations</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Additional Products Grid -->
-        <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-
-            <!-- Hunter Pro -->
-            <div class="bg-white rounded-xl shadow-lg p-8">
-                <div class="flex items-center mb-6">
-                    <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center text-white text-xl font-bold mr-4">🎯</div>
-                    <div>
-                        <h3 class="text-2xl font-bold text-green-600">Hunter Pro™</h3>
-                        <p class="text-gray-600">Lead Generation & Intelligence</p>
-                    </div>
-                </div>
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center py-2 border-b">
-                        <span class="font-medium">Starter Edition</span>
-                        <span class="font-bold text-green-600">$2,500/month</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b">
-                        <span class="font-medium">Professional Edition</span>
-                        <span class="font-bold text-green-600">$8,500/month</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2">
-                        <span class="font-medium">Enterprise Edition</span>
-                        <span class="font-bold text-green-600">$25,000/month</span>
-                    </div>
-                </div>
+                <h2 class="text-6xl font-black text-white mb-8 morphing-text">
+                    Choose Your Intelligence Level
+                </h2>
+                <p class="text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                    Scalable AI solutions from startups to Fortune 500 enterprises.
+                </p>
             </div>
 
-            <!-- MediaPax Enterprise -->
-            <div class="bg-white rounded-xl shadow-lg p-8">
-                <div class="flex items-center mb-6">
-                    <div class="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center text-white text-xl font-bold mr-4">🎬</div>
-                    <div>
-                        <h3 class="text-2xl font-bold text-orange-600">MediaPax Enterprise™</h3>
-                        <p class="text-gray-600">Media Creation & Distribution</p>
+            <div class="grid lg:grid-cols-3 gap-12">
+                <!-- Professional Tier -->
+                <div class="pricing-card rounded-3xl p-12">
+                    <div class="text-center mb-8">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Professional</h3>
+                        <div class="text-5xl font-black text-cyan-400 mb-2">$2,500</div>
+                        <div class="text-gray-400 font-mono">/month</div>
                     </div>
-                </div>
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center py-2 border-b">
-                        <span class="font-medium">Starter Edition</span>
-                        <span class="font-bold text-orange-600">$3,500/month</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b">
-                        <span class="font-medium">Professional Edition</span>
-                        <span class="font-bold text-orange-600">$12,500/month</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2">
-                        <span class="font-medium">Enterprise Edition</span>
-                        <span class="font-bold text-orange-600">$35,000/month</span>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Business Intelligence Suite -->
-            <div class="bg-white rounded-xl shadow-lg p-8">
-                <div class="flex items-center mb-6">
-                    <div class="w-12 h-12 bg-indigo-500 rounded-xl flex items-center justify-center text-white text-xl font-bold mr-4">📊</div>
-                    <div>
-                        <h3 class="text-2xl font-bold text-indigo-600">Business Intelligence Suite™</h3>
-                        <p class="text-gray-600">Advanced Analytics Platform</p>
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-cyan-400 rounded-full mr-4"></div>
+                            <span>Real-time analytics dashboard</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-cyan-400 rounded-full mr-4"></div>
+                            <span>Predictive intelligence</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-cyan-400 rounded-full mr-4"></div>
+                            <span>50+ business integrations</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-cyan-400 rounded-full mr-4"></div>
+                            <span>Standard support</span>
+                        </div>
                     </div>
-                </div>
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center py-2 border-b">
-                        <span class="font-medium">Professional Edition</span>
-                        <span class="font-bold text-indigo-600">$15,000/month</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b">
-                        <span class="font-medium">Enterprise Edition</span>
-                        <span class="font-bold text-indigo-600">$45,000/month</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2">
-                        <span class="font-medium">Enterprise Plus</span>
-                        <span class="font-bold text-indigo-600">$125,000/month</span>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Revenue Acceleration System -->
-            <div class="bg-white rounded-xl shadow-lg p-8">
-                <div class="flex items-center mb-6">
-                    <div class="w-12 h-12 bg-yellow-500 rounded-xl flex items-center justify-center text-white text-xl font-bold mr-4">💰</div>
-                    <div>
-                        <h3 class="text-2xl font-bold text-yellow-600">Revenue Acceleration System™</h3>
-                        <p class="text-gray-600">Sales Optimization Platform</p>
-                    </div>
+                    <a href="{{ url_for('contact') }}" class="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-4 px-6 rounded-xl font-semibold hover:scale-105 transition-all block text-center">
+                        Start Professional
+                    </a>
                 </div>
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center py-2 border-b">
-                        <span class="font-medium">Professional Edition</span>
-                        <span class="font-bold text-yellow-600">$500/user/month</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2 border-b">
-                        <span class="font-medium">Enterprise Edition</span>
-                        <span class="font-bold text-yellow-600">$850/user/month</span>
-                    </div>
-                    <div class="flex justify-between items-center py-2">
-                        <span class="font-medium">Enterprise Plus</span>
-                        <span class="font-bold text-yellow-600">$1,500/user/month</span>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Enterprise Command Center -->
-        <div class="max-w-4xl mx-auto mt-16">
-            <div class="bg-gradient-to-br from-gray-900 to-black rounded-2xl p-8 text-white">
-                <div class="text-center mb-8">
-                    <div class="w-16 h-16 bg-white rounded-xl flex items-center justify-center text-2xl font-bold text-black mx-auto mb-4">⚡</div>
-                    <h2 class="text-3xl font-bold mb-2">Enterprise Command Center™</h2>
-                    <p class="text-gray-300">Business Operations Dashboard & Control Platform</p>
+                <!-- Enterprise Tier -->
+                <div class="pricing-card rounded-3xl p-12 premium-tier border-2 border-purple-400">
+                    <div class="absolute top-6 right-6">
+                        <div class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-bold">
+                            Most Popular
+                        </div>
+                    </div>
+
+                    <div class="text-center mb-8">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Enterprise</h3>
+                        <div class="text-5xl font-black enterprise-highlight mb-2">$7,500</div>
+                        <div class="text-gray-400 font-mono">/month</div>
+                    </div>
+
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-purple-400 rounded-full mr-4"></div>
+                            <span>Advanced neural processing</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-purple-400 rounded-full mr-4"></div>
+                            <span>Autonomous AI agents</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-purple-400 rounded-full mr-4"></div>
+                            <span>Unlimited integrations</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-purple-400 rounded-full mr-4"></div>
+                            <span>24/7 priority support</span>
+                        </div>
+                    </div>
+
+                    <a href="{{ url_for('contact') }}" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-4 px-6 rounded-xl font-semibold hover:scale-105 transition-all block text-center">
+                        Start Enterprise
+                    </a>
                 </div>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="text-center bg-gray-800 rounded-xl p-6">
-                        <h3 class="text-xl font-bold mb-4">Enterprise Edition</h3>
-                        <div class="text-3xl font-bold text-cyan-400 mb-4">$50,000<span class="text-lg text-gray-400">/month</span></div>
-                        <p class="text-sm text-gray-300">100 integrated systems • Standard dashboards • Business hours support</p>
+
+                <!-- Custom Tier -->
+                <div class="pricing-card rounded-3xl p-12">
+                    <div class="text-center mb-8">
+                        <div class="w-16 h-16 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Custom</h3>
+                        <div class="text-5xl font-black text-emerald-400 mb-2">Custom</div>
+                        <div class="text-gray-400 font-mono">pricing</div>
                     </div>
-                    <div class="text-center bg-gray-800 rounded-xl p-6 border-2 border-cyan-400">
-                        <div class="bg-cyan-400 text-black px-3 py-1 rounded-full text-sm font-bold mb-4">Recommended</div>
-                        <h3 class="text-xl font-bold mb-4">Enterprise Plus</h3>
-                        <div class="text-3xl font-bold text-cyan-400 mb-4">$125,000<span class="text-lg text-gray-400">/month</span></div>
-                        <p class="text-sm text-gray-300">300 integrated systems • Custom dashboards • 24/7 priority support</p>
+
+                    <div class="space-y-4 mb-8">
+                        <div class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-emerald-400 rounded-full mr-4"></div>
+                            <span>Bespoke AI architecture</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-emerald-400 rounded-full mr-4"></div>
+                            <span>White-label solutions</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-emerald-400 rounded-full mr-4"></div>
+                            <span>Dedicated engineering team</span>
+                        </div>
+                        <div class="flex items-center text-gray-300">
+                            <div class="w-2 h-2 bg-emerald-400 rounded-full mr-4"></div>
+                            <span>Enterprise SLA</span>
+                        </div>
                     </div>
-                    <div class="text-center bg-gray-800 rounded-xl p-6">
-                        <h3 class="text-xl font-bold mb-4">Enterprise Premium</h3>
-                        <div class="text-3xl font-bold text-cyan-400 mb-4">$300,000<span class="text-lg text-gray-400">/month</span></div>
-                        <p class="text-sm text-gray-300">Unlimited integrations • White-label • Dedicated support team</p>
-                    </div>
+
+                    <a href="{{ url_for('contact') }}" class="w-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white py-4 px-6 rounded-xl font-semibold hover:scale-105 transition-all block text-center">
+                        Contact Sales
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Enterprise CTA -->
-<section class="py-20 bg-gradient-to-r from-blue-600 to-purple-700 text-white">
-    <div class="container mx-auto px-6 text-center">
-        <h2 class="text-4xl font-bold mb-6">Ready to Transform Your Business?</h2>
-        <p class="text-xl mb-8 text-blue-100">Complete enterprise automation with 7 premium solutions and 47 specialized AI agents</p>
-        <div class="space-y-4 md:space-y-0 md:space-x-4 md:flex md:justify-center">
-            <a href="{{ url_for('contact') }}" class="inline-block bg-yellow-500 text-black px-8 py-4 rounded-lg text-lg font-semibold hover:bg-yellow-400 transition duration-200 transform hover:scale-105">Get Enterprise Quote</a>
-            <a href="/demo/access" class="inline-block border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-blue-600 transition duration-200">Try Platform Demo</a>
+
+
+
+<!-- Enterprise Value Section -->
+<section class="py-32 bg-white relative overflow-hidden">
+    <div class="container mx-auto px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl font-black text-gray-900 mb-8">
+                    Enterprise <span class="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Value</span>
+                </h2>
+                <p class="text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                    Beyond cost savings - achieve exponential business growth with AI that delivers measurable ROI.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-12">
+                <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-12 text-center">
+                    <h3 class="text-3xl font-bold text-gray-900 mb-6">Cost Reduction</h3>
+                    <div class="text-6xl font-black text-emerald-600 mb-4">73%</div>
+                    <p class="text-xl text-gray-600">Average reduction in operational costs through intelligent automation</p>
+                </div>
+                <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-12 text-center">
+                    <h3 class="text-3xl font-bold text-gray-900 mb-6">Revenue Growth</h3>
+                    <div class="text-6xl font-black text-purple-600 mb-4">2.4x</div>
+                    <p class="text-xl text-gray-600">Average revenue multiplier within 12 months of deployment</p>
+                </div>
+                <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-3xl p-12 text-center">
+                    <h3 class="text-3xl font-bold text-gray-900 mb-6">Time to Value</h3>
+                    <div class="text-6xl font-black text-cyan-600 mb-4">30</div>
+                    <p class="text-xl text-gray-600">Days to see measurable business impact and ROI</p>
+                </div>
+            </div>
         </div>
-        <p class="text-blue-200 mt-6">Enterprise solutions • Custom implementation • 24/7 support available</p>
+    </div>
+</section>
+
+<!-- Premium CTA Section -->
+<section class="py-32 pricing-hero relative overflow-hidden">
+    <div class="neural-network absolute inset-0 opacity-10"></div>
+
+    <div class="container mx-auto px-6 text-center relative z-10">
+        <div class="max-w-5xl mx-auto">
+            <div class="ultra-glass rounded-3xl p-16">
+                <h2 class="text-6xl font-black text-white mb-8 morphing-text">
+                    Ready to Scale with AI?
+                </h2>
+                <p class="text-2xl text-gray-100 mb-12 leading-relaxed max-w-3xl mx-auto">
+                    Join forward-thinking enterprises using SINCOR to achieve unprecedented growth through intelligent automation.
+                </p>
+
+                <div class="flex flex-col lg:flex-row gap-8 justify-center mb-12">
+                    <a href="{{ url_for('contact') }}" class="bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 text-white px-16 py-8 rounded-2xl text-2xl font-bold transition-all premium-glow shadow-2xl group">
+                        <span class="flex items-center justify-center">
+                            Get Custom Pricing
+                            <svg class="w-8 h-8 ml-4 group-hover:translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                        </span>
+                    </a>
+                    <a href="{{ url_for('demo') }}" class="ultra-glass hover:bg-white/20 text-white px-16 py-8 rounded-2xl text-2xl font-semibold transition-all border-2 border-white/20">
+                        Enterprise Demo
+                    </a>
+                </div>
+
+                <!-- Trust Indicators -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12 border-t border-white/20">
+                    <div class="text-center">
+                        <div class="text-emerald-400 font-mono text-sm mb-2">IMPLEMENTATION</div>
+                        <div class="text-white font-bold">30-Day Rapid Deployment</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-cyan-400 font-mono text-sm mb-2">GUARANTEE</div>
+                        <div class="text-white font-bold">ROI Within 90 Days</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-pink-400 font-mono text-sm mb-2">SUPPORT</div>
+                        <div class="text-white font-bold">24/7 Enterprise Success</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 {% endblock %}
