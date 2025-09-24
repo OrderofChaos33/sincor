@@ -1,117 +1,207 @@
-# Fixed SINCOR deployment file - no Unicode characters
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+#!/usr/bin/env python3
+"""
+SINCOR - Intelligence at the Speed of Business
+Complete Railway-ready deployment for getsincor.com
+"""
+from flask import Flask, jsonify, render_template_string, request
 import os
-import sqlite3
-import requests
-import json
-from datetime import datetime, timedelta
-import psutil
-import subprocess
+import logging
+from datetime import datetime
 
-# Create Flask app for getsincor.com deployment
-app = Flask(__name__, template_folder='templates', static_folder='static')
-app.secret_key = 'sincor-secret-key-2024-production'
+app = Flask(__name__)
+app.secret_key = os.getenv('SECRET_KEY', 'sincor-production-secure-key-2025')
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# PayPal Configuration
+PAYPAL_ENV = os.getenv('PAYPAL_ENV', 'sandbox')
+PAYPAL_CLIENT_ID = os.getenv('PAYPAL_CLIENT_ID', 'not-set')
+PAYPAL_CLIENT_SECRET = os.getenv('PAYPAL_CLIENT_SECRET', 'not-set')
 
 @app.route('/')
 def home():
-    return '''<!DOCTYPE html>
-<html>
+    """SINCOR Landing Page"""
+    return render_template_string('''
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>SINCOR - Business Intelligence Platform</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SINCOR - Intelligence at the Speed of Business</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-        .container { max-width: 800px; margin: 0 auto; text-align: center; }
-        .logo { font-size: 3em; font-weight: bold; margin-bottom: 20px; }
-        .tagline { font-size: 1.5em; margin-bottom: 40px; opacity: 0.9; }
-        .features { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin: 40px 0; }
-        .feature { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; }
-        .cta { background: #ff6b6b; padding: 15px 30px; border: none; border-radius: 25px; color: white; font-size: 1.2em; cursor: pointer; margin: 20px 10px; }
-        .cta:hover { background: #ff5252; }
+        .gradient-bg { background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #581c87 100%); }
+        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="logo">SINCOR</div>
-        <div class="tagline">Advanced Business Intelligence + Agent Automation</div>
-        
-        <div class="features">
-            <div class="feature">
-                <h3>🚀 Instant BI</h3>
-                <p>Real-time business intelligence dashboards with live metrics</p>
+<body class="gradient-bg min-h-screen text-white">
+    <div class="container mx-auto px-6 py-16">
+        <div class="text-center mb-12">
+            <h1 class="text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+                SINCOR
+            </h1>
+            <p class="text-2xl mb-8 text-blue-200 font-light">Intelligence at the Speed of Business</p>
+            
+            <div class="glass rounded-2xl p-8 max-w-6xl mx-auto mb-12">
+                <h2 class="text-4xl font-bold mb-6">AI Business Automation Platform</h2>
+                <p class="text-xl mb-8 text-blue-100 leading-relaxed max-w-4xl mx-auto">
+                    Leveraging a 43-agent swarm architecture to deliver instant business intelligence, 
+                    predictive analytics, and automated agent services. Enterprise-grade solutions 
+                    with premium positioning and consultation-based engagement.
+                </p>
+                
+                <div class="grid md:grid-cols-3 gap-8 mt-12">
+                    <div class="glass rounded-xl p-6 border border-white/10">
+                        <div class="text-4xl mb-4">⚡</div>
+                        <h3 class="text-2xl font-bold mb-3">Instant Intelligence</h3>
+                        <p class="text-blue-100">Business intelligence delivered in hours, not weeks. Market analysis, competitive intelligence, and revenue optimization.</p>
+                    </div>
+                    <div class="glass rounded-xl p-6 border border-white/10">
+                        <div class="text-4xl mb-4">🧠</div>
+                        <h3 class="text-2xl font-bold mb-3">43-Agent Swarm</h3>
+                        <p class="text-blue-100">Advanced multi-agent architecture across 7 archetypes: Scout, Synthesizer, Builder, Negotiator, Caretaker, Auditor, Director.</p>
+                    </div>
+                    <div class="glass rounded-xl p-6 border border-white/10">
+                        <div class="text-4xl mb-4">🏢</div>
+                        <h3 class="text-2xl font-bold mb-3">Enterprise Ready</h3>
+                        <p class="text-blue-100">27 distinct monetization paths. Scalable solutions for high-value business outcomes and strategic partnerships.</p>
+                    </div>
+                </div>
+                
+                <div class="mt-12">
+                    <h3 class="text-2xl font-bold mb-6">Platform Capabilities</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-white/5 rounded-lg p-4">
+                            <h4 class="font-semibold mb-2">Market Analysis</h4>
+                            <p class="text-sm text-blue-200">Real-time competitive intelligence</p>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-4">
+                            <h4 class="font-semibold mb-2">Predictive Analytics</h4>
+                            <p class="text-sm text-blue-200">Revenue forecasting & optimization</p>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-4">
+                            <h4 class="font-semibold mb-2">Agent Services</h4>
+                            <p class="text-sm text-blue-200">Automated business processes</p>
+                        </div>
+                        <div class="bg-white/5 rounded-lg p-4">
+                            <h4 class="font-semibold mb-2">Strategic Partnerships</h4>
+                            <p class="text-sm text-blue-200">Enterprise collaboration frameworks</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="feature">
-                <h3>🤖 Agent Scaling</h3>
-                <p>AI agent constellation for automated business discovery</p>
+            
+            <div class="text-center">
+                <p class="text-lg text-blue-200 mb-4">Ready to accelerate your business intelligence?</p>
+                <p class="text-sm text-blue-300">Contact us for enterprise consultation and partnership opportunities.</p>
             </div>
-            <div class="feature">
-                <h3>💰 Revenue Gen</h3>
-                <p>Direct revenue generation through intelligent automation</p>
-            </div>
-        </div>
-        
-        <button class="cta" onclick="window.location.href='/admin/access'">Launch Admin Dashboard</button>
-        <button class="cta" onclick="window.location.href='/demo/access'">Try Demo</button>
-        
-        <div style="margin-top: 40px; opacity: 0.8;">
-            <p>Production deployment successful ✅</p>
-            <p>All systems operational • Agent constellation ready</p>
         </div>
     </div>
 </body>
-</html>'''
+</html>
+    ''')
 
-@app.route('/admin/access')
-def admin_access():
-    session['user_authenticated'] = True
-    session['user_level'] = 'admin'
-    return redirect('/admin')
-
-@app.route('/demo/access')  
-def demo_access():
-    session['user_authenticated'] = True
-    session['user_level'] = 'member'
-    return redirect('/dashboard')
-
-@app.route('/admin')
-def admin_dashboard():
-    if 'user_authenticated' not in session or session.get('user_level') != 'admin':
-        return redirect('/')
-    return '<h1>SINCOR Admin Dashboard</h1><p>Full admin panel coming soon...</p><a href="/">Back to Home</a>'
-
-@app.route('/dashboard')
-def member_dashboard():
-    if 'user_authenticated' not in session:
-        return redirect('/')
-    return '<h1>SINCOR Member Dashboard</h1><p>Member features coming soon...</p><a href="/">Back to Home</a>'
-
-# Essential API endpoints for production
-@app.route('/api/status')
-def api_status():
+@app.route('/health')
+def health_check():
+    """Health check for Railway"""
     return jsonify({
-        'status': 'operational',
+        'status': 'healthy',
+        'service': 'SINCOR',
+        'version': '1.0',
         'timestamp': datetime.now().isoformat(),
-        'version': '1.0.0',
-        'services': {
-            'web': 'online',
-            'api': 'online', 
-            'agents': 'ready'
-        }
+        'domain': 'getsincor.com',
+        'platform': 'Railway'
     })
 
-@app.route('/api/health')
-def api_health():
-    try:
-        return jsonify({
-            'healthy': True,
-            'timestamp': datetime.now().isoformat(),
-            'uptime': 'operational'
-        })
-    except Exception as e:
-        return jsonify({'healthy': False, 'error': str(e)}), 500
+@app.route('/api/status')
+def api_status():
+    """API status endpoint"""
+    return jsonify({
+        'success': True,
+        'message': 'SINCOR API is operational',
+        'platform': 'Railway',
+        'domain_ready': True,
+        'paypal_configured': PAYPAL_CLIENT_ID != 'not-set',
+        'environment': PAYPAL_ENV
+    })
+
+@app.route('/api/business-intelligence')
+def business_intelligence_info():
+    """Business Intelligence service information"""
+    return jsonify({
+        'service': 'Instant Business Intelligence',
+        'delivery_time': '2-6 hours',
+        'agent_architecture': '43-agent swarm',
+        'archetypes': [
+            'Scout Agents (8) - Market intelligence',
+            'Synthesizer Agents (6) - Executive briefings',
+            'Builder Agents (7) - System integration',
+            'Negotiator Agents (6) - Partnership development',
+            'Caretaker Agents (5) - Data maintenance',
+            'Auditor Agents (5) - Quality validation',
+            'Director Agents (6) - Strategic coordination'
+        ],
+        'monetization_paths': 27,
+        'enterprise_ready': True
+    })
+
+@app.route('/contact')
+def contact():
+    """Contact page for enterprise inquiries"""
+    return render_template_string('''
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact SINCOR - Enterprise Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #581c87 100%); }
+        .glass { background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-white">
+    <div class="container mx-auto px-6 py-16">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h1 class="text-5xl font-bold mb-6">Get in Touch</h1>
+                <p class="text-xl text-blue-200">Ready to transform your business with AI-powered intelligence?</p>
+            </div>
+            
+            <div class="glass rounded-2xl p-8">
+                <h2 class="text-2xl font-bold mb-6">Enterprise Consultation Available</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">🚀 Instant Business Intelligence</h3>
+                        <p class="text-blue-100">Get comprehensive market analysis and competitive intelligence delivered in hours.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">🤖 43-Agent Swarm Architecture</h3>
+                        <p class="text-blue-100">Advanced multi-agent coordination for complex business challenges.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">💼 Strategic Partnerships</h3>
+                        <p class="text-blue-100">Enterprise-grade collaboration frameworks and revenue optimization.</p>
+                    </div>
+                </div>
+                
+                <div class="mt-8 text-center">
+                    <p class="text-lg mb-4">Contact us to discuss your specific requirements</p>
+                    <p class="text-blue-200">Premium positioning • Consultation-based engagement • 27 monetization paths</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+    ''')
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.getenv('PORT', 5000))
+    print(f"🚀 Starting SINCOR Production Platform on port {port}")
+    print(f"🌐 Ready for getsincor.com")
+    print(f"💳 PayPal: {'CONFIGURED' if PAYPAL_CLIENT_ID != 'not-set' else 'PENDING SETUP'}")
     app.run(host='0.0.0.0', port=port, debug=False)
-
-# WSGI entry point for production servers
-application = app
