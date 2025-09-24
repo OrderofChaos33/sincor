@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿# Environment
 .env
 .env.*
@@ -11,3 +12,13 @@ __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
+=======
+__pycache__/
+*.pyc
+*.db
+*.log
+*.zip
+.env
+.env.*
+.DS_Store
+>>>>>>> master
