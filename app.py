@@ -18,14 +18,13 @@ except Exception:
     # Fallback if directories don't exist
     templates = None
 
-@app.get("/health", response_class=JSONResponse)
+@app.get("/health")
 async def health():
-    return {
-        "status": "ok",
-        "app": APP_NAME,
-        "version": VERSION,
-        "timestamp": "2024-09-25T23:30:00Z"
-    }
+    return {"status": "ok"}
+
+@app.get("/healthz")
+async def healthz():
+    return {"status": "ok"}
 
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
