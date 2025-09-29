@@ -1,7 +1,6 @@
 """
-SINCOR AI Business Automation Platform - $100K System
-Railway-compatible monetization engine with PayPal integration
-Real revenue generation for enterprise clients
+Railway-compatible SINCOR Monetization App
+Integrates the monetization engine with Flask routes for real revenue generation
 """
 
 import os
