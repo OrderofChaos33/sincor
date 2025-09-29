@@ -5,7 +5,10 @@
       "Bash(curl:*)",
       "Bash(cp:*)",
       "Bash(rm:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(git commit:*)",
+      "Bash(git revert:*)"
     ],
     "deny": [],
     "ask": []
