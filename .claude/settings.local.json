@@ -8,7 +8,8 @@
       "Bash(git add:*)",
       "Bash(git push:*)",
       "Bash(git commit:*)",
-      "Bash(git revert:*)"
+      "Bash(git revert:*)",
+      "Read(//c/Users/cjay4/OneDrive/Desktop/SINCOR/sincor/**)"
     ],
     "deny": [],
     "ask": []
