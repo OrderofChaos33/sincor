@@ -23,5 +23,7 @@ README.md
 *.db
 *.png
 *.pdf
-*.txt
 *.log
+
+# Keep requirements.txt - it's needed for Docker build
+!requirements.txt
