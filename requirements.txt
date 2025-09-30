@@ -1,4 +1,4 @@
-# SINCOR Requirements
+# SINCOR Requirements - Full Monetization Platform
 # Flask web framework for lead capture and product platform
 Flask>=2.3.0,<4.0.0
 PyJWT>=2.8.0
