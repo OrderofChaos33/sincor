@@ -40,4 +40,4 @@ sincor/
 4. **Negotiator** - Outreach, replies, offers, follow-ups
 5. **Caretaker** - Data hygiene, labeling, redaction, backups
 6. **Auditor** - Evaluations, tests, safety, compliance
-7. **Director** - Prioritization, market clearing, escalation
+7. **Director** - Prioritization, market clearing, escalation# Railway deployment trigger Tue, Sep 30, 2025  8:51:29 AM
