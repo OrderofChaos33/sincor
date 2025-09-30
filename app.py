@@ -14,6 +14,36 @@ except ImportError as e:
     print(f"Waitlist system not available: {e}")
     WAITLIST_AVAILABLE = False
 
+# Import PayPal integration with error handling
+try:
+    from paypal_integration import PayPalIntegration, PaymentRequest
+    paypal_processor = PayPalIntegration()
+    PAYPAL_AVAILABLE = True
+    print("✅ PayPal Integration Loaded Successfully")
+except ImportError as e:
+    print(f"PayPal integration not available: {e}")
+    PAYPAL_AVAILABLE = False
+    paypal_processor = None
+except Exception as e:
+    print(f"PayPal configuration error: {e}")
+    PAYPAL_AVAILABLE = False
+    paypal_processor = None
+
+# Import monetization engine with error handling
+try:
+    from monetization_engine import MonetizationEngine
+    monetization_engine = MonetizationEngine()
+    MONETIZATION_AVAILABLE = True
+    print("✅ Monetization Engine Loaded Successfully")
+except ImportError as e:
+    print(f"Monetization engine not available: {e}")
+    MONETIZATION_AVAILABLE = False
+    monetization_engine = None
+except Exception as e:
+    print(f"Monetization engine error: {e}")
+    MONETIZATION_AVAILABLE = False
+    monetization_engine = None
+
 # Initialize Flask app
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'development-key-change-in-production')
@@ -162,11 +192,8 @@ def health_check():
     """Health check endpoint"""
     import datetime
 
-    # Check if monetization is available based on PayPal env vars
-    monetization_available = bool(
-        os.environ.get('PAYPAL_REST_API_ID') and
-        os.environ.get('PAYPAL_REST_API_SECRET')
-    )
+    # Check if monetization is available based on loaded systems
+    monetization_available = bool(PAYPAL_AVAILABLE and MONETIZATION_AVAILABLE)
 
     return jsonify({
         'status': 'healthy',
@@ -319,6 +346,108 @@ def test_environment():
             'monetization_available': paypal_ready
         },
         'detailed_results': results
+    })
+
+# PayPal payment processing routes
+@app.route('/api/payment/create', methods=['POST'])
+async def create_payment():
+    """Create a PayPal payment"""
+    if not PAYPAL_AVAILABLE:
+        return jsonify({'error': 'PayPal integration not available'}), 503
+
+    try:
+        payment_data = request.get_json()
+
+        # Validate required fields
+        required_fields = ['amount', 'description']
+        for field in required_fields:
+            if field not in payment_data:
+                return jsonify({'error': f'Missing required field: {field}'}), 400
+
+        # Create payment request
+        payment_request = PaymentRequest(
+            amount=float(payment_data['amount']),
+            currency=payment_data.get('currency', 'USD'),
+            description=payment_data['description'],
+            customer_email=payment_data.get('customer_email', ''),
+            order_id=payment_data.get('order_id', ''),
+            return_url=payment_data.get('return_url', request.host_url + 'payment/success'),
+            cancel_url=payment_data.get('cancel_url', request.host_url + 'payment/cancel')
+        )
+
+        # Process payment
+        result = await paypal_processor.create_payment(payment_request)
+
+        return jsonify({
+            'success': result.success,
+            'payment_id': result.payment_id,
+            'approval_url': result.approval_url,
+            'amount': result.amount,
+            'status': result.status.value
+        })
+
+    except Exception as e:
+        return jsonify({'error': f'Payment creation failed: {str(e)}'}), 500
+
+@app.route('/api/payment/execute', methods=['POST'])
+async def execute_payment():
+    """Execute a PayPal payment after approval"""
+    if not PAYPAL_AVAILABLE:
+        return jsonify({'error': 'PayPal integration not available'}), 503
+
+    try:
+        payment_data = request.get_json()
+        payment_id = payment_data.get('payment_id')
+        payer_id = payment_data.get('payer_id')
+
+        if not payment_id or not payer_id:
+            return jsonify({'error': 'Missing payment_id or payer_id'}), 400
+
+        # Execute payment
+        result = await paypal_processor.execute_payment(payment_id, payer_id)
+
+        return jsonify({
+            'success': result.success,
+            'payment_id': result.payment_id,
+            'status': result.status.value,
+            'amount': result.amount,
+            'net_amount': result.net_amount,
+            'transaction_fee': result.transaction_fee
+        })
+
+    except Exception as e:
+        return jsonify({'error': f'Payment execution failed: {str(e)}'}), 500
+
+@app.route('/api/monetization/start', methods=['POST'])
+async def start_monetization():
+    """Start the monetization engine"""
+    if not MONETIZATION_AVAILABLE:
+        return jsonify({'error': 'Monetization engine not available'}), 503
+
+    try:
+        # Execute monetization strategy
+        strategy_report = await monetization_engine.execute_monetization_strategy(
+            max_concurrent_opportunities=10
+        )
+
+        return jsonify({
+            'success': True,
+            'message': 'Monetization engine started successfully',
+            'strategy_report': strategy_report
+        })
+
+    except Exception as e:
+        return jsonify({'error': f'Failed to start monetization: {str(e)}'}), 500
+
+@app.route('/api/monetization/status')
+def monetization_status():
+    """Get monetization engine status"""
+    return jsonify({
+        'paypal_available': PAYPAL_AVAILABLE,
+        'monetization_available': MONETIZATION_AVAILABLE,
+        'waitlist_available': WAITLIST_AVAILABLE,
+        'environment_configured': bool(os.environ.get('PAYPAL_REST_API_ID')),
+        'production_mode': os.environ.get('PAYPAL_ENV', 'sandbox') == 'live'
     })
 
 # Error handlers
