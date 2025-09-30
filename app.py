@@ -687,10 +687,11 @@ def paypal_checkout_override(plan_id):
 if __name__=="__main__":
     port=int(os.environ.get("PORT","8080"))
     host="0.0.0.0"
-    log(f"Starting SINCOR PROFESSIONAL on {host}:{port}")
+    log(f"Starting SINCOR PROFESSIONAL with 42 AI AGENTS on {host}:{port}")
     log("✅ Professional admin system active")
     log("✅ Executive dashboard available at /admin/executive")
     log("✅ Real metrics and monitoring enabled")
+    log("✅ 42 AI AGENTS DEPLOYED")
     log("Promo routes: /free-trial/FRIENDSTEST, /free-trial/PROTOTYPE2025, /free-trial/COURTTESTER")
     
     try:
