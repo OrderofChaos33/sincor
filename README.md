@@ -1,35 +1,43 @@
-# SINCOR · Railway Build
+# SINCOR Agent Swarm Architecture
 
-Minimal, production-lean build of SINCOR suitable for Railway. FastAPI + Uvicorn with agents as modular async handlers.
+A persistent multi-agent system with cryptographic identity, composable skills, multi-tier memory, and evolving persona vectors.
 
-## Quick Start (Local)
-```bash
-python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-uvicorn app:app --reload --port 8080
+## Architecture Overview
+
+- **43 Persistent Entities** with unique identities and evolving personalities
+- **Swarm Coordination** via lightweight market/contract-net protocols  
+- **Health & Rhythm** cycles that boost creativity and prevent mode collapse
+- **Continuity Controls** with checksums and logs aligned with CTP-v1 Acheron
+
+## Directory Structure
+
+```
+sincor/
+├── agents/           # Entity identity & persona configs (E-*.yaml)
+├── memory/           # Multi-tier memory architecture
+│   ├── semantic/     # Graph snapshots & fact stores
+│   ├── procedural/   # Tool & prompt registries
+│   └── autobiographical/ # Self-narrative documents
+├── market/           # Task coordination & contract-net
+├── constitution/     # Governance & value frameworks
+├── tools/            # Tool registry & auth scopes
+└── audits/           # Compliance reports & metrics
 ```
 
-Open: http://localhost:8080 and health at http://localhost:8080/health
+## Quick Start
 
-## Deploy to Railway
-- Create a new Railway project and **Upload this folder** or connect to your repo containing it.
-- Add environment variables defined in `.env.example` under **Variables**.
-- Deploy. Health check path: `/health`
+1. Review archetype templates in `agents/archetypes/`
+2. Customize agent configs in `agents/E-*.yaml` 
+3. Define global constitution in `constitution/global.md`
+4. Configure tools registry in `tools/registry.yaml`
+5. Launch swarm coordination via market system
 
-## API
-- `GET /` index dashboard
-- `GET /health` service status
-- `POST /run` body: `{ "agent": "pricing", "payload": {...} }`
-```json
-{ "agent": "pricing", "result": {"base_price":199,"demand":1.2,"urgency":1.0,"price":238.8} }
-```
+## The 7 Archetypes
 
-## Structure
-```
-app.py
-agents/            # pluggable async agents
-services/          # db, cache, external clients
-ui/                # minimal dashboard
-tests/             # basic health test
-Procfile, Dockerfile, railway.json, requirements.txt
-```
+1. **Scout** - Discovery, prospecting, intelligence gathering
+2. **Synthesizer** - Summaries, briefs, deduplication, deconfliction  
+3. **Builder** - Code, automations, infrastructure
+4. **Negotiator** - Outreach, replies, offers, follow-ups
+5. **Caretaker** - Data hygiene, labeling, redaction, backups
+6. **Auditor** - Evaluations, tests, safety, compliance
+7. **Director** - Prioritization, market clearing, escalation

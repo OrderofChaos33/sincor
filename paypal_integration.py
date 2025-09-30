@@ -8,7 +8,6 @@ import os
 import json
 import requests
 import asyncio
-import uuid
 from typing import Dict, Any, Optional
 from datetime import datetime, timedelta
 from dataclasses import dataclass
@@ -59,12 +58,9 @@ class PayPalIntegration:
         self.access_token = None
         self.token_expires_at = None
         
-        # Validate configuration (graceful fallback for development)
+        # Validate configuration
         if not self.client_id or not self.client_secret:
-            print("WARNING: PayPal credentials not found. Using development mode (payments will be simulated)")
-            self.development_mode = True
-        else:
-            self.development_mode = False
+            raise ValueError("PayPal credentials not found. Ensure PAYPAL_REST_API_ID and PAYPAL_REST_API_SECRET are set in Railway")
     
     async def get_access_token(self) -> str:
         """Get or refresh PayPal access token"""
@@ -108,19 +104,7 @@ class PayPalIntegration:
     
     async def create_payment(self, payment_request: PaymentRequest) -> PaymentResult:
         """Create a PayPal payment"""
-
-        # Handle development mode
-        if getattr(self, 'development_mode', False):
-            return PaymentResult(
-                success=True,
-                payment_id=f"dev_{uuid.uuid4().hex[:8]}",
-                status=PaymentStatus.PENDING,
-                amount=payment_request.amount,
-                transaction_fee=0.0,
-                net_amount=payment_request.amount,
-                approval_url=f"https://sandbox.paypal.com/dev/approval/{uuid.uuid4().hex}"
-            )
-
+        
         try:
             access_token = await self.get_access_token()
             

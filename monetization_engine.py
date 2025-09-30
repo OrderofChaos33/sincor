@@ -17,11 +17,11 @@ import numpy as np
 from dynamic_pricing_engine import DynamicPricingEngine, TaskMetrics, PricingResult
 from recursive_value_products import RecursiveValueEngine, ProductType, ValueProduct
 from partnership_framework import PartnershipFramework, PartnerTier, PartnershipType
-from instant_business_intelligence import InstantBusinessIntelligence
+from instant_business_intelligence import InstantBIEngine, BITaskMetrics
 from infinite_scaling_engine import InfiniteScalingEngine, AgentArchetype
-from real_time_intelligence import RealTimeIntelligenceEngine, IntelligenceSource
+from real_time_intelligence import RealTimeIntelligence, IntelligenceSource
 from predictive_analytics_engine import PredictiveAnalyticsEngine, PredictionType
-from quality_scoring_engine import SelfImprovingQualityEngine, QualityDimension
+from quality_scoring_engine import QualityScoringEngine, QualityDimension
 from paypal_integration import SINCORPaymentProcessor, PaymentResult, PaymentStatus
 
 class RevenueStream(Enum):
@@ -70,19 +70,11 @@ class MonetizationEngine:
         self.pricing_engine = DynamicPricingEngine()
         self.value_products_engine = RecursiveValueEngine()
         self.partnership_framework = PartnershipFramework()
-        # Initialize BI engine with mock dependencies for demo
-        try:
-            from swarm_coordination import TaskMarket
-            from cortecs_core import CortecsBrain
-            task_market = TaskMarket()
-            cortecs_brain = CortecsBrain()
-            self.bi_engine = InstantBusinessIntelligence(task_market, cortecs_brain)
-        except:
-            self.bi_engine = None
+        self.bi_engine = InstantBIEngine()
         self.scaling_engine = InfiniteScalingEngine()
-        self.intelligence_engine = RealTimeIntelligenceEngine()
+        self.intelligence_engine = RealTimeIntelligence()
         self.analytics_engine = PredictiveAnalyticsEngine()
-        self.quality_engine = SelfImprovingQualityEngine()
+        self.quality_engine = QualityScoringEngine()
         
         # Initialize payment processor with your Railway PayPal config
         self.payment_processor = SINCORPaymentProcessor()
@@ -531,12 +523,14 @@ class MonetizationEngine:
         # Simulate opportunity execution based on confidence score
         success_probability = opportunity.confidence_score
         
-        # Apply quality scoring to improve success rate (simplified for demo)
-        try:
-            quality_score = 0.9  # High quality baseline
-            adjusted_success_probability = success_probability * quality_score
-        except:
-            adjusted_success_probability = success_probability
+        # Apply quality scoring to improve success rate
+        quality_assessment = await self.quality_engine.assess_deliverable_quality({
+            'complexity': opportunity.revenue_potential / 10000,
+            'timeline': opportunity.time_to_close,
+            'resource_availability': 0.8
+        })
+        
+        adjusted_success_probability = success_probability * quality_assessment.overall_score
         
         # Execute (simulated business logic, real payment processing)
         execution_success = np.random.random() < adjusted_success_probability
