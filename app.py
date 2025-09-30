@@ -160,10 +160,24 @@ def admin_panel():
 @app.route('/health')
 def health_check():
     """Health check endpoint"""
+    import datetime
+
+    # Check if monetization is available based on PayPal env vars
+    monetization_available = bool(
+        os.environ.get('PAYPAL_REST_API_ID') and
+        os.environ.get('PAYPAL_REST_API_SECRET')
+    )
+
     return jsonify({
         'status': 'healthy',
-        'service': 'SINCOR Product Platform',
-        'port': os.environ.get('PORT', '5000')
+        'service': 'SINCOR Master Platform',
+        'ai_agents': 42,
+        'waitlist_available': WAITLIST_AVAILABLE,
+        'monetization_available': monetization_available,
+        'google_api_available': bool(os.environ.get('GOOGLE_API_KEY')),
+        'email_available': bool(os.environ.get('SMTP_HOST') and os.environ.get('SMTP_USER')),
+        'port': os.environ.get('PORT', '5000'),
+        'timestamp': datetime.datetime.now().isoformat()
     })
 
 @app.route('/discovery-dashboard')
@@ -210,6 +224,65 @@ def terms():
 def security():
     """Security and compliance page"""
     return render_template('security.html')
+
+@app.route('/api/test/paypal')
+def test_paypal():
+    """Test PayPal environment variables"""
+    paypal_client_id = os.environ.get('PAYPAL_REST_API_ID')
+    paypal_secret = os.environ.get('PAYPAL_REST_API_SECRET')
+    paypal_sandbox = os.environ.get('PAYPAL_SANDBOX', 'true')
+
+    return jsonify({
+        'paypal_configured': bool(paypal_client_id and paypal_secret),
+        'client_id_set': bool(paypal_client_id),
+        'secret_set': bool(paypal_secret),
+        'sandbox_mode': paypal_sandbox.lower() == 'true',
+        'client_id_preview': paypal_client_id[:10] + "..." if paypal_client_id else None
+    })
+
+@app.route('/api/test/google')
+def test_google():
+    """Test Google API environment variables"""
+    google_api_key = os.environ.get('GOOGLE_API_KEY')
+    google_places_key = os.environ.get('GOOGLE_PLACES_API_KEY')
+
+    return jsonify({
+        'google_api_configured': bool(google_api_key),
+        'google_places_configured': bool(google_places_key),
+        'api_key_preview': google_api_key[:10] + "..." if google_api_key else None,
+        'places_key_preview': google_places_key[:10] + "..." if google_places_key else None
+    })
+
+@app.route('/api/test/environment')
+def test_environment():
+    """Test all environment variables"""
+    env_vars = {
+        'SECRET_KEY': bool(os.environ.get('SECRET_KEY')),
+        'FLASK_SECRET_KEY': bool(os.environ.get('FLASK_SECRET_KEY')),
+        'PAYPAL_REST_API_ID': bool(os.environ.get('PAYPAL_REST_API_ID')),
+        'PAYPAL_REST_API_SECRET': bool(os.environ.get('PAYPAL_REST_API_SECRET')),
+        'PAYPAL_SANDBOX': os.environ.get('PAYPAL_SANDBOX', 'true'),
+        'GOOGLE_API_KEY': bool(os.environ.get('GOOGLE_API_KEY')),
+        'GOOGLE_PLACES_API_KEY': bool(os.environ.get('GOOGLE_PLACES_API_KEY')),
+        'SMTP_HOST': bool(os.environ.get('SMTP_HOST')),
+        'SMTP_PORT': bool(os.environ.get('SMTP_PORT')),
+        'SMTP_USER': bool(os.environ.get('SMTP_USER')),
+        'SMTP_PASS': bool(os.environ.get('SMTP_PASS')),
+        'EMAIL_FROM': bool(os.environ.get('EMAIL_FROM')),
+        'EMAIL_TO': bool(os.environ.get('EMAIL_TO')),
+        'PORT': os.environ.get('PORT', '5000'),
+        'PYTHONUNBUFFERED': bool(os.environ.get('PYTHONUNBUFFERED'))
+    }
+
+    configured_count = sum(1 for k, v in env_vars.items() if v and k != 'PORT' and k != 'PAYPAL_SANDBOX')
+
+    return jsonify({
+        'total_configured': configured_count,
+        'environment_variables': env_vars,
+        'monetization_ready': bool(os.environ.get('PAYPAL_REST_API_ID') and os.environ.get('PAYPAL_REST_API_SECRET')),
+        'email_ready': bool(os.environ.get('SMTP_HOST') and os.environ.get('SMTP_USER')),
+        'google_ready': bool(os.environ.get('GOOGLE_API_KEY'))
+    })
 
 # Error handlers
 @app.errorhandler(404)
