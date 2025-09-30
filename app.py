@@ -255,33 +255,70 @@ def test_google():
 
 @app.route('/api/test/environment')
 def test_environment():
-    """Test all environment variables"""
-    env_vars = {
-        'SECRET_KEY': bool(os.environ.get('SECRET_KEY')),
-        'FLASK_SECRET_KEY': bool(os.environ.get('FLASK_SECRET_KEY')),
-        'PAYPAL_REST_API_ID': bool(os.environ.get('PAYPAL_REST_API_ID')),
-        'PAYPAL_REST_API_SECRET': bool(os.environ.get('PAYPAL_REST_API_SECRET')),
-        'PAYPAL_SANDBOX': os.environ.get('PAYPAL_SANDBOX', 'true'),
-        'GOOGLE_API_KEY': bool(os.environ.get('GOOGLE_API_KEY')),
-        'GOOGLE_PLACES_API_KEY': bool(os.environ.get('GOOGLE_PLACES_API_KEY')),
-        'SMTP_HOST': bool(os.environ.get('SMTP_HOST')),
-        'SMTP_PORT': bool(os.environ.get('SMTP_PORT')),
-        'SMTP_USER': bool(os.environ.get('SMTP_USER')),
-        'SMTP_PASS': bool(os.environ.get('SMTP_PASS')),
-        'EMAIL_FROM': bool(os.environ.get('EMAIL_FROM')),
-        'EMAIL_TO': bool(os.environ.get('EMAIL_TO')),
-        'PORT': os.environ.get('PORT', '5000'),
-        'PYTHONUNBUFFERED': bool(os.environ.get('PYTHONUNBUFFERED'))
-    }
+    """Test all environment variables for presence and basic validation"""
 
-    configured_count = sum(1 for k, v in env_vars.items() if v and k != 'PORT' and k != 'PAYPAL_SANDBOX')
+    # Test core environment variables for SINCOR platform
+    test_vars = [
+        'ANTHROPIC_API_KEY',
+        'GOOGLE_ADS_API_ID',
+        'GOOGLE_ADS_API_KEY',
+        'GOOGLE_API_KEY',
+        'GOOGLE_OAUTH_CLIENT_ID',
+        'GOOGLE_OAUTH_CLIENT_SECRET',
+        'PAYPAL_ENV',
+        'PAYPAL_REST_API_ID',
+        'PAYPAL_REST_API_SECRET',
+        'SECRET_KEY',
+        'SQUARE_APP_ID',
+        'SQUARE_APP_SECRET',
+        'TWILO_AUTH',
+        'TWILO_ID',
+        'TWILO_NUMBER'
+    ]
+
+    results = {}
+    for var_name in test_vars:
+        actual_value = os.environ.get(var_name)
+        if actual_value:
+            # Basic validation for each type
+            is_valid = len(actual_value.strip()) > 10  # All should be longer than 10 chars
+            results[var_name] = {
+                'configured': True,
+                'valid_format': is_valid,
+                'preview': actual_value[:15] + "..." if len(actual_value) > 15 else actual_value,
+                'length': len(actual_value)
+            }
+        else:
+            results[var_name] = {
+                'configured': False,
+                'valid_format': False,
+                'preview': None,
+                'length': 0
+            }
+
+    # Calculate summary
+    total_vars = len(test_vars)
+    configured_vars = sum(1 for r in results.values() if r['configured'])
+    valid_vars = sum(1 for r in results.values() if r['valid_format'])
+
+    # Service readiness based on presence and basic validation
+    paypal_ready = (results.get('PAYPAL_REST_API_ID', {}).get('valid_format', False) and
+                   results.get('PAYPAL_REST_API_SECRET', {}).get('valid_format', False))
+    google_ready = results.get('GOOGLE_API_KEY', {}).get('valid_format', False)
+    anthropic_ready = results.get('ANTHROPIC_API_KEY', {}).get('valid_format', False)
 
     return jsonify({
-        'total_configured': configured_count,
-        'environment_variables': env_vars,
-        'monetization_ready': bool(os.environ.get('PAYPAL_REST_API_ID') and os.environ.get('PAYPAL_REST_API_SECRET')),
-        'email_ready': bool(os.environ.get('SMTP_HOST') and os.environ.get('SMTP_USER')),
-        'google_ready': bool(os.environ.get('GOOGLE_API_KEY'))
+        'total_variables': total_vars,
+        'configured_count': configured_vars,
+        'valid_count': valid_vars,
+        'success_rate': round((valid_vars / total_vars) * 100, 1),
+        'services': {
+            'paypal_integration_ready': paypal_ready,
+            'google_apis_ready': google_ready,
+            'anthropic_ai_ready': anthropic_ready,
+            'monetization_available': paypal_ready
+        },
+        'detailed_results': results
     })
 
 # Error handlers
